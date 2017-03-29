@@ -34,7 +34,7 @@ public class DBConnect {
             JSONObject fullJson = (JSONObject) file;
             JSONObject dbJson = (JSONObject) fullJson.get("database");
 
-            url = (String) dbJson.get("url");
+            url = (String) dbJson.get("host");
             db = (String) dbJson.get("db");
             username = (String) dbJson.get("user");
             password = (String) dbJson.get("pass");
