@@ -2,18 +2,16 @@ package model.connection;
 
 import javafx.scene.control.TextField;
 import model.exception.ConnectionException;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.sql.*;
 
 
 /**
- * Created by Domestos Maximus on 24-Nov-16.
+ * Database Connection Handler
  */
 public class DBConnect {
 
@@ -25,7 +23,7 @@ public class DBConnect {
         parseJson();
     }
 
-    public void parseJson(){
+    private void parseJson() {
         JSONParser parser = new JSONParser();
         try {
             Object file = parser.parse(new InputStreamReader(new FileInputStream(getClass().getResource("/data.json").getFile())));
