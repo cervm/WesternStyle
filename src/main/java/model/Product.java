@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by Ondřej Soukup on 28.03.2017.
  */
-public class Product{
+public class Product {
     private int id, minStock;
     private String name, countryOrigin, description;
     private double costPrice, salesPrice, rentPrice;

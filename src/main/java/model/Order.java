@@ -11,7 +11,7 @@ public class Order {
     private double amount;
     private boolean deliveryStatus;
 
-    public Order(int id, Date orderDate, double amount, boolean deliveryStatus, Date deliveryDate, int invoiceId){
+    public Order(int id, Date orderDate, double amount, boolean deliveryStatus, Date deliveryDate, int invoiceId) {
         this.id = id;
         this.orderDate = orderDate;
         this.amount = amount;

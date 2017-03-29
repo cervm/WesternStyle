@@ -12,7 +12,7 @@ public class Invoice {
     double amount;
     private ArrayList<Integer> orders;
 
-    public Invoice(int id, Date paymentDate, double amount, int orderId){
+    public Invoice(int id, Date paymentDate, double amount, int orderId) {
         this.id = id;
         this.paymentDate = paymentDate;
         this.amount = amount;
