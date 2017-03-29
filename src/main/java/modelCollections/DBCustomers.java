@@ -110,6 +110,11 @@ public class DBCustomers implements IDataAccessObject<Customer> {
     }
 
     @Override
+    public void update(Customer... objects) throws ModelSyncException {
+        //TODO: to be implemented
+    }
+
+    @Override
     public void update(Customer object) {
         //TODO: to be implemented
     }
