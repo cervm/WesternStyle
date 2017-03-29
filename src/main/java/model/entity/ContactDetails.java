@@ -7,36 +7,45 @@ public abstract class ContactDetails {
     private int id;
     private String phone, email, address, postcode, city, country;
 
-    protected int getContactId() {
+    public int getContactId() {
         return id;
     }
 
-    protected String getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    protected String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    protected String getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    protected String getPostcode() {
+    public String getPostcode() {
         return postcode;
     }
 
-    protected String getCity() {
+    public String getCity() {
         return city;
     }
 
-    protected String getCountry() {
+    public String getCountry() {
         return country;
     }
 
-    protected ContactDetails(int id, String phone, String email, String address, String postcode, String city, String country) {
+    public ContactDetails(int id, String phone, String email, String address, String postcode, String city, String country) {
         this.id = id;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.postcode = postcode;
+        this.city = city;
+        this.country = country;
+    }
+
+    public ContactDetails(String phone, String email, String address, String postcode, String city, String country) {
         this.phone = phone;
         this.email = email;
         this.address = address;

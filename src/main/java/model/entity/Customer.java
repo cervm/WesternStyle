@@ -15,6 +15,12 @@ public class Customer extends ContactDetails {
         this.groupID = groupID;
     }
 
+    public Customer(String phone, String email, String address, String postcode, String city, String country, int groupID, String name) {
+        super(phone, email, address, postcode, city, country);
+        this.groupID = groupID;
+        this.name = name;
+    }
+
     public int getCid() {
         return cid;
     }
@@ -28,37 +34,37 @@ public class Customer extends ContactDetails {
     }
 
     @Override
-    protected int getContactId() {
+    public int getContactId() {
         return super.getContactId();
     }
 
     @Override
-    protected String getPhone() {
+    public String getPhone() {
         return super.getPhone();
     }
 
     @Override
-    protected String getEmail() {
+    public String getEmail() {
         return super.getEmail();
     }
 
     @Override
-    protected String getAddress() {
+    public String getAddress() {
         return super.getAddress();
     }
 
     @Override
-    protected String getPostcode() {
+    public String getPostcode() {
         return super.getPostcode();
     }
 
     @Override
-    protected String getCity() {
+    public String getCity() {
         return super.getCity();
     }
 
     @Override
-    protected String getCountry() {
+    public String getCountry() {
         return super.getCountry();
     }
 }

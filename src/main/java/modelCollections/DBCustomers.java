@@ -15,10 +15,16 @@ import java.util.List;
  * Created by rajmu on 17.03.28.
  */
 public class DBCustomers implements IDataAccessObject<Customer> {
-    private List<Customer> customers;
+    private ArrayList<Customer> customers;
     private DBConnect dbConnect;
+    private boolean isLoaded;
 
     public DBCustomers() throws ModelSyncException {
+        customers = new ArrayList<>();
+        isLoaded = false;
+    }
+
+    public void load() throws ModelSyncException {
         customers = new ArrayList<>();
         try {
             dbConnect = new DBConnect();
@@ -38,23 +44,34 @@ public class DBCustomers implements IDataAccessObject<Customer> {
                         rs.getInt("customers.group_id")
                 ));
             }
+            isLoaded = true;
         } catch (ConnectionException | SQLException e) {
             throw new ModelSyncException("Could not load customers.", e);
         }
     }
 
     @Override
-    public List<Customer> getAll() {
+    public List<Customer> getAll() throws ModelSyncException {
+        if (!isLoaded) {
+            load();
+        }
         return customers;
     }
 
     @Override
-    public Customer getById(int id) {
-        return null; //TODO: to be implemented
+    public Customer getById(int id) throws ModelSyncException {
+        if (!isLoaded) {
+            load();
+        }
+        if (id >= customers.size() || id < 0) {
+            throw new ModelSyncException("ID is out of range!");
+        }
+        return customers.stream().filter(o -> o.getCid() == id).findFirst().get();
     }
 
     @Override
     public void create(Customer object) {
+
         //TODO: to be implemented
     }
 
