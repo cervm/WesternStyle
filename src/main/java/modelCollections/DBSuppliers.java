@@ -30,7 +30,7 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
         suppliers = new ArrayList<>();
         try {
             conn = new DBConnect();
-            String query = "SELECT id, phone, email, address, postcode, city, country, suppliers.id, suppliers.name, suppliers.co_reg_no FROM contact_details INNER JOIN suppliers ON suppliers.contact_detail_id = contact_details.id";
+            String query = "SELECT [id], [phone], [email], [address], [postcode], [city], [country], [suppliers.id], [suppliers.name], [suppliers.co_reg_no] FROM [contact_details] INNER JOIN [suppliers] ON [suppliers.contact_detail_id] = [contact_details.id]";
             ResultSet rs = conn.getFromDataBase(query);
             while (rs.next()) {
                 suppliers.add(new Supplier(
@@ -75,8 +75,7 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
         for (int i = 0; i <= objects.length; i++){
             try{
                 conn = new DBConnect();
-                int supplierContactId = 0;
-                String contactQuery = "INSERT INTO contact_details (phone, email, address, postcode, city, country) VALUES (?, ?, ?, ?, ?, ?)";
+                String contactQuery = "INSERT INTO [contact_details] ([phone], [email], [address], [postcode], [city], [country_code]) VALUES (?,?,?,?,?,?);";
                 PreparedStatement contactPs = conn.getConnection().prepareStatement(contactQuery);
                 contactPs.setString(2, objects[i].getPhone());
                 contactPs.setString(3, objects[i].getEmail());
@@ -84,18 +83,19 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
                 contactPs.setString(5, objects[i].getPostcode());
                 contactPs.setString(6, objects[i].getCountry());
                 conn.uploadSafe(contactPs);
-                ResultSet rs = conn.getFromDataBase("SELECT id FROM contact_details WHERE phone = '" + objects[i].getPhone() + "' AND email = '" + objects[i].getEmail() +"'");
-                while(rs.next()){
-                    supplierContactId = rs.getInt("id");
+                try (ResultSet generatedKeys = contactPs.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        objects[i].setContactId(generatedKeys.getInt("id"));
+                    } else {
+                        throw new ModelSyncException("Creating contact details failed. No ID retrieved!");
+                    }
                 }
-                String supplierQuery = "INSERT INTO suppliers (name, co_reg_no, contact_detail_id) VALUES (?, ?, ?)";
+                String supplierQuery = "INSERT INTO [customers] ([name], [co_reg_no], [contact_detail_id]) VALUES (?,?,?);";
                 PreparedStatement supplierPs = conn.getConnection().prepareStatement(supplierQuery);
                 supplierPs.setString(1, objects[i].getName());
                 supplierPs.setString(2, objects[i].getCompanyRegNo());
-                supplierPs.setInt(3, supplierContactId);
+                supplierPs.setInt(3, objects[i].getContactId());
                 conn.uploadSafe(supplierPs);
-
-
             } catch (ConnectionException | SQLException e) {
                 throw new ModelSyncException("Could not load customers.", e);
             }
@@ -108,13 +108,7 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
         for (int i = 0; i <= objects.length; i++){
             try{
                 conn = new DBConnect();
-                int contactDetailId = 0;
-
-                ResultSet rs = conn.getFromDataBase("SELECT contact_detail_id FROM suppliers WHERE id='"+objects[i].getsId()+"'");
-                while(rs.next()){
-                    contactDetailId = rs.getInt("contact_detail_id");
-                }
-                String updateContactQuery = "UPDATE contact_details SET phone = ?, email = ?, address = ?, postcode = ?, country = ? WHERE id = '"+contactDetailId+"'";
+                String updateContactQuery = "UPDATE contact_details SET phone = ?, email = ?, address = ?, postcode = ?, country = ? WHERE id = '"+objects[i].getContactId()+"'";
                 PreparedStatement updatePs = conn.getConnection().prepareStatement(updateContactQuery);
                 updatePs.setString(1, objects[i].getPhone());
                 updatePs.setString(2, objects[i].getEmail());
@@ -134,13 +128,12 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
         }
 
     }
-
     @Override
     public void delete(Supplier... objects) throws ModelSyncException{
         for (int i = 0; i <= objects.length; i++){
             try {
                 conn = new DBConnect();
-                String query = "DELETE a.*, b.* FROM contact_details a INNER JOIN suppliers b ON a.id = b.contact_detail_id WHERE b.id = '"+objects[i].getsId()+"' ";
+                String query = "DELETE [a.*], [b.*] FROM [contact_details] a INNER JOIN [suppliers] b ON [a.id] = [b.contact_detail_id] WHERE [b.id] = '"+objects[i].getsId()+"' ";
                 conn.upload(query);
             } catch (ConnectionException e) {
                 throw new ModelSyncException("Could not load customers.", e);
