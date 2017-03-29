@@ -9,22 +9,23 @@ import model.exception.ModelSyncException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Products Data Access Object
  */
 public class DBProducts implements IDataAccessObject<Product> {
-    private List<Product> products;
     private DBConnect dbConnect;
 
-    public DBProducts() throws ModelSyncException {
-        products = new ArrayList<>();
+    @Override
+    public List<Product> getAll() throws ModelSyncException {
+        List<Product> products = new LinkedList<>();
         try {
             dbConnect = new DBConnect();
-            String query = "SELECT id FROM products";
-            ResultSet rs = dbConnect.getFromDataBase(query);
+            Statement statement = dbConnect.getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM products");
             while (rs.next()) {
                 products.add(new Product(
                         rs.getInt("id"),
@@ -37,15 +38,38 @@ public class DBProducts implements IDataAccessObject<Product> {
                         rs.getDouble("rent_price")
                 ));
             }
-
         } catch (ConnectionException | SQLException e) {
-            throw new ModelSyncException("Could not load customers.", e);
+            throw new ModelSyncException("Could not load products.", e);
         }
+        return products;
     }
 
-    @Override
-    public List<Product> getAll() {
-        return null; //TODO: to be implemented
+    public List<Product> getByCategory() throws ModelSyncException {
+        List<Product> products = new LinkedList<>();
+        try {
+            dbConnect = new DBConnect();
+            Statement statement = dbConnect.getConnection().createStatement();
+            ResultSet rs = statement.executeQuery(
+                    "SELECT *\n" +
+                            "FROM products AS p\n" +
+                            "JOIN product_categories AS c ON c.product_id = p.id\n" +
+                            "WHERE c.id = ?;");
+            while (rs.next()) {
+                products.add(new Product(
+                        rs.getInt("id"),
+                        rs.getInt("min_stock"),
+                        rs.getString("name"),
+                        rs.getString("country_code"),
+                        rs.getString("description"),
+                        rs.getDouble("cost_price"),
+                        rs.getDouble("sales_price"),
+                        rs.getDouble("rent_price")
+                ));
+            }
+        } catch (ConnectionException | SQLException e) {
+            throw new ModelSyncException("Could not load products.", e);
+        }
+        return products;
     }
 
     @Override
