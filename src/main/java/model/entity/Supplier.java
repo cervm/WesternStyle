@@ -27,6 +27,53 @@ public class Supplier extends ContactDetails {
         return companyRegNo;
     }
 
+    public void setsId(int sId) {
+        this.sId = sId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCompanyRegNo(String companyRegNo) {
+        this.companyRegNo = companyRegNo;
+    }
+
+    @Override
+    public void setContactId(int id) {
+        super.setContactId(id);
+    }
+
+    @Override
+    public void setPhone(String phone) {
+        super.setPhone(phone);
+    }
+
+    @Override
+    public void setEmail(String email) {
+        super.setEmail(email);
+    }
+
+    @Override
+    public void setAddress(String address) {
+        super.setAddress(address);
+    }
+
+    @Override
+    public void setPostcode(String postcode) {
+        super.setPostcode(postcode);
+    }
+
+    @Override
+    public void setCity(String city) {
+        super.setCity(city);
+    }
+
+    @Override
+    public void setCountry(String country) {
+        super.setCountry(country);
+    }
+
     @Override
     public int getContactId() {
         return super.getContactId();
