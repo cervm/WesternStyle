@@ -30,20 +30,21 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
         suppliers = new ArrayList<>();
         try {
             conn = new DBConnect();
-            String query = "SELECT [id], [phone], [email], [address], [postcode], [city], [country], [suppliers.id], [suppliers.name], [suppliers.co_reg_no] FROM [contact_details] INNER JOIN [suppliers] ON [suppliers.contact_detail_id] = [contact_details.id]";
+            String query = "SELECT s.id, name, phone, email, address, postcode, city, country_code, co_reg_no\n" +
+                    "FROM suppliers AS s\n" +
+                    "INNER JOIN contact_details AS cd ON s.contact_detail_id = cd.id;";
             ResultSet rs = conn.getFromDataBase(query);
             while (rs.next()) {
                 suppliers.add(new Supplier(
-                        rs.getInt("id"),
+                        rs.getInt("s.id"),
+                        rs.getString("name"),
                         rs.getString("phone"),
                         rs.getString("email"),
                         rs.getString("address"),
                         rs.getString("postcode"),
                         rs.getString("city"),
-                        rs.getString("country"),
-                        rs.getInt("suppliers.id"),
-                        rs.getString("suppliers.name"),
-                        rs.getString("suppliers.co_reg_no")
+                        rs.getString("country_code"),
+                        rs.getString("co_reg_no")
                 ));
             }
             isLoaded = true;
@@ -51,9 +52,10 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
             throw new ModelSyncException("Could not load customers.", e);
         }
     }
+
     @Override
     public List<Supplier> getAll() throws ModelSyncException {
-        if(!isLoaded){
+        if (!isLoaded) {
             load();
         }
         return suppliers;
@@ -67,13 +69,13 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
         if (id >= suppliers.size() || id < 0) {
             throw new ModelSyncException("ID is out of range!");
         }
-        return suppliers.stream().filter(o -> o.getsId() == id).findFirst().get();
+        return suppliers.stream().filter(o -> o.getId() == id).findFirst().get();
     }
 
     @Override
-    public void create(Supplier... objects) throws ModelSyncException{
-        for (int i = 0; i <= objects.length; i++){
-            try{
+    public void create(Supplier... objects) throws ModelSyncException {
+        for (int i = 0; i <= objects.length; i++) {
+            try {
                 conn = new DBConnect();
                 String contactQuery = "INSERT INTO [contact_details] ([phone], [email], [address], [postcode], [city], [country_code]) VALUES (?,?,?,?,?,?);";
                 PreparedStatement contactPs = conn.getConnection().prepareStatement(contactQuery);
@@ -104,11 +106,11 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
     }
 
     @Override
-    public void update(Supplier... objects) throws ModelSyncException{
-        for (int i = 0; i <= objects.length; i++){
-            try{
+    public void update(Supplier... objects) throws ModelSyncException {
+        for (int i = 0; i <= objects.length; i++) {
+            try {
                 conn = new DBConnect();
-                String updateContactQuery = "UPDATE contact_details SET phone = ?, email = ?, address = ?, postcode = ?, country = ? WHERE id = '"+objects[i].getContactId()+"'";
+                String updateContactQuery = "UPDATE contact_details SET phone = ?, email = ?, address = ?, postcode = ?, country = ? WHERE id = '" + objects[i].getContactId() + "'";
                 PreparedStatement updatePs = conn.getConnection().prepareStatement(updateContactQuery);
                 updatePs.setString(1, objects[i].getPhone());
                 updatePs.setString(2, objects[i].getEmail());
@@ -116,7 +118,7 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
                 updatePs.setString(4, objects[i].getPostcode());
                 updatePs.setString(5, objects[i].getCountry());
                 conn.uploadSafe(updatePs);
-                String updateSupplierQuery = "UPDATE suppliers SET name = ?, co_reg_no WHERE id= '"+objects[i].getsId()+"'";
+                String updateSupplierQuery = "UPDATE suppliers SET name = ?, co_reg_no WHERE id= '" + objects[i].getId() + "'";
                 PreparedStatement updateSuppPs = conn.getConnection().prepareStatement(updateSupplierQuery);
                 updateSuppPs.setString(1, objects[i].getName());
                 updateSuppPs.setString(2, objects[i].getCompanyRegNo());
@@ -128,12 +130,13 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
         }
 
     }
+
     @Override
-    public void delete(Supplier... objects) throws ModelSyncException{
-        for (int i = 0; i <= objects.length; i++){
+    public void delete(Supplier... objects) throws ModelSyncException {
+        for (int i = 0; i <= objects.length; i++) {
             try {
                 conn = new DBConnect();
-                String query = "DELETE [a.*], [b.*] FROM [contact_details] a INNER JOIN [suppliers] b ON [a.id] = [b.contact_detail_id] WHERE [b.id] = '"+objects[i].getsId()+"' ";
+                String query = "DELETE [a.*], [b.*] FROM [contact_details] a INNER JOIN [suppliers] b ON [a.id] = [b.contact_detail_id] WHERE [b.id] = '" + objects[i].getId() + "' ";
                 conn.upload(query);
             } catch (ConnectionException e) {
                 throw new ModelSyncException("Could not load customers.", e);

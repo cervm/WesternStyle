@@ -1,77 +1,32 @@
 package model.entity;
 
 /**
- * Created by rajmu on 17.03.28.
+ * Suppliers Data Access Object
  */
 public class Supplier extends ContactDetails {
-    int sId;
-    String name;
-    String companyRegNo;
+    private String companyRegNo;
 
-    public Supplier(int id, String phone, String email, String address, String postcode, String city, String country, int sId, String name, String companyRegNo) {
-        super(id, phone, email, address, postcode, city, country);
-        this.sId = sId;
-        this.name = name;
-        this.companyRegNo = companyRegNo;
+    public Supplier(int id, String name, String phone, String email, String address, String postcode, String city, String country, String companyRegNo) {
+        super(id, name, phone, email, address, postcode, city, country);
+        setCompanyRegNo(companyRegNo);
     }
 
-    public int getsId() {
-        return sId;
+    @Override
+    public int getId() {
+        return super.getId();
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public void setId(int id) {
+        super.setId(id);
     }
 
     public String getCompanyRegNo() {
         return companyRegNo;
     }
 
-    public void setsId(int sId) {
-        this.sId = sId;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setCompanyRegNo(String companyRegNo) {
         this.companyRegNo = companyRegNo;
-    }
-
-    @Override
-    public void setContactId(int id) {
-        super.setContactId(id);
-    }
-
-    @Override
-    public void setPhone(String phone) {
-        super.setPhone(phone);
-    }
-
-    @Override
-    public void setEmail(String email) {
-        super.setEmail(email);
-    }
-
-    @Override
-    public void setAddress(String address) {
-        super.setAddress(address);
-    }
-
-    @Override
-    public void setPostcode(String postcode) {
-        super.setPostcode(postcode);
-    }
-
-    @Override
-    public void setCity(String city) {
-        super.setCity(city);
-    }
-
-    @Override
-    public void setCountry(String country) {
-        super.setCountry(country);
     }
 
     @Override
@@ -80,8 +35,18 @@ public class Supplier extends ContactDetails {
     }
 
     @Override
+    public void setContactId(int id) {
+        super.setContactId(id);
+    }
+
+    @Override
     public String getPhone() {
         return super.getPhone();
+    }
+
+    @Override
+    public void setPhone(String phone) {
+        super.setPhone(phone);
     }
 
     @Override
@@ -90,8 +55,18 @@ public class Supplier extends ContactDetails {
     }
 
     @Override
+    public void setEmail(String email) {
+        super.setEmail(email);
+    }
+
+    @Override
     public String getAddress() {
         return super.getAddress();
+    }
+
+    @Override
+    public void setAddress(String address) {
+        super.setAddress(address);
     }
 
     @Override
@@ -100,12 +75,27 @@ public class Supplier extends ContactDetails {
     }
 
     @Override
+    public void setPostcode(String postcode) {
+        super.setPostcode(postcode);
+    }
+
+    @Override
     public String getCity() {
         return super.getCity();
     }
 
     @Override
+    public void setCity(String city) {
+        super.setCity(city);
+    }
+
+    @Override
     public String getCountry() {
         return super.getCountry();
+    }
+
+    @Override
+    public void setCountry(String country) {
+        super.setCountry(country);
     }
 }

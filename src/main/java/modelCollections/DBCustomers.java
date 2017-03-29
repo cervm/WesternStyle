@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by rajmu on 17.03.28.
+ * Customers Data Access Object
  */
 public class DBCustomers implements IDataAccessObject<Customer> {
     private ArrayList<Customer> customers;
