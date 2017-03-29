@@ -13,12 +13,11 @@ import java.sql.*;
 
 
 /**
- * Created by Domestos Maximus on 24-Nov-16.
+ * Database Connection Handler
  */
 public class DBConnect {
 
     private static String url;
-    private static String db;
     private static String username;
     private static String password;
 
@@ -26,7 +25,7 @@ public class DBConnect {
         parseJson();
     }
 
-    public void parseJson() throws ConnectionException {
+    private void parseJson() throws ConnectionException {
         JSONParser parser = new JSONParser();
         try {
             Object file = parser.parse(new InputStreamReader(new FileInputStream(getClass().getResource("/config.json").getFile())));
@@ -35,7 +34,6 @@ public class DBConnect {
             JSONObject dbJson = (JSONObject) fullJson.get("database");
 
             url = (String) dbJson.get("url");
-            db = (String) dbJson.get("db");
             username = (String) dbJson.get("user");
             password = (String) dbJson.get("pass");
 
