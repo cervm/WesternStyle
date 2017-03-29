@@ -71,60 +71,65 @@ public class DBCustomers implements IDataAccessObject<Customer> {
     }
 
     @Override
-    public void create(Customer... objects) throws ModelSyncException {
-        for (int i = 0; i <= objects.length; i++){
-            try {
-                dbConnect = new DBConnect();
+    public void create(Customer object) throws ModelSyncException {
+        try {
+            dbConnect = new DBConnect();
 
-                //creating contact details record
-                PreparedStatement stmt = dbConnect.getConnection().prepareStatement(
-                        "INSERT INTO [contact_details] ([phone], [email], [address], [postcode], [city], [country_code]) VALUES (?,?,?,?,?,?);");
-                stmt.setString(1, objects[i].getPhone());
-                stmt.setString(2, objects[i].getEmail());
-                stmt.setString(3, objects[i].getAddress());
-                stmt.setString(4, objects[i].getPostcode());
-                stmt.setString(5, objects[i].getCity());
-                stmt.setString(6, objects[i].getCountry());
-                dbConnect.uploadSafe(stmt);
+            //creating contact details record
+            PreparedStatement stmt = dbConnect.getConnection().prepareStatement(
+                    "INSERT INTO [contact_details] ([phone], [email], [address], [postcode], [city], [country_code]) VALUES (?,?,?,?,?,?);");
+            stmt.setString(1, object.getPhone());
+            stmt.setString(2, object.getEmail());
+            stmt.setString(3, object.getAddress());
+            stmt.setString(4, object.getPostcode());
+            stmt.setString(5, object.getCity());
+            stmt.setString(6, object.getCountry());
+            dbConnect.uploadSafe(stmt);
 
-                //fetching contact details data
-                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        objects[i].setContactId(generatedKeys.getInt("id"));
-                    } else {
-                        throw new ModelSyncException("Creating contact details failed. No ID retrieved!");
-                    }
+            //fetching contact details data
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    object.setContactId(generatedKeys.getInt("id"));
+                } else {
+                    throw new ModelSyncException("Creating contact details failed. No ID retrieved!");
                 }
-
-                //create customer
-                stmt = dbConnect.getConnection().prepareStatement(
-                        "INSERT INTO [customers] ([name], [contact_detail_id], [customer_group_id]) VALUES (?,?,?);");
-                stmt.setString(1, objects[i].getName());
-                stmt.setInt(2, objects[i].getContactId());
-                stmt.setInt(3, objects[i].getGroupID());
-                dbConnect.uploadSafe(stmt);
-            } catch (ConnectionException | SQLException e) {
-                throw new ModelSyncException("WARNING! Error occured while creating a new contact details record.", e);
-            } finally {
-                customers.add(objects[i]);
             }
+
+            //create customer
+            stmt = dbConnect.getConnection().prepareStatement(
+                    "INSERT INTO [customers] ([name], [contact_detail_id], [customer_group_id]) VALUES (?,?,?);");
+            stmt.setString(1, object.getName());
+            stmt.setInt(2, object.getContactId());
+            stmt.setInt(3, object.getGroupID());
+            dbConnect.uploadSafe(stmt);
+
+            //fetch customer ID
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    object.setCid(generatedKeys.getInt("id"));
+                } else {
+                    throw new ModelSyncException("Creating customer failed. No ID retrieved!");
+                }
+            }
+        } catch (ConnectionException | SQLException e) {
+            throw new ModelSyncException("WARNING! Error occured while creating a new contact details record.", e);
+        } finally {
+            customers.add(object);
         }
     }
 
     @Override
-    public void update(Customer... objects) {
-        for (int i = 0; i <= objects.length; i++){
-
-        }
-    }
-    //TODO: to be implemented
-
-    @Override
-    public void delete(Customer... objects) {
-        for (int i = 0; i <= objects.length; i++){
-
-            }
-        }
+    public void update(Customer... objects) throws ModelSyncException {
         //TODO: to be implemented
     }
 
+    @Override
+    public void update(Customer object) {
+        //TODO: to be implemented
+    }
+
+    @Override
+    public void delete(Customer object) {
+        //TODO: to be implemented
+    }
+}

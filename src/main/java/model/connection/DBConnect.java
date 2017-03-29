@@ -6,7 +6,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.sql.*;
 
 
@@ -26,7 +28,7 @@ public class DBConnect {
     public void parseJson(){
         JSONParser parser = new JSONParser();
         try {
-            Object file = parser.parse(new FileReader("../WesternStyle/src/main/resources/data.json"));
+            Object file = parser.parse(new InputStreamReader(new FileInputStream(getClass().getResource("/data.json").getFile())));
 
             JSONObject fullJson = (JSONObject) file;
             JSONObject dbJson = (JSONObject) fullJson.get("database");
@@ -36,7 +38,6 @@ public class DBConnect {
             password = (String) dbJson.get("pass");
 
             System.out.println(url + " " + username + " " + password);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
