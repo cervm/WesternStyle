@@ -87,7 +87,7 @@ public class DBCustomers implements IDataAccessObject<Customer> {
                 stmt.setString(5, object.getPostcode());
                 stmt.setString(6, object.getCity());
                 stmt.setString(7, object.getCountry());
-                dbConnect.uploadSafe(stmt);
+                stmt.execute();
 
                 //fetching contact details data
                 try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
@@ -103,16 +103,8 @@ public class DBCustomers implements IDataAccessObject<Customer> {
                         "INSERT INTO [customers] ([contact_detail_id], [customer_group_id]) VALUES (?,?);");
                 stmt.setInt(1, object.getContactId());
                 stmt.setInt(2, object.getGroupID());
-                dbConnect.uploadSafe(stmt);
+                stmt.execute();
 
-                //fetch customer ID
-                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        object.setId(generatedKeys.getInt("id"));
-                    } else {
-                        throw new ModelSyncException("Creating customer failed. No ID retrieved!");
-                    }
-                }
             } catch (ConnectionException | SQLException e) {
                 throw new ModelSyncException("WARNING! Error occured while creating a new contact details record.", e);
             } finally {
@@ -128,12 +120,6 @@ public class DBCustomers implements IDataAccessObject<Customer> {
             try {
                 dbConnect = new DBConnect();
                 PreparedStatement stmt = dbConnect.getConnection().prepareStatement(
-                        "UPDATE [customers] SET [customer_group_id]=? WHERE [id]=?;");
-                stmt.setInt(1, object.getGroupID());
-                stmt.setInt(2, object.getId());
-                dbConnect.uploadSafe(stmt);
-
-                stmt = dbConnect.getConnection().prepareStatement(
                         "UPDATE [contact_details] SET [phone]=?, [email]=?, [address]=?, [postcode]=?, [city]=?, [country_code]=? WHERE id=?;");
                 stmt.setString(1, object.getPhone());
                 stmt.setString(2, object.getEmail());
@@ -142,6 +128,12 @@ public class DBCustomers implements IDataAccessObject<Customer> {
                 stmt.setString(5, object.getCity());
                 stmt.setString(6, object.getCountry());
                 stmt.setInt(7, object.getGroupID());
+                dbConnect.uploadSafe(stmt);
+
+                stmt = dbConnect.getConnection().prepareStatement(
+                        "UPDATE [customers] SET [customer_group_id]=? WHERE [id]=?;");
+                stmt.setInt(1, object.getGroupID());
+                stmt.setInt(2, object.getId());
                 dbConnect.uploadSafe(stmt);
             } catch (ConnectionException | SQLException e) {
                 throw new ModelSyncException("WARNING! Could not update the customer of id [" + object.getId() + "]!", e);
@@ -162,6 +154,7 @@ public class DBCustomers implements IDataAccessObject<Customer> {
                                 "DELETE FROM [contact_details] WHERE [id]=?;");
                 stmt.setInt(1, object.getId());
                 stmt.setInt(2, object.getGroupID());
+                dbConnect.uploadSafe(stmt);
             } catch (ConnectionException | SQLException e) {
                 throw new ModelSyncException("Could not delete the user!", e);
             } finally {

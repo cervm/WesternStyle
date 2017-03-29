@@ -11,6 +11,11 @@ public class Customer extends ContactDetails {
         setGroupID(groupId);
     }
 
+    public Customer(String name, String phone, String email, String address, String postcode, String city, String country, int groupId) {
+        super(name, phone, email, address, postcode, city, country);
+        this.groupId = groupId;
+    }
+
     public int getGroupID() {
         return groupId;
     }

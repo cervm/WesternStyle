@@ -18,6 +18,16 @@ public abstract class ContactDetails {
         this.country = country;
     }
 
+    public ContactDetails(String name, String phone, String email, String address, String postcode, String city, String country) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.postcode = postcode;
+        this.city = city;
+        this.country = country;
+    }
+
     public int getContactId() {
         return id;
     }
