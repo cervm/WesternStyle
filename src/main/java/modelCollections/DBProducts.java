@@ -24,8 +24,7 @@ public class DBProducts implements IDataAccessObject<Product> {
         List<Product> products = new LinkedList<>();
         try {
             dbConnect = new DBConnect();
-            Statement statement = dbConnect.getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM products");
+            ResultSet rs = dbConnect.getFromDataBase("SELECT * FROM products");
             while (rs.next()) {
                 products.add(new Product(
                         rs.getInt("id"),
@@ -73,8 +72,26 @@ public class DBProducts implements IDataAccessObject<Product> {
     }
 
     @Override
-    public Product getById(int id) {
-        return null; //TODO: to be implemented
+    public Product getById(int id) throws ModelSyncException {
+        Product product;
+        try {
+            dbConnect = new DBConnect();
+            ResultSet rs = dbConnect.getFromDataBase("SELECT * FROM products WHERE id = " + id);
+            rs.next();
+            product = new Product(
+                    rs.getInt("id"),
+                    rs.getInt("min_stock"),
+                    rs.getString("name"),
+                    rs.getString("country_code"),
+                    rs.getString("description"),
+                    rs.getDouble("cost_price"),
+                    rs.getDouble("sales_price"),
+                    rs.getDouble("rent_price")
+            );
+        } catch (ConnectionException | SQLException e) {
+            throw new ModelSyncException("Could not load products.", e);
+        }
+        return product;
     }
 
     @Override

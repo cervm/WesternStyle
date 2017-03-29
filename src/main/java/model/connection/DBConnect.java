@@ -2,8 +2,9 @@ package model.connection;
 
 import javafx.scene.control.TextField;
 import model.exception.ConnectionException;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
 import java.sql.*;
@@ -19,21 +20,25 @@ public class DBConnect {
     private static String password;
 
     public DBConnect() throws ConnectionException {
-        //TODO: retrieve data from JSON fole
+        parseJson();
+    }
+
+    public void parseJson(){
+        JSONParser parser = new JSONParser();
         try {
-            String file = "/data.json";
-            FileReader fileReader = new FileReader(file);
-            //JSONObject jsonObject = (JSONObject) new JSONParser().parse(fileReader);
-            JSONObject jsonObject = new JSONObject(fileReader);
-            JSONArray dbArray = jsonObject.getJSONArray("database");
-            url = dbArray.getString(0);
-            username = dbArray.getString(1);
-            password = dbArray.getString(2);
-            System.out.println("URL: " + url + '\n' +
-                    "User: " + username + '\n' +
-                    "Password" + password);
+            Object file = parser.parse(new FileReader("../WesternStyle/src/main/resources/data.json"));
+
+            JSONObject fullJson = (JSONObject) file;
+            JSONObject dbJson = (JSONObject) fullJson.get("database");
+
+            url = (String) dbJson.get("url");
+            username = (String) dbJson.get("user");
+            password = (String) dbJson.get("pass");
+
+            System.out.println(url + " " + username + " " + password);
+
         } catch (Exception e) {
-            throw new ConnectionException(e);
+            e.printStackTrace();
         }
     }
 
