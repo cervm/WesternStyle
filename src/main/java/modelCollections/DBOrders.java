@@ -1,38 +1,38 @@
 package modelCollections;
 
 import model.connection.IDataAccessObject;
-import model.Product;
+import model.Order;
 
 import java.util.List;
 
 /**
  * Created by Ondřej Soukup on 28.03.2017.
  */
-public class Products implements IDataAccessObject<Product> {
-    private List<Product> invoices;
+public class DBOrders implements IDataAccessObject<Order> {
+    private List<Order> orders;
 
     @Override
-    public List<Product> getAll() {
+    public List<Order> getAll() {
         return null; //TODO: to be implemented
     }
 
     @Override
-    public Product getById(int id) {
+    public Order getById(int id) {
         return null; //TODO: to be implemented
     }
 
     @Override
-    public void create(Product object) {
+    public void create(Order object) {
         //TODO: to be implemented
     }
 
     @Override
-    public void update(Product object) {
+    public void update(Order object) {
         //TODO: to be implemented
     }
 
     @Override
-    public void delete(Product object) {
+    public void delete(Order object) {
         //TODO: to be implemented
     }
 }

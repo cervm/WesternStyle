@@ -1,38 +1,38 @@
 package modelCollections;
 
 import model.connection.IDataAccessObject;
-import model.entity.Customer;
+import model.Product;
 
 import java.util.List;
 
 /**
- * Created by rajmu on 17.03.28.
+ * Created by Ondřej Soukup on 28.03.2017.
  */
-public class Customers implements IDataAccessObject<Customer> {
-    private List<Customer> customers;
+public class DBProducts implements IDataAccessObject<Product> {
+    private List<Product> invoices;
 
     @Override
-    public List<Customer> getAll() {
+    public List<Product> getAll() {
         return null; //TODO: to be implemented
     }
 
     @Override
-    public Customer getById(int id) {
+    public Product getById(int id) {
         return null; //TODO: to be implemented
     }
 
     @Override
-    public void create(Customer object) {
+    public void create(Product object) {
         //TODO: to be implemented
     }
 
     @Override
-    public void update(Customer object) {
+    public void update(Product object) {
         //TODO: to be implemented
     }
 
     @Override
-    public void delete(Customer object) {
+    public void delete(Product object) {
         //TODO: to be implemented
     }
 }
