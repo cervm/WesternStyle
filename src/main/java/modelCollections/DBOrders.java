@@ -1,39 +1,38 @@
 package modelCollections;
 
 import model.connection.IDataAccessObject;
-import model.entity.Supplier;
+import model.Order;
 
 import java.util.List;
 
 /**
- * Created by rajmu on 17.03.28.
+ * Created by Ondřej Soukup on 28.03.2017.
  */
-public class Suppliers implements IDataAccessObject<Supplier> {
-
-    private List<Supplier> suppliers;
+public class DBOrders implements IDataAccessObject<Order> {
+    private List<Order> orders;
 
     @Override
-    public List<Supplier> getAll() {
+    public List<Order> getAll() {
         return null; //TODO: to be implemented
     }
 
     @Override
-    public Supplier getById(int id) {
+    public Order getById(int id) {
         return null; //TODO: to be implemented
     }
 
     @Override
-    public void create(Supplier object) {
+    public void create(Order object) {
         //TODO: to be implemented
     }
 
     @Override
-    public void update(Supplier object) {
+    public void update(Order object) {
         //TODO: to be implemented
     }
 
     @Override
-    public void delete(Supplier object) {
+    public void delete(Order object) {
         //TODO: to be implemented
     }
 }

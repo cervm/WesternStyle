@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Ondřej Soukup on 28.03.2017.
  */
-public class Products implements IDataAccessObject<Product> {
+public class DBProducts implements IDataAccessObject<Product> {
     private List<Product> invoices;
 
     @Override

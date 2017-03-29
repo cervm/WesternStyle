@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Ondřej Soukup on 28.03.2017.
  */
-public class Invoices implements IDataAccessObject<Invoice> {
+public class DBInvoices implements IDataAccessObject<Invoice> {
     private List<Invoice> invoices;
 
     @Override

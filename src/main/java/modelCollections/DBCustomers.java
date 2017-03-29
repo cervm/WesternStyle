@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by rajmu on 17.03.28.
  */
-public class Customers implements IDataAccessObject<Customer> {
+public class DBCustomers implements IDataAccessObject<Customer> {
     private List<Customer> customers;
     private DBConnect dbConnect;
 

@@ -9,10 +9,10 @@ public class Product {
     private int id, minStock;
     private String name, countryOrigin, description;
     private double costPrice, salesPrice, rentPrice;
-    private Category primatyCategory;
+    private Category primaryCategory;
     private ArrayList<Category> categories;
 
-    public Product(int id, int minStock, String name, String countryOrigin, String description, double costPrice, double salesPrice, double rentPrice, Category primatyCategory, ArrayList<Category> categories) {
+    public Product(int id, int minStock, String name, String countryOrigin, String description, double costPrice, double salesPrice, double rentPrice, Category primaryCategory, ArrayList<Category> categories) {
         this.id = id;
         this.minStock = minStock;
         this.name = name;
@@ -21,7 +21,7 @@ public class Product {
         this.costPrice = costPrice;
         this.salesPrice = salesPrice;
         this.rentPrice = rentPrice;
-        this.primatyCategory = primatyCategory;
+        this.primaryCategory = primaryCategory;
         this.categories = categories;
     }
 
@@ -57,11 +57,19 @@ public class Product {
         return rentPrice;
     }
 
-    public Category getPrimatyCategory() {
-        return primatyCategory;
+    public Category getPrimaryCategory() {
+        return primaryCategory;
     }
 
     public ArrayList<Category> getCategories() {
         return categories;
+    }
+
+    public void addCategory(Category c) {
+        categories.add(c);
+    }
+
+    public void removeCategory(Category c) {
+        categories.removeIf(o -> o == c);
     }
 }
