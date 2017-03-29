@@ -18,7 +18,7 @@ public class DBCustomers implements IDataAccessObject<Customer> {
     private List<Customer> customers;
     private DBConnect dbConnect;
 
-    public Customers() throws ModelSyncException {
+    public DBCustomers() throws ModelSyncException {
         customers = new ArrayList<>();
         try {
             dbConnect = new DBConnect();
