@@ -35,6 +35,34 @@ public abstract class ContactDetails {
         return country;
     }
 
+    public void setContactId(int id) {
+        this.id = id;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     public ContactDetails(int id, String phone, String email, String address, String postcode, String city, String country) {
         this.id = id;
         this.phone = phone;
