@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.effect.BoxBlur?>
+<?import javafx.scene.effect.Reflection?>
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.MainWindowController"
+            prefHeight="400.0" prefWidth="600.0">
+    <center>
+        <ColorPicker editable="true" BorderPane.alignment="CENTER">
+            <effect>
+                <BoxBlur height="0.0" iterations="2" width="11.07">
+                    <input>
+                        <Reflection/>
+                    </input>
+                </BoxBlur>
+            </effect>
+        </ColorPicker>
+    </center>
+</BorderPane>
