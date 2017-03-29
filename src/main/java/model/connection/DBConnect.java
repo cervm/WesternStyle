@@ -2,12 +2,12 @@ package model.connection;
 
 import javafx.scene.control.TextField;
 import model.exception.ConnectionException;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.FileInputStream;
-import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.*;
 
@@ -18,6 +18,7 @@ import java.sql.*;
 public class DBConnect {
 
     private static String url;
+    private static String db;
     private static String username;
     private static String password;
 
@@ -25,21 +26,21 @@ public class DBConnect {
         parseJson();
     }
 
-    public void parseJson(){
+    public void parseJson() throws ConnectionException {
         JSONParser parser = new JSONParser();
         try {
-            Object file = parser.parse(new InputStreamReader(new FileInputStream(getClass().getResource("/data.json").getFile())));
+            Object file = parser.parse(new InputStreamReader(new FileInputStream(getClass().getResource("/config.json").getFile())));
 
             JSONObject fullJson = (JSONObject) file;
             JSONObject dbJson = (JSONObject) fullJson.get("database");
 
             url = (String) dbJson.get("url");
+            db = (String) dbJson.get("db");
             username = (String) dbJson.get("user");
             password = (String) dbJson.get("pass");
 
-            System.out.println(url + " " + username + " " + password);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ParseException | IOException e) {
+            throw new ConnectionException(e);
         }
     }
 
