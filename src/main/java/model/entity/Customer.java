@@ -1,28 +1,26 @@
 package model.entity;
 
-import model.CustomerGroup;
-
 /**
  * Created by rajmu on 17.03.28.
  */
 public class Customer extends ContactDetails {
     private int cid;
-    private CustomerGroup group;
+    private int groupID;
     private String name;
 
-    public Customer(int id, String phone, String email, String address, String postcode, String city, String country, int id1, String name, CustomerGroup group) {
+    public Customer(int id, String phone, String email, String address, String postcode, String city, String country, int id1, String name, int groupID) {
         super(id, phone, email, address, postcode, city, country);
         this.cid = id1;
         this.name = name;
-        this.group = group;
+        this.groupID = groupID;
     }
 
     public int getCid() {
         return cid;
     }
 
-    public CustomerGroup getGroup() {
-        return group;
+    public int getGroupID() {
+        return groupID;
     }
 
     public String getName() {
