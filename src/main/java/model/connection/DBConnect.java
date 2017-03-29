@@ -111,8 +111,11 @@ public class DBConnect {
     public void uploadSafe(PreparedStatement stmt) throws ConnectionException {
         Connection con = connect(url, username, password);
         try {
-            stmt.executeUpdate();
+            int affectedRows = stmt.executeUpdate();
             con.close();
+            if (affectedRows == 0) {
+                throw new ConnectionException("Update failed for an unknown reason!");
+            }
         } catch (SQLException ex) {
             throw new ConnectionException("WARNING! exception occured while uploading a query to the server.", ex);
         }
