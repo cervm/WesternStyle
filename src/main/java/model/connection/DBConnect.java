@@ -28,8 +28,6 @@ public class DBConnect {
     public void parseJson(){
         JSONParser parser = new JSONParser();
         try {
-            //Object file = parser.parse(new FileReader("../src/main/resources/data.json"));
-            //Object file = parser.parse(new FileReader(DBConnect.class.getResourceAsStream("/src/resources/data.json").toString()));
             Object file = parser.parse(new InputStreamReader(new FileInputStream(getClass().getResource("/data.json").getFile())));
 
             JSONObject fullJson = (JSONObject) file;
@@ -40,7 +38,6 @@ public class DBConnect {
             password = (String) dbJson.get("pass");
 
             System.out.println(url + " " + username + " " + password);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
