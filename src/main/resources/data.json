@@ -1,7 +1,7 @@
 {
-  "database":{
-    "url": "www.homosex.cz",
-    "user": "ondrej",
-    "pass": "ceausescu"
-  }
+    "database": {
+      "url": "www.homosex.cz",
+      "user": "ondrej",
+      "pass": "ceausescu"
+    }
 }
