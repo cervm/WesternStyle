@@ -22,17 +22,26 @@ public class DBOrders implements IDataAccessObject<Order> {
     }
 
     @Override
-    public void create(Order object) {
+    public void create(Order... objects) {
+        for (int i = 0; i <= objects.length; i++){
+
+        }
         //TODO: to be implemented
     }
 
     @Override
-    public void update(Order object) {
+    public void update(Order... objects) {
+        for (int i = 0; i <= objects.length; i++){
+
+        }
         //TODO: to be implemented
     }
 
     @Override
-    public void delete(Order object) {
+    public void delete(Order... objects) {
+        for (int i = 0; i <= objects.length; i++){
+
+        }
         //TODO: to be implemented
     }
 }
