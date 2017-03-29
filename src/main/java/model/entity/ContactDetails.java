@@ -5,7 +5,7 @@ package model.entity;
  */
 public abstract class ContactDetails {
     private int id;
-    private String phone, email, address, postcode, city, country;
+    private String name, phone, email, address, postcode, city, country;
 
     public int getContactId() {
         return id;
@@ -63,8 +63,25 @@ public abstract class ContactDetails {
         this.country = country;
     }
 
-    public ContactDetails(int id, String phone, String email, String address, String postcode, String city, String country) {
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ContactDetails(int id, String name, String phone, String email, String address, String postcode, String city, String country) {
+        this.id = id;
+        this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;

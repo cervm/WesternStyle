@@ -4,45 +4,29 @@ package model.entity;
  * Created by rajmu on 17.03.28.
  */
 public class Customer extends ContactDetails {
-    private int cid;
-    private int groupID;
-    private String name;
+    private int groupId;
 
-    public Customer(int id, String phone, String email, String address, String postcode, String city, String country, int id1, String name, int groupID) {
-        super(id, phone, email, address, postcode, city, country);
-        this.cid = id1;
-        this.name = name;
-        this.groupID = groupID;
-    }
-
-    public Customer(String phone, String email, String address, String postcode, String city, String country, int groupID, String name) {
-        super(phone, email, address, postcode, city, country);
-        this.groupID = groupID;
-        this.name = name;
-    }
-
-    public int getCid() {
-        return cid;
+    public Customer(int id, String name, String phone, String email, String address, String postcode, String city, String country_code, int groupId) {
+        super(id, name, phone, email, address, postcode, city, country_code);
+        setGroupID(groupId);
     }
 
     public int getGroupID() {
-        return groupID;
+        return groupId;
     }
 
+    @Override
     public String getName() {
-        return name;
+        return super.getName();
     }
 
-    public void setCid(int cid) {
-        this.cid = cid;
+    public void setGroupID(int groupId) {
+        this.groupId = groupId;
     }
 
-    public void setGroupID(int groupID) {
-        this.groupID = groupID;
-    }
-
+    @Override
     public void setName(String name) {
-        this.name = name;
+        super.setName(name);
     }
 
     @Override
