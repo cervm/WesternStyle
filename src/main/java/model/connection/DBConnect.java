@@ -18,7 +18,7 @@ public class DBConnect {
     private static String username;
     private static String password;
 
-    public DBConnect() {
+    public DBConnect() throws ConnectionException {
         //TODO: retrieve data from JSON fole
         try {
             String file = "/data.json";
@@ -33,7 +33,7 @@ public class DBConnect {
                     "User: " + username + '\n' +
                     "Password" + password);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new ConnectionException(e);
         }
     }
 
