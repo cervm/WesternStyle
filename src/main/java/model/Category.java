@@ -33,4 +33,12 @@ public class Category {
     public ArrayList<Property> getProperties() {
         return properties;
     }
+
+    public void addProperty(Property p) {
+        properties.add(p);
+    }
+
+    public void removeProperty(Property p) {
+        properties.removeIf(o -> o == p);
+    }
 }
