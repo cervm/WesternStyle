@@ -102,6 +102,15 @@ public class DBCustomers implements IDataAccessObject<Customer> {
             stmt.setInt(2, object.getContactId());
             stmt.setInt(3, object.getGroupID());
             dbConnect.uploadSafe(stmt);
+
+            //fetch customer ID
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    object.setCid(generatedKeys.getInt("id"));
+                } else {
+                    throw new ModelSyncException("Creating customer failed. No ID retrieved!");
+                }
+            }
         } catch (ConnectionException | SQLException e) {
             throw new ModelSyncException("WARNING! Error occured while creating a new contact details record.", e);
         } finally {
