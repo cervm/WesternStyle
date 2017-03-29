@@ -6,7 +6,7 @@ import model.Invoice;
 import java.util.List;
 
 /**
- * Created by Ondřej Soukup on 28.03.2017.
+ * Invoices Data Access Object
  */
 public class DBInvoices implements IDataAccessObject<Invoice> {
     private List<Invoice> invoices;
@@ -23,7 +23,7 @@ public class DBInvoices implements IDataAccessObject<Invoice> {
 
     @Override
     public void create(Invoice... objects) {
-        for (int i = 0; i <= objects.length; i++){
+        for (int i = 0; i <= objects.length; i++) {
 
         }
         //TODO: to be implemented
@@ -31,7 +31,7 @@ public class DBInvoices implements IDataAccessObject<Invoice> {
 
     @Override
     public void update(Invoice... objects) {
-        for (int i = 0; i <= objects.length; i++){
+        for (int i = 0; i <= objects.length; i++) {
 
         }
         //TODO: to be implemented
@@ -39,7 +39,7 @@ public class DBInvoices implements IDataAccessObject<Invoice> {
 
     @Override
     public void delete(Invoice... objects) {
-        for (int i = 0; i <= objects.length; i++){
+        for (int i = 0; i <= objects.length; i++) {
 
         }
         //TODO: to be implemented

@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 /**
- * Created by jakub on 29/03/2017.
+ * Variant Entity
  */
 public class Variant {
     private int vid;

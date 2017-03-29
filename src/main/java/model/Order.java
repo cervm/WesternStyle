@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by Ondřej Soukup on 28.03.2017.
+ * Order Entity
  */
 public class Order {
     private int id, invoiceId;

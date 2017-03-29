@@ -1,7 +1,7 @@
 package model.entity;
 
 /**
- * Created by rajmu on 17.03.28.
+ * Customer Entity
  */
 public class Customer extends ContactDetails {
     private int groupId;
@@ -20,13 +20,13 @@ public class Customer extends ContactDetails {
         return groupId;
     }
 
+    public void setGroupID(int groupId) {
+        this.groupId = groupId;
+    }
+
     @Override
     public String getName() {
         return super.getName();
-    }
-
-    public void setGroupID(int groupId) {
-        this.groupId = groupId;
     }
 
     @Override
@@ -35,43 +35,13 @@ public class Customer extends ContactDetails {
     }
 
     @Override
-    public void setContactId(int id) {
-        super.setContactId(id);
-    }
-
-    @Override
-    public void setPhone(String phone) {
-        super.setPhone(phone);
-    }
-
-    @Override
-    public void setEmail(String email) {
-        super.setEmail(email);
-    }
-
-    @Override
-    public void setAddress(String address) {
-        super.setAddress(address);
-    }
-
-    @Override
-    public void setPostcode(String postcode) {
-        super.setPostcode(postcode);
-    }
-
-    @Override
-    public void setCity(String city) {
-        super.setCity(city);
-    }
-
-    @Override
-    public void setCountry(String country) {
-        super.setCountry(country);
-    }
-
-    @Override
     public int getContactId() {
         return super.getContactId();
+    }
+
+    @Override
+    public void setContactId(int id) {
+        super.setContactId(id);
     }
 
     @Override
@@ -80,8 +50,18 @@ public class Customer extends ContactDetails {
     }
 
     @Override
+    public void setPhone(String phone) {
+        super.setPhone(phone);
+    }
+
+    @Override
     public String getEmail() {
         return super.getEmail();
+    }
+
+    @Override
+    public void setEmail(String email) {
+        super.setEmail(email);
     }
 
     @Override
@@ -90,8 +70,18 @@ public class Customer extends ContactDetails {
     }
 
     @Override
+    public void setAddress(String address) {
+        super.setAddress(address);
+    }
+
+    @Override
     public String getPostcode() {
         return super.getPostcode();
+    }
+
+    @Override
+    public void setPostcode(String postcode) {
+        super.setPostcode(postcode);
     }
 
     @Override
@@ -100,7 +90,17 @@ public class Customer extends ContactDetails {
     }
 
     @Override
+    public void setCity(String city) {
+        super.setCity(city);
+    }
+
+    @Override
     public String getCountry() {
         return super.getCountry();
+    }
+
+    @Override
+    public void setCountry(String country) {
+        super.setCountry(country);
     }
 }

@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 /**
- * Created by Ondřej Soukup on 28.03.2017.
+ * Product Entity
  */
 public class Product {
     private int id, minStock;

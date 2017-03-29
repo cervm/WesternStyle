@@ -6,7 +6,7 @@ import model.Order;
 import java.util.List;
 
 /**
- * Created by Ondřej Soukup on 28.03.2017.
+ * Orders Data Access Object
  */
 public class DBOrders implements IDataAccessObject<Order> {
     private List<Order> orders;
@@ -23,7 +23,7 @@ public class DBOrders implements IDataAccessObject<Order> {
 
     @Override
     public void create(Order... objects) {
-        for (int i = 0; i <= objects.length; i++){
+        for (int i = 0; i <= objects.length; i++) {
 
         }
         //TODO: to be implemented
@@ -31,7 +31,7 @@ public class DBOrders implements IDataAccessObject<Order> {
 
     @Override
     public void update(Order... objects) {
-        for (int i = 0; i <= objects.length; i++){
+        for (int i = 0; i <= objects.length; i++) {
 
         }
         //TODO: to be implemented
@@ -39,7 +39,7 @@ public class DBOrders implements IDataAccessObject<Order> {
 
     @Override
     public void delete(Order... objects) {
-        for (int i = 0; i <= objects.length; i++){
+        for (int i = 0; i <= objects.length; i++) {
 
         }
         //TODO: to be implemented

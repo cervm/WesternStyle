@@ -1,7 +1,7 @@
 package model.entity;
 
 /**
- * Suppliers Data Access Object
+ * Supplier Entity
  */
 public class Supplier extends ContactDetails {
     private String companyRegNo;

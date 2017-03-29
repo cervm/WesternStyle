@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by rajmu on 17.03.28.
+ * Suppliers Data Access Object
  */
 public class DBSuppliers implements IDataAccessObject<Supplier> {
 
@@ -61,6 +61,13 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
         return suppliers;
     }
 
+    /**
+     * Method to get a supplier by id
+     *
+     * @param id id of the supplier
+     * @return supplier by id
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
     public Supplier getById(int id) throws ModelSyncException {
         if (!isLoaded) {
@@ -72,6 +79,12 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
         return suppliers.stream().filter(o -> o.getId() == id).findFirst().get();
     }
 
+    /**
+     * Method to persist a supplier in the database
+     *
+     * @param objects suppliers to be persisted
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
     public void create(Supplier... objects) throws ModelSyncException {
         for (int i = 0; i <= objects.length; i++) {
@@ -99,12 +112,18 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
                 supplierPs.setInt(3, objects[i].getContactId());
                 conn.uploadSafe(supplierPs);
             } catch (ConnectionException | SQLException e) {
-                throw new ModelSyncException("Could not load customers.", e);
+                throw new ModelSyncException("Could not load suppliers.", e);
             }
         }
 
     }
 
+    /**
+     * Method to update a supplier in the database
+     *
+     * @param objects suppliers to be updated
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
     public void update(Supplier... objects) throws ModelSyncException {
         for (int i = 0; i <= objects.length; i++) {
@@ -124,13 +143,18 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
                 updateSuppPs.setString(2, objects[i].getCompanyRegNo());
                 conn.uploadSafe(updateSuppPs);
             } catch (ConnectionException | SQLException e) {
-                throw new ModelSyncException("Could not load customers.", e);
+                throw new ModelSyncException("Could not update the supplier.", e);
             }
 
         }
 
     }
 
+    /**
+     * Method to delete a supplier from the database
+     *
+     * @param objects suppliers to be deleted
+     */
     @Override
     public void delete(Supplier... objects) throws ModelSyncException {
         for (int i = 0; i <= objects.length; i++) {
@@ -139,7 +163,7 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
                 String query = "DELETE [a.*], [b.*] FROM [contact_details] a INNER JOIN [suppliers] b ON [a.id] = [b.contact_detail_id] WHERE [b.id] = '" + objects[i].getId() + "' ";
                 conn.upload(query);
             } catch (ConnectionException e) {
-                throw new ModelSyncException("Could not load customers.", e);
+                throw new ModelSyncException("Could not delete the supplier.", e);
             }
         }
 

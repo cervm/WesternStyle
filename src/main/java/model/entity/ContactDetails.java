@@ -1,7 +1,7 @@
 package model.entity;
 
 /**
- * Created by rajmu on 17.03.28.
+ * Contact Details Entity
  */
 public abstract class ContactDetails {
     private int id;
@@ -18,7 +18,7 @@ public abstract class ContactDetails {
         this.country = country;
     }
 
-    public ContactDetails(String name, String phone, String email, String address, String postcode, String city, String country) {
+    ContactDetails(String name, String phone, String email, String address, String postcode, String city, String country) {
         this.name = name;
         this.phone = phone;
         this.email = email;
