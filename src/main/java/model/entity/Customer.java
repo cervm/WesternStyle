@@ -1,28 +1,32 @@
 package model.entity;
 
-import model.CustomerGroup;
-
 /**
  * Created by rajmu on 17.03.28.
  */
 public class Customer extends ContactDetails {
     private int cid;
-    private CustomerGroup group;
+    private int groupID;
     private String name;
 
-    public Customer(int id, String phone, String email, String address, String postcode, String city, String country, int id1, String name, CustomerGroup group) {
+    public Customer(int id, String phone, String email, String address, String postcode, String city, String country, int id1, String name, int groupID) {
         super(id, phone, email, address, postcode, city, country);
         this.cid = id1;
         this.name = name;
-        this.group = group;
+        this.groupID = groupID;
+    }
+
+    public Customer(String phone, String email, String address, String postcode, String city, String country, int groupID, String name) {
+        super(phone, email, address, postcode, city, country);
+        this.groupID = groupID;
+        this.name = name;
     }
 
     public int getCid() {
         return cid;
     }
 
-    public CustomerGroup getGroup() {
-        return group;
+    public int getGroupID() {
+        return groupID;
     }
 
     public String getName() {
@@ -30,37 +34,37 @@ public class Customer extends ContactDetails {
     }
 
     @Override
-    protected int getContactId() {
+    public int getContactId() {
         return super.getContactId();
     }
 
     @Override
-    protected String getPhone() {
+    public String getPhone() {
         return super.getPhone();
     }
 
     @Override
-    protected String getEmail() {
+    public String getEmail() {
         return super.getEmail();
     }
 
     @Override
-    protected String getAddress() {
+    public String getAddress() {
         return super.getAddress();
     }
 
     @Override
-    protected String getPostcode() {
+    public String getPostcode() {
         return super.getPostcode();
     }
 
     @Override
-    protected String getCity() {
+    public String getCity() {
         return super.getCity();
     }
 
     @Override
-    protected String getCountry() {
+    public String getCountry() {
         return super.getCountry();
     }
 }

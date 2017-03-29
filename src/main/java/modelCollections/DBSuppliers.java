@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by rajmu on 17.03.28.
  */
-public class Suppliers implements IDataAccessObject<Supplier> {
+public class DBSuppliers implements IDataAccessObject<Supplier> {
 
     private List<Supplier> suppliers;
     private DBConnect conn;
