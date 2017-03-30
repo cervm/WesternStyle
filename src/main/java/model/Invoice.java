@@ -1,6 +1,5 @@
 package model;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.sql.Date;
 
@@ -10,7 +9,7 @@ import java.sql.Date;
 public class Invoice {
     private int id;
     private Date paymentDate;
-    double amount;
+    private double amount;
     private ArrayList<Integer> orders;
 
     public Invoice(int id, Date paymentDate, double amount, ArrayList<Integer> orders) {
@@ -37,7 +36,7 @@ public class Invoice {
     }
 
     public void deleteOrder(int orderId) {
-        orders.removeIf(o -> (int) o == orderId);
+        orders.removeIf(o -> o == orderId);
     }
 
     @Override

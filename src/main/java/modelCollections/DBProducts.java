@@ -11,14 +11,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Products Data Access Object
  */
 public class DBProducts implements IDataAccessObject<Product> {
-    private LinkedList<Product> products;
+    private ArrayList<Product> products;
     private DBConnect dbConnect;
 
     /**
@@ -29,7 +29,7 @@ public class DBProducts implements IDataAccessObject<Product> {
      */
     @Override
     public List<Product> getAll() throws ModelSyncException {
-        products = new LinkedList<>();
+        products = new ArrayList<>();
         try {
             dbConnect = new DBConnect();
             ResultSet rs = dbConnect.getFromDataBase("SELECT * FROM products");
@@ -59,7 +59,7 @@ public class DBProducts implements IDataAccessObject<Product> {
      * @throws ModelSyncException connection or SQL exception
      */
     public List<Product> getByCategory(Category category) throws ModelSyncException {
-        List<Product> products = new LinkedList<>();
+        List<Product> products = new ArrayList<>();
         try {
             dbConnect = new DBConnect();
             Statement statement = dbConnect.getConnection().createStatement();
