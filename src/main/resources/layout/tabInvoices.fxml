@@ -50,11 +50,16 @@
                </GridPane.margin></JFXButton>
             <TableView fx:id="table_invoiceItems" GridPane.columnSpan="3" GridPane.rowIndex="4">
                <columns>
-                  <TableColumn />
-                  <TableColumn />
+                  <TableColumn fx:id="oidCol" prefWidth="75.0" text="ID"/>
+                  <TableColumn fx:id="orderDateCol" prefWidth="75.0" text="Order Date"/>
+                  <TableColumn fx:id="deliveryDateCol" prefWidth="75.0" text="Delivery Date"/>
+                  <TableColumn fx:id="oamountCol" prefWidth="75.0" text="Amount"/>
+                  <TableColumn fx:id="statusCol" prefWidth="75.0" text="Delivered"/>
+                  <TableColumn fx:id="customerCol" prefWidth="75.0" text="Customer ID"/>
                </columns>
             </TableView>
-            <TableView fx:id="table_invoices" GridPane.columnSpan="3" GridPane.rowIndex="2">
+            <TableView fx:id="table_invoices" onMouseClicked="#tableInvoicesOnMouseClicked" GridPane.columnSpan="3"
+                       GridPane.rowIndex="2">
                <columns>
                   <TableColumn fx:id="idCol" prefWidth="75.0" text="ID"/>
                   <TableColumn fx:id="paymentCol" prefWidth="75.0" text="Payment Date"/>
