@@ -76,7 +76,7 @@ public class DBCustomersTest {
     @Test
     public void updateMultiple() throws Exception {
         String phone = "721312709";
-        String city = "Zbąszynek";
+        String city = "Zbonszynek";
         customers.load();
 
         Customer c = customers.getById(21);

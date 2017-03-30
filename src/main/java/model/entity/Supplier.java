@@ -11,6 +11,11 @@ public class Supplier extends ContactDetails {
         setCompanyRegNo(companyRegNo);
     }
 
+    public Supplier(String name, String phone, String email, String address, String postcode, String city, String country, String companyRegNo) {
+        super(name, phone, email, address, postcode, city, country);
+        this.companyRegNo = companyRegNo;
+    }
+
     @Override
     public int getId() {
         return super.getId();
