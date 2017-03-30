@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Ondřej Soukup on 30.03.2017.
  */
-public class tabGroupsController implements Initializable {
+public class TabGroupsController implements Initializable {
 
     @FXML
     public JFXTreeTableView table_groups;

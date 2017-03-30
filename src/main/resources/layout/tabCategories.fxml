@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Text?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.tabCategoriesController"
+            fx:controller="controller.TabCategoriesController"
             prefHeight="200.0" prefWidth="400.0">
     <center>
     <Text>Categories tab :]]]</Text>
