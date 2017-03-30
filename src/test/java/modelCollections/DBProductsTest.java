@@ -38,7 +38,7 @@ public class DBProductsTest {
         int initialSize = list.size();
 
         // Create new object
-        Product temp = new Product(5, "Product name", "DK", "Description", 100, 150, 50);
+        Product temp = new Product(5, "Product name", "DK", "Description", 100, 150, 50, 1);
         temp = products.create(temp);
         int tempId = temp.getId();
 

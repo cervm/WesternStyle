@@ -20,15 +20,14 @@ import java.util.List;
 public class DBProducts implements IDataAccessObject<Product> {
     private ArrayList<Product> products;
     private DBConnect dbConnect;
+    private boolean isLoaded;
 
-    /**
-     * Method to retrieve all products from the database
-     *
-     * @return all products in the database
-     * @throws ModelSyncException connection or SQL exception
-     */
-    @Override
-    public List<Product> getAll() throws ModelSyncException {
+    public DBProducts() {
+        products = new ArrayList<>();
+        isLoaded = false;
+    }
+
+    void load() throws ModelSyncException {
         products = new ArrayList<>();
         try {
             dbConnect = new DBConnect();
@@ -47,6 +46,19 @@ public class DBProducts implements IDataAccessObject<Product> {
             }
         } catch (ConnectionException | SQLException e) {
             throw new ModelSyncException("Could not load products.", e);
+        }
+    }
+
+    /**
+     * Method to retrieve all products from the database
+     *
+     * @return all products in the database
+     * @throws ModelSyncException connection or SQL exception
+     */
+    @Override
+    public List<Product> getAll() throws ModelSyncException {
+        if (!isLoaded) {
+            load();
         }
         return products;
     }
@@ -127,21 +139,30 @@ public class DBProducts implements IDataAccessObject<Product> {
     public Product create(Product product) throws ModelSyncException {
         try {
             dbConnect = new DBConnect();
-            PreparedStatement preparedStatement = dbConnect.getConnection().prepareStatement(
-                    "INSERT INTO [products] ([name], [cost_price], [sales_price], [rent_price], [country_code], [min_stock], [description])\n" +
-                            "VALUES (?, ?, ?, ?, ?, ?, ?);"
-            );
-            preparedStatement.setString(1, product.getName());
-            preparedStatement.setDouble(2, product.getCostPrice());
-            preparedStatement.setDouble(3, product.getSalesPrice());
-            preparedStatement.setDouble(4, product.getRentPrice());
-            preparedStatement.setString(5, product.getCountryOrigin());
-            preparedStatement.setInt(6, product.getMinStock());
-            preparedStatement.setString(7, product.getDescription());
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
+
+            String productQuery = "INSERT INTO [products] ([name], [cost_price], [sales_price], [rent_price], [country_code], [min_stock], [description], [supplier_id]) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+            PreparedStatement stmt = dbConnect.getConnection().prepareStatement(productQuery, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, product.getName());
+            stmt.setDouble(2, product.getCostPrice());
+            stmt.setDouble(3, product.getSalesPrice());
+            stmt.setDouble(4, product.getRentPrice());
+            stmt.setString(5, product.getCountryOrigin());
+            stmt.setInt(6, product.getMinStock());
+            stmt.setString(7, product.getDescription());
+            stmt.setInt(8, product.getSupplierId());
+            stmt.executeUpdate();
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    product.setId(generatedKeys.getInt(1));
+                } else {
+                    throw new ModelSyncException("Creating contact details failed. No ID retrieved!");
+                }
+            }
+            stmt.close();
         } catch (ConnectionException | SQLException e) {
             throw new ModelSyncException("Could not create the product.", e);
+        } finally {
+            products.add(product);
         }
         return product;
     }
@@ -183,7 +204,7 @@ public class DBProducts implements IDataAccessObject<Product> {
      * @param product product to be deleted
      */
     @Override
-    public void delete(Product product) {
+    public void delete(Product product) throws ModelSyncException {
         try {
             dbConnect = new DBConnect();
             PreparedStatement stmt = dbConnect.getConnection().prepareStatement(
@@ -191,8 +212,9 @@ public class DBProducts implements IDataAccessObject<Product> {
                             "WHERE id = ?;"
             );
             stmt.setInt(1, product.getId());
+            stmt.execute();
         } catch (ConnectionException | SQLException e) {
-            e.printStackTrace();
+            throw new ModelSyncException("Could not delete the product!", e);
         } finally {
             products.removeIf(p -> p.getId() == product.getId());
         }
