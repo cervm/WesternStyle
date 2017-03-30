@@ -1,29 +1,53 @@
 package modelCollections;
 
 import model.Product;
-import model.connection.DBConnect;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 /**
- * Created by rajmu on 17.03.29.
+ * Created by rajmu on 17.03.30.
  */
 public class DBProductsTest {
-    private DBProducts products;
+    private static DBProducts dbProducts;
 
-    @Before
-    public void setUp() throws Exception {
-        products = new DBProducts();
+    @BeforeClass
+    public static void setUp() throws Exception {
+        dbProducts = new DBProducts();
     }
 
     @Test
-    public void getAllTest() throws Exception {
-        List<Product> p = products.getAll();
-        assertNotEquals("Empty array or connection failed", 0, p.size());
+    public void getAll() throws Exception {
+        List<Product> p = dbProducts.getAll();
+        assertNotEquals(0, p.size());
+    }
+
+    @Test
+    public void getById() throws Exception {
+        Product p = dbProducts.getById(10);
+        assertEquals("ad", p.getName());
+    }
+
+    @Test
+    public void createDelete() throws Exception {
+        List<Product> c = dbProducts.getAll();
+        int numOfRows = c.size();
+        Product temp = new Product() //TODO: needs to be finished
+        temp = dbProducts.create(temp);
+        System.out.println("The id is: " + temp.getId());
+        c = dbProducts.getAll();
+
+        int size = c.size();
+        dbProducts.delete(temp);
+        assertNotEquals("Didn't create a new row", size, numOfRows);
+    }
+
+    @Test
+    public void update() throws Exception {
+
     }
 }
