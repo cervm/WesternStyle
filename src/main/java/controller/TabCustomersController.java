@@ -1,5 +1,7 @@
 package controller;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -26,6 +28,20 @@ public class TabCustomersController implements Initializable{
     public TableColumn nameCol;
     @FXML
     public TableColumn emailCol;
+    @FXML
+    public JFXTextField tf_customers_search;
+    @FXML
+    public JFXButton btn_customers_search;
+    @FXML
+    public JFXButton btn_customers_add;
+    @FXML
+    public JFXButton btn_customers_edit;
+    @FXML
+    public JFXButton btn_customers_delete;
+    @FXML
+    public JFXButton btn_customers_changeCat;
+    @FXML
+    public JFXButton btn_customers_assignCat;
 
     private DBCustomers dbCustomers;
     ObservableList<Customer> customers;
