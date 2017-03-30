@@ -35,16 +35,6 @@ public class Customer extends ContactDetails {
     }
 
     @Override
-    public int getContactId() {
-        return super.getContactId();
-    }
-
-    @Override
-    public void setContactId(int id) {
-        super.setContactId(id);
-    }
-
-    @Override
     public String getPhone() {
         return super.getPhone();
     }

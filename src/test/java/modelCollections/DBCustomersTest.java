@@ -50,11 +50,12 @@ public class DBCustomersTest {
         int numOfRows = c.size();
         Customer temp = new Customer("test", "tefgst", "test1", "test", "test", "test", "PL", 1);
         temp = customers.create(temp);
+        System.out.println("The id is: " + temp.getId());
         c = customers.getAll();
 
+        int size = c.size();
         customers.delete(temp);
-        assertNotEquals("Didn't create a new row", c.size(), numOfRows);
-
+        assertNotEquals("Didn't create a new row", size, numOfRows);
     }
 
     @Test

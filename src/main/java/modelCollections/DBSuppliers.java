@@ -9,6 +9,7 @@ import model.exception.ModelSyncException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +19,12 @@ import java.util.List;
 public class DBSuppliers implements IDataAccessObject<Supplier> {
 
     private List<Supplier> suppliers;
-    private DBConnect conn;
+    private DBConnect dbConnect;
     private boolean isLoaded;
 
-    public DBSuppliers() throws ModelSyncException {
+    private static final String SELECT_CONTACT_ID = "(SELECT [contact_detail_id] FROM customers WHERE [id] = ?)";
+
+    DBSuppliers() throws ModelSyncException {
         suppliers = new ArrayList<>();
         isLoaded = false;
     }
@@ -29,11 +32,11 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
     private void load() throws ModelSyncException {
         suppliers = new ArrayList<>();
         try {
-            conn = new DBConnect();
+            dbConnect = new DBConnect();
             String query = "SELECT s.id, name, phone, email, address, postcode, city, country_code, co_reg_no\n" +
                     "FROM suppliers AS s\n" +
                     "INNER JOIN contact_details AS cd ON s.contact_detail_id = cd.id;";
-            ResultSet rs = conn.getFromDataBase(query);
+            ResultSet rs = dbConnect.getFromDataBase(query);
             while (rs.next()) {
                 suppliers.add(new Supplier(
                         rs.getInt("id"),
@@ -88,28 +91,43 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
     @Override
     public Supplier create(Supplier supplier) throws ModelSyncException {
         try {
-            conn = new DBConnect();
-            String contactQuery = "INSERT INTO [contact_details] ([phone], [email], [address], [postcode], [city], [country_code]) VALUES (?,?,?,?,?,?);";
-            PreparedStatement contactPs = conn.getConnection().prepareStatement(contactQuery);
-            contactPs.setString(2, supplier.getPhone());
-            contactPs.setString(3, supplier.getEmail());
-            contactPs.setString(4, supplier.getAddress());
-            contactPs.setString(5, supplier.getPostcode());
-            contactPs.setString(6, supplier.getCountry());
-            conn.uploadSafe(contactPs);
-            try (ResultSet generatedKeys = contactPs.getGeneratedKeys()) {
+            dbConnect = new DBConnect();
+
+            //creating contact details record
+            String contactQuery = "INSERT INTO [contact_details] ([name], [phone], [email], [address], [postcode], [city], [country_code])\n" +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?);";
+            PreparedStatement stmt = dbConnect.getConnection().prepareStatement(contactQuery, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, supplier.getName());
+            stmt.setString(2, supplier.getPhone());
+            stmt.setString(3, supplier.getEmail());
+            stmt.setString(4, supplier.getAddress());
+            stmt.setString(5, supplier.getPostcode());
+            stmt.setString(6, supplier.getCountry());
+
+            stmt.executeUpdate();
+
+            int contactId;
+            //fetching contact details data
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    supplier.setContactId(generatedKeys.getInt("id"));
+                    contactId = generatedKeys.getInt(1);
                 } else {
                     throw new ModelSyncException("Creating contact details failed. No ID retrieved!");
                 }
             }
-            String supplierQuery = "INSERT INTO [customers] ([name], [co_reg_no], [contact_detail_id]) VALUES (?,?,?);";
-            PreparedStatement supplierPs = conn.getConnection().prepareStatement(supplierQuery);
-            supplierPs.setString(1, supplier.getName());
-            supplierPs.setString(2, supplier.getCompanyRegNo());
-            supplierPs.setInt(3, supplier.getContactId());
-            conn.uploadSafe(supplierPs);
+
+            String supplierQuery = "INSERT INTO [suppliers] ([co_reg_no], [contact_detail_id]) VALUES (?,?);";
+            stmt = dbConnect.getConnection().prepareStatement(supplierQuery, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, supplier.getCompanyRegNo());
+            stmt.setInt(2, contactId);
+            stmt.executeUpdate();
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    supplier.setId(generatedKeys.getInt(1));
+                } else {
+                    throw new ModelSyncException("Creating contact details failed. No ID retrieved!");
+                }
+            }
         } catch (ConnectionException | SQLException e) {
             throw new ModelSyncException("Could not load suppliers.", e);
         }
@@ -126,20 +144,24 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
     @Override
     public void update(Supplier supplier) throws ModelSyncException {
         try {
-            conn = new DBConnect();
-            String updateContactQuery = "UPDATE contact_details SET phone = ?, email = ?, address = ?, postcode = ?, country = ? WHERE id = '" + supplier.getContactId() + "'";
-            PreparedStatement updatePs = conn.getConnection().prepareStatement(updateContactQuery);
-            updatePs.setString(1, supplier.getPhone());
-            updatePs.setString(2, supplier.getEmail());
-            updatePs.setString(3, supplier.getAddress());
-            updatePs.setString(4, supplier.getPostcode());
-            updatePs.setString(5, supplier.getCountry());
-            conn.uploadSafe(updatePs);
-            String updateSupplierQuery = "UPDATE suppliers SET name = ?, co_reg_no WHERE id= '" + supplier.getId() + "'";
-            PreparedStatement updateSuppPs = conn.getConnection().prepareStatement(updateSupplierQuery);
-            updateSuppPs.setString(1, supplier.getName());
-            updateSuppPs.setString(2, supplier.getCompanyRegNo());
-            conn.uploadSafe(updateSuppPs);
+            dbConnect = new DBConnect();
+            PreparedStatement updatePs = dbConnect.getConnection().prepareStatement(
+                    "UPDATE [contact_details]\n" +
+                            "SET [phone] = ?, [email] = ?, [address] = ?, [postcode] = ?, [city] = ?, [country_code] = ?\n" +
+                            "WHERE [id] =  " + SELECT_CONTACT_ID + ";"
+            );
+            updatePs.setString(1, supplier.getName());
+            updatePs.setString(2, supplier.getPhone());
+            updatePs.setString(3, supplier.getEmail());
+            updatePs.setString(4, supplier.getAddress());
+            updatePs.setString(5, supplier.getPostcode());
+            updatePs.setString(6, supplier.getCountry());
+            dbConnect.uploadSafe(updatePs);
+            String updateSupplierQuery = "UPDATE suppliers SET co_reg_no = ? WHERE id = ?;";
+            PreparedStatement updateSuppPs = dbConnect.getConnection().prepareStatement(updateSupplierQuery);
+            updateSuppPs.setString(1, supplier.getCompanyRegNo());
+            updateSuppPs.setInt(2, supplier.getId());
+            dbConnect.uploadSafe(updateSuppPs);
         } catch (ConnectionException | SQLException e) {
             throw new ModelSyncException("Could not update the supplier.", e);
         }
@@ -154,11 +176,17 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
     @Override
     public void delete(Supplier supplier) throws ModelSyncException {
         try {
-            conn = new DBConnect();
-            String query = "DELETE [a.*], [b.*] FROM [contact_details] a INNER JOIN [suppliers] b ON [a.id] = [b.contact_detail_id] WHERE [b.id] = '" + supplier.getId() + "' ";
-            conn.upload(query);
-        } catch (ConnectionException e) {
-            throw new ModelSyncException("Could not delete the supplier.", e);
+            dbConnect = new DBConnect();
+            PreparedStatement stmt = dbConnect.getConnection().prepareStatement(
+                    "DELETE FROM [contact_details]\n" +
+                            "WHERE [id] =  " + SELECT_CONTACT_ID + ";"
+            );
+            stmt.setInt(1, supplier.getId());
+            stmt.execute();
+        } catch (ConnectionException | SQLException e) {
+            throw new ModelSyncException("Could not delete the user!", e);
+        } finally {
+            suppliers.removeIf(c -> c.getId() == supplier.getId());
         }
 
     }

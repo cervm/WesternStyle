@@ -28,14 +28,6 @@ public abstract class ContactDetails {
         this.country = country;
     }
 
-    public int getContactId() {
-        return id;
-    }
-
-    public void setContactId(int id) {
-        this.id = id;
-    }
-
     public String getPhone() {
         return phone;
     }
