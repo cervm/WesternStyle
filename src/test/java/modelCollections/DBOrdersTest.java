@@ -45,13 +45,14 @@ public class DBOrdersTest {
     public void createDelete() throws Exception {
         List<Order> o = dbOrders.getAll();
         int numOfRows = o.size();
-        Order order = new Order(1, new Date(134275623), new Date(143275623), 2, false);
+        Order order = new Order(1, new Date(134275623), new Date(143275623), 2, false, 21);
         order = dbOrders.create(order);
         System.out.println("The order ID: " + order.getId());
         o = dbOrders.getAll();
 
         int size = o.size();
         dbOrders.delete(order);
+        System.out.println("Before: " + numOfRows + "\n After" + size);
         assertNotEquals(numOfRows, size);
     }
 
