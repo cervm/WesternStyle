@@ -44,7 +44,7 @@ public class TabProductsController implements Initializable {
     @FXML
     public void showNewProductDialog() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/src/main/resources/layout/addProduct.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/layout/addProduct.fxml"));
             Stage newProductDialog = new Stage();
             newProductDialog.setTitle("New product");
             newProductDialog.setScene(new Scene(root));
