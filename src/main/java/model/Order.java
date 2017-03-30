@@ -3,7 +3,7 @@ package model;
 import model.entity.Customer;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Order Entity
@@ -29,6 +29,14 @@ public class Order {
 
     public Order(int id, int invoiceId, Date orderDate, Date deliveryDate, double amount, boolean deliveryStatus) {
         this.id = id;
+        this.invoiceId = invoiceId;
+        this.orderDate = orderDate;
+        this.deliveryDate = deliveryDate;
+        this.amount = amount;
+        this.deliveryStatus = deliveryStatus;
+    }
+
+    public Order(int invoiceId, Date orderDate, Date deliveryDate, double amount, boolean deliveryStatus) {
         this.invoiceId = invoiceId;
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;

@@ -29,7 +29,7 @@ public class DBOrders implements IDataAccessObject<Order> {
         isLoaded = false;
     }
 
-    private void load() throws ModelSyncException {
+    public void load() throws ModelSyncException {
         //doesn't instantiate products, variants or the customer at this point
         orders = new ArrayList<>();
         try {

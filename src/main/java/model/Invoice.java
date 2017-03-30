@@ -12,6 +12,11 @@ public class Invoice {
     private double amount;
     private ArrayList<Integer> orders;
 
+    public Invoice(Date paymentDate, double amount) {
+        this.paymentDate = paymentDate;
+        this.amount = amount;
+    }
+
     public Invoice(int id, Date paymentDate, double amount, ArrayList<Integer> orders) {
         this.id = id;
         this.paymentDate = paymentDate;
@@ -21,6 +26,10 @@ public class Invoice {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Date getPaymentDate() {
