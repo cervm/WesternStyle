@@ -50,16 +50,28 @@ public class DBCustomersTest {
 
     @Test
     public void createDelete() throws Exception {
+        // Initial list size
         List<Customer> c = customers.getAll();
-        int numOfRows = c.size();
+        int initialSize = c.size();
+
+        // Create new object
         Customer temp = new Customer("test", "tefgst", "test1", "test", "test", "test", "PL", 1);
         temp = customers.create(temp);
-        System.out.println("The id is: " + temp.getId());
-        c = customers.getAll();
+        int tempId = temp.getId();
 
-        int size = c.size();
+        // Check the list size after creation
+        c = customers.getAll();
+        int creationSize = c.size();
+
+        // Delete the object
         customers.delete(temp);
-        assertNotEquals("Didn't create a new row", size, numOfRows);
+
+        // Check the list size after deletion
+        c = customers.getAll();
+        int deletionSize = c.size();
+
+        assertNotEquals("The customer not created", creationSize, initialSize);
+        assertEquals("The customer not deleted. The id is " + tempId, deletionSize, initialSize);
     }
 
     @Test

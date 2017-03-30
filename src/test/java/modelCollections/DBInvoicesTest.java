@@ -46,28 +46,34 @@ public class DBInvoicesTest {
     }
 
     @Test
-    public void create() throws Exception {
+    public void createDelete() throws Exception {
+        // Initial list size
         List<Invoice> i = invoices.getAll();
-        int numOfRows = i.size();
+        int initialSize = i.size();
+
+        // Create new object
         Invoice temp = new Invoice(new Date(Calendar.getInstance().getTimeInMillis()), 100);
         temp = invoices.create(temp);
-        System.out.println("The id is: " + temp.getId());
-        i = invoices.getAll();
+        int tempId = temp.getId();
 
-        int size = i.size();
+        // Check the list size after creation
+        i = invoices.getAll();
+        int creationSize = i.size();
+
+        // Delete the object
         invoices.delete(temp);
-        assertNotEquals("Didn't create a new row", size, numOfRows);
+
+        // Check the list size after deletion
+        i = invoices.getAll();
+        int deletionSize = i.size();
+
+        assertNotEquals("The invoice not created", creationSize, initialSize);
+        assertEquals("The invoice not deleted. The id is " + tempId, deletionSize, initialSize);
     }
 
     @Ignore("Not implemented")
     @Test
     public void update() throws Exception {
-
-    }
-
-    @Ignore("Not implemented")
-    @Test
-    public void delete() throws Exception {
 
     }
 
