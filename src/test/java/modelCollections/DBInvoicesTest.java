@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Created by Rajmund Staniek on 30-Mar-17.
+ * Tests for Invoices DAO
  */
 public class DBInvoicesTest {
     private static DBInvoices invoices;

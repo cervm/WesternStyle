@@ -9,7 +9,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Created by rajmu on 17.03.30.
+ * Tests for Products DAO
  */
 public class DBProductsTest {
     private static DBProducts products;
