@@ -49,7 +49,7 @@ public class DBCustomersTest {
     }
 
     @Test
-    public void create() throws Exception {
+    public void createDelete() throws Exception {
         List<Customer> c = customers.getAll();
         int numOfRows = c.size();
         Customer temp = new Customer("test", "tefgst", "test1", "test", "test", "test", "PL", 1);
@@ -62,16 +62,15 @@ public class DBCustomersTest {
         assertNotEquals("Didn't create a new row", size, numOfRows);
     }
 
-    @Ignore("Not implemented")
     @Test
     public void update() throws Exception {
-
-    }
-
-    @Ignore("Not implemented")
-    @Test
-    public void delete() throws Exception {
-
+        String street = "308 Negro Arroyo Lane";
+        customers.load();
+        Customer c = customers.getById(24);
+        c.setAddress(street);
+        customers.update(c);
+        customers.load();
+        assertEquals(street, customers.getById(24).getAddress());
     }
 
     @Test
