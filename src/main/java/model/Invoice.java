@@ -1,5 +1,6 @@
 package model;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.sql.Date;
 
@@ -7,17 +8,16 @@ import java.sql.Date;
  * Invoice Entity
  */
 public class Invoice {
-    private int id, orderId;
+    private int id;
     private Date paymentDate;
     double amount;
     private ArrayList<Integer> orders;
 
-    public Invoice(int id, Date paymentDate, double amount, int orderId) {
+    public Invoice(int id, Date paymentDate, double amount, ArrayList<Integer> orders) {
         this.id = id;
         this.paymentDate = paymentDate;
         this.amount = amount;
-        orders = new ArrayList<>();
-        orders.add(orderId);
+        this.orders = orders;
     }
 
     public int getId() {
@@ -40,4 +40,14 @@ public class Invoice {
         orders.removeIf(o -> (int) o == orderId);
     }
 
+    @Override
+    public String toString() {
+        String s = "[INVOICE]: id=" + id + " ," +
+                " paymentDate=" + paymentDate.toString() + " ," +
+                " amount=" + amount + " , ordersIDs=";
+        for (int i : orders) {
+            s += i + ",";
+        }
+        return s;
+    }
 }

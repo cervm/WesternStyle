@@ -10,6 +10,7 @@ import model.exception.ModelSyncException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
  * Invoices Data Access Object
  */
 public class DBInvoices implements IDataAccessObject<Invoice> {
-    private LinkedList<Invoice> invoices;
+    private ArrayList<Invoice> invoices;
     private DBConnect dbConnect;
     private boolean isLoaded;
 
@@ -26,23 +27,29 @@ public class DBInvoices implements IDataAccessObject<Invoice> {
     }
 
     public void load() throws ModelSyncException {
-        invoices = new LinkedList<>();
+        invoices = new ArrayList<>();
         try {
             dbConnect = new DBConnect();
             ResultSet rs = dbConnect.getFromDataBase("SELECT * FROM invoices");
-            while (rs.next())
+            while (rs.next()) {
+                ArrayList<Integer> orders = new ArrayList<>();
+                ResultSet orderResults = dbConnect.getFromDataBase("SELECT * FROM orders AS o INNER JOIN invoices AS i ON i.id = o.invoice_id;");
+                while (orderResults.next()) {
+                    orders.add(orderResults.getInt("id"));
+                }
                 invoices.add(new Invoice(rs.getInt("id"),
                         rs.getDate("payment_date"),
                         rs.getInt("amount"),
-                        rs.getInt("order_id")));
-            isLoaded = true;
+                        orders));
+                isLoaded = true;
+            }
         } catch (ConnectionException | SQLException e) {
             throw new ModelSyncException("Could not load invoices.", e);
         }
     }
 
     @Override
-    public List<Invoice> getAll() throws ModelSyncException {
+    public ArrayList<Invoice> getAll() throws ModelSyncException {
         if(!isLoaded){
             load();
         }
@@ -55,10 +62,16 @@ public class DBInvoices implements IDataAccessObject<Invoice> {
         try {
             dbConnect = new DBConnect();
             ResultSet rs = dbConnect.getFromDataBase("SELECT * FROM invoice WHERE id = " + id);
+            rs.next();
+            ResultSet orderResults = dbConnect.getFromDataBase("SELECT * FROM orders AS o INNER JOIN invoices AS i ON i.id = o.invoice_id;");
+            ArrayList<Integer> orders = new ArrayList<>();
+            while (orderResults.next()) {
+                orders.add(orderResults.getInt("id"));
+            }
             invoice = new Invoice(rs.getInt("id"),
                     rs.getDate("payment_date"),
                     rs.getInt("amount"),
-                    rs.getInt("order_id"));
+                    orders);
         } catch (ConnectionException | SQLException e) {
             throw new ModelSyncException("Could not load invoices.", e);
         }

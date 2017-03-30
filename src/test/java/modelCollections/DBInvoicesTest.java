@@ -31,6 +31,10 @@ public class DBInvoicesTest {
         ArrayList<Invoice> list = (ArrayList<Invoice>) f.get(dbInvoices);
 
         assertNotEquals("Empty table or fetching error", 0, list.size());
+        ArrayList<Invoice> arrayList = dbInvoices.getAll();
+        for (Invoice i : arrayList) {
+            System.out.println(i.toString());
+        }
     }
 
     @Test
