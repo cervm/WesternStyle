@@ -3,8 +3,18 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import model.CustomerGroup;
+import model.entity.Customer;
+import model.exception.ModelSyncException;
+import modelCollections.DBCustomers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,21 +25,21 @@ import java.util.ResourceBundle;
 public class TabGroupsController implements Initializable {
 
     @FXML
-    public JFXTreeTableView table_groups;
+    public TableView table_groups;
     @FXML
-    public JFXTreeTableView table_members;
+    public TableView table_members;
     @FXML
-    public JFXTreeTableColumn groups_name;
+    public TableColumn groups_name;
     @FXML
-    public JFXTreeTableColumn groups_discount;
+    public TableColumn groups_discount;
     @FXML
-    public JFXTreeTableColumn members_name;
+    public TableColumn members_name;
     @FXML
-    public JFXTreeTableColumn members_city;
+    public TableColumn members_city;
     @FXML
-    public JFXTreeTableColumn members_email;
+    public TableColumn members_email;
     @FXML
-    public JFXTreeTableColumn members_phone;
+    public TableColumn members_phone;
     @FXML
     public JFXButton btn_groups_create;
     @FXML
@@ -43,8 +53,21 @@ public class TabGroupsController implements Initializable {
     @FXML
     public JFXButton btn_members_delete;
 
+    private DBCustomers dbCustomers;
+    ObservableList<Customer> customers;
+    ObservableList<CustomerGroup> groups;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        try {
+            dbCustomers = new DBCustomers();
+            customers = FXCollections.observableArrayList(dbCustomers.getAll());
+            groups = FXCollections.observableArrayList(dbCustomers.getCustomerGroups());
+        } catch (ModelSyncException e) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setHeaderText("Error occured while initializing the customer connection component.");
+            a.setContentText(e.getMessage());
+        }
+        table_groups.setItems(groups);
     }
 }
