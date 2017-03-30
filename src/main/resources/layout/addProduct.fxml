@@ -132,7 +132,7 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </JFXButton>
-            <JFXButton maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #ffffff; -fx-border-width: 0.8;" text="Cancel" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+            <JFXButton fx:id="btn_products_cancel" onAction="#closeDialog" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #ffffff; -fx-border-width: 0.8;" text="Cancel" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>

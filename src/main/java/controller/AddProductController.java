@@ -3,8 +3,10 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
 import org.controlsfx.control.CheckTreeView;
 
 import java.net.URL;
@@ -45,5 +47,11 @@ public class AddProductController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    @FXML
+    public void closeDialog(ActionEvent actionEvent) {
+        Stage stage = (Stage) btn_products_cancel.getScene().getWindow();
+        stage.close();
     }
 }
