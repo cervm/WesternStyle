@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Ondřej Soukup on 30.03.2017.
  */
-public class tabInvoicesController implements Initializable {
+public class TabInvoicesController implements Initializable {
 
     @FXML
     public JFXButton btn_test;

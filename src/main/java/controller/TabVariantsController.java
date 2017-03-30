@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Ondřej Soukup on 30.03.2017.
  */
-public class tabVariantsController implements Initializable {
+public class TabVariantsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
