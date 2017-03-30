@@ -1,17 +1,16 @@
 package modelCollections;
 
 import model.Order;
-import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Created by Rajmund Staniek on 30-Mar-17.
@@ -68,6 +67,12 @@ public class DBOrdersTest {
 
     @Test
     public void update() throws Exception {
-
+        boolean status = true;
+        dbOrders.load();
+        Order order = dbOrders.getById(29);
+        order.setDeliveryStatus(status);
+        dbOrders.update(order);
+        dbOrders.load();
+        assertEquals(status, dbOrders.getById(29).getDeliveryStatus());
     }
 }

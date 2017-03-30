@@ -1,7 +1,7 @@
 package model;
 
-import java.util.ArrayList;
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  * Order Entity
@@ -85,5 +85,33 @@ public class Order {
 
     public void removeItem(BasketItem item) {
         items.removeIf(o -> o == item);
+    }
+
+    public void setInvoiceId(int invoiceId) {
+        this.invoiceId = invoiceId;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void setDeliveryStatus(boolean deliveryStatus) {
+        this.deliveryStatus = deliveryStatus;
+    }
+
+    public void setItems(ArrayList<BasketItem> items) {
+        this.items = items;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 }

@@ -2,17 +2,17 @@ package modelCollections;
 
 import model.CustomerGroup;
 import model.entity.Customer;
+import model.exception.ModelSyncException;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by rajmu on 17.03.29.
@@ -117,5 +117,27 @@ public class DBCustomersTest {
         customers.assignToGroup(c, customers.getCustomerGroups().get(1));
 
         assertEquals(newGroupID, c.getGroupID());
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void getByIDNoSuchElementExceptionTest() throws Exception {
+        Customer c = customers.getById(-1);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void updateExceptionTest() throws Exception {
+        customers.update(null);
+    }
+
+    @Test(expected = ModelSyncException.class)
+    public void updateInvalidObjectTest() throws Exception {
+        Customer c = new Customer("Richard Cheese", "dfgsdgsdfgsdfgsdfgsdfg", "1", null, null, null, "DA", 1);
+        customers.update(c);
+    }
+
+    @Test(expected = ModelSyncException.class)
+    public void createInvalidObjectTest() throws Exception {
+        Customer c = new Customer("Richard Cheese", "dfgsdgsdfgsdfgsdfgsdfg", "1", null, null, null, "DA", 1);
+        customers.create(c);
     }
 }
