@@ -22,7 +22,7 @@ public class DBCustomers implements IDataAccessObject<Customer> {
     private DBConnect dbConnect;
     private boolean isLoaded;
 
-    DBCustomers() throws ModelSyncException {
+    public DBCustomers() throws ModelSyncException {
         customers = new ArrayList<>();
         isLoaded = false;
     }
