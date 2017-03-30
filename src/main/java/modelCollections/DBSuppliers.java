@@ -74,9 +74,6 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
         if (!isLoaded) {
             load();
         }
-        if (id >= suppliers.size() || id < 0) {
-            throw new ModelSyncException("ID is out of range!");
-        }
         return suppliers.stream().filter(o -> o.getId() == id).findFirst().get();
     }
 

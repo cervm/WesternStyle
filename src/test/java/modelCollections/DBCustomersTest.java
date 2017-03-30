@@ -74,6 +74,24 @@ public class DBCustomersTest {
     }
 
     @Test
+    public void updateMultiple() throws Exception {
+        String phone = "721312709";
+        String city = "Zbąszynek";
+        customers.load();
+
+        Customer c = customers.getById(21);
+        c.setPhone(phone);
+        c.setCity(city);
+
+        customers.update(c);
+
+        DBCustomers c2 = new DBCustomers();
+
+        assertEquals(phone, c2.getById(21).getPhone());
+        assertEquals(city, c2.getById(21).getCity());
+    }
+
+    @Test
     public void getCustomerGroupsTest() throws Exception {
         ArrayList<CustomerGroup> groups = customers.getCustomerGroups();
         assertNotEquals(0, groups.size());
