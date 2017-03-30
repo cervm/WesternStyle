@@ -84,25 +84,31 @@ public class DBOrders implements IDataAccessObject<Order> {
     }
 
     @Override
-    public Order create(Order order) {
+    public Order create(Order order) throws ModelSyncException {
         //creates the row in the orders table
         try {
             dbConnect = new DBConnect();
-            PreparedStatement preparedStatement = dbConnect.getConnection().prepareStatement(
-                    "INSERT INTO [orders] ([order_date], [amount], [delivery_status], [invoice_id], [customer_id],[delivery_date]) VALUES (?, ?, ?, ?, ?, ?);"
-            );
-            preparedStatement.setDate(1, (Date) order.getOrderDate());
+            String orderQuery = "INSERT INTO [orders] ([order_date], [amount], [delivery_status], [invoice_id], [customer_id],[delivery_date]) VALUES (?, ?, ?, ?, ?, ?);";
+            PreparedStatement preparedStatement = dbConnect.getConnection().prepareStatement(orderQuery, PreparedStatement.RETURN_GENERATED_KEYS);
+            preparedStatement.setDate(1, order.getOrderDate());
             preparedStatement.setDouble(2, order.getAmount());
             preparedStatement.setBoolean(3, order.getDeliveryStatus());
             preparedStatement.setInt(4, order.getInvoiceId());
             preparedStatement.setInt(5, order.getCustomerId());
-            preparedStatement.setDate(6, (Date) order.getDeliveryDate());
+            preparedStatement.setDate(6, order.getDeliveryDate());
             preparedStatement.executeUpdate();
-            preparedStatement.close();
+
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    order.setId(generatedKeys.getInt(1));
+                } else {
+                    throw new ModelSyncException("Creating order failed. No ID retrieved!");
+                }
+            }
         } catch (ConnectionException | SQLException e) {
             e.printStackTrace();
         } finally {
-        orders.add(order);
+            orders.add(order);
     }
 
         //iterates through all of the basketItems of the order and adds them to the order_items table
