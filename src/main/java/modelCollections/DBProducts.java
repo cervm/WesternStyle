@@ -1,8 +1,9 @@
 package modelCollections;
 
+import model.Category;
+import model.Product;
 import model.connection.DBConnect;
 import model.connection.IDataAccessObject;
-import model.Product;
 import model.exception.ConnectionException;
 import model.exception.ModelSyncException;
 
@@ -17,11 +18,18 @@ import java.util.List;
  * Products Data Access Object
  */
 public class DBProducts implements IDataAccessObject<Product> {
+    private LinkedList<Product> products;
     private DBConnect dbConnect;
 
+    /**
+     * Method to retrieve all products from the database
+     *
+     * @return all products in the database
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
     public List<Product> getAll() throws ModelSyncException {
-        List<Product> products = new LinkedList<>();
+        products = new LinkedList<>();
         try {
             dbConnect = new DBConnect();
             ResultSet rs = dbConnect.getFromDataBase("SELECT * FROM products");
@@ -43,7 +51,14 @@ public class DBProducts implements IDataAccessObject<Product> {
         return products;
     }
 
-    public List<Product> getByCategory() throws ModelSyncException {
+    /**
+     * Method to retrieve all products from the specified category
+     *
+     * @param category category to search in
+     * @return all products in the category
+     * @throws ModelSyncException connection or SQL exception
+     */
+    public List<Product> getByCategory(Category category) throws ModelSyncException {
         List<Product> products = new LinkedList<>();
         try {
             dbConnect = new DBConnect();
@@ -52,7 +67,7 @@ public class DBProducts implements IDataAccessObject<Product> {
                     "SELECT *\n" +
                             "FROM products AS p\n" +
                             "JOIN product_categories AS c ON c.product_id = p.id\n" +
-                            "WHERE c.id = ?;");
+                            "WHERE c.id = " + category.getCid() + ";");
             while (rs.next()) {
                 products.add(new Product(
                         rs.getInt("id"),
@@ -71,6 +86,13 @@ public class DBProducts implements IDataAccessObject<Product> {
         return products;
     }
 
+    /**
+     * Method to get a product by id
+     *
+     * @param id id of the product
+     * @return product by id
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
     public Product getById(int id) throws ModelSyncException {
         Product product;
@@ -94,13 +116,21 @@ public class DBProducts implements IDataAccessObject<Product> {
         return product;
     }
 
+    /**
+     * Method to persist a product in the database
+     *
+     * @param objects products to be persisted
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
-    public void create(Product... objects) {
-        for (int i = 0; i <= objects.length; i++){
+    public void create(Product... objects) throws ModelSyncException {
+        for (int i = 0; i <= objects.length; i++) {
             try {
                 dbConnect = new DBConnect();
                 PreparedStatement preparedStatement = dbConnect.getConnection().prepareStatement(
-                        "INSERT INTO [products] ([name], [cost_price], [sales_price], [rent_price], [country_code], [min_stock], [description]) VALUES (?, ?, ?, ?, ?, ?, ?); ");
+                        "INSERT INTO [products] ([name], [cost_price], [sales_price], [rent_price], [country_code], [min_stock], [description])\n" +
+                                "VALUES (?, ?, ?, ?, ?, ?, ?);"
+                );
                 preparedStatement.setString(1, objects[i].getName());
                 preparedStatement.setDouble(2, objects[i].getCostPrice());
                 preparedStatement.setDouble(3, objects[i].getSalesPrice());
@@ -111,25 +141,66 @@ public class DBProducts implements IDataAccessObject<Product> {
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
             } catch (ConnectionException | SQLException e) {
-                e.printStackTrace();
+                throw new ModelSyncException("Could not create the product.", e);
             }
         }
 
     }
 
+    /**
+     * Method to update a product in the database
+     *
+     * @param objects products to be updated
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
-    public void update(Product... objects) {
-        for (int i = 0; i <= objects.length; i++){
-
+    public void update(Product... objects) throws ModelSyncException {
+        for (Product object : objects) {
+            try {
+                dbConnect = new DBConnect();
+                PreparedStatement ps = dbConnect.getConnection().prepareStatement(
+                        "UPDATE [products]\n" +
+                                "SET [name]      = ?, [cost_price] = ?, [sales_price] = ?, [rent_price] = ?, [country_code] = ?, [min_stock] = ?,\n" +
+                                "  [description] = ?, [supplier_id] = ?;"
+                );
+                ps.setString(1, object.getName());
+                ps.setDouble(2, object.getCostPrice());
+                ps.setDouble(3, object.getSalesPrice());
+                ps.setDouble(4, object.getRentPrice());
+                ps.setString(5, object.getCountryOrigin());
+                ps.setInt(6, object.getMinStock());
+                ps.setString(7, object.getDescription());
+                ps.setInt(8, 1);
+            } catch (ConnectionException | SQLException e) {
+                throw new ModelSyncException("WARNING! Could not update the product of id [" + object.getId() + "]!", e);
+            } finally {
+                products.removeIf(p -> p.getId() == object.getId());
+                products.add(object);
+            }
         }
-        //TODO: to be implemented
     }
 
+    /**
+     * Method to delete a product from the database
+     *
+     * @param objects products to be deleted
+     */
     @Override
     public void delete(Product... objects) {
-        for (int i = 0; i <= objects.length; i++){
+        for (Product object : objects) {
+            try {
+                dbConnect = new DBConnect();
+                PreparedStatement ps = dbConnect.getConnection().prepareStatement(
+                        "DELETE FROM products\n" +
+                                "WHERE id = ?;"
+                );
+                ps.setInt(1, object.getId());
+            } catch (ConnectionException | SQLException e) {
+                e.printStackTrace();
+            } finally {
+                products.removeIf(p -> p.getId() == object.getId());
+            }
 
         }
-        //TODO: to be implemented
     }
 }

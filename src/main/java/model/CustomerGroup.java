@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Created by rajmu on 17.03.28.
+ * Customer Group Entity
  */
 public class CustomerGroup {
     private int gid;

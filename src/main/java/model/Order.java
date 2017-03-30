@@ -1,10 +1,12 @@
 package model;
 
+import model.entity.Customer;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by Ondřej Soukup on 28.03.2017.
+ * Order Entity
  */
 public class Order {
     private int id, invoiceId;
@@ -12,15 +14,26 @@ public class Order {
     private double amount;
     private boolean deliveryStatus;
     private ArrayList<BasketItem> items;
+    private Customer customer;
 
-    public Order(int id, Date orderDate, double amount, boolean deliveryStatus, Date deliveryDate, int invoiceId, ArrayList<BasketItem> items) {
+    public Order(int id, int invoiceId, Date orderDate, Date deliveryDate, double amount, boolean deliveryStatus, ArrayList<BasketItem> items, Customer customer) {
         this.id = id;
+        this.invoiceId = invoiceId;
         this.orderDate = orderDate;
+        this.deliveryDate = deliveryDate;
         this.amount = amount;
         this.deliveryStatus = deliveryStatus;
-        this.deliveryDate = deliveryDate;
-        this.invoiceId = invoiceId;
         this.items = items;
+        this.customer = customer;
+    }
+
+    public Order(int id, int invoiceId, Date orderDate, Date deliveryDate, double amount, boolean deliveryStatus) {
+        this.id = id;
+        this.invoiceId = invoiceId;
+        this.orderDate = orderDate;
+        this.deliveryDate = deliveryDate;
+        this.amount = amount;
+        this.deliveryStatus = deliveryStatus;
     }
 
     public int getId() {
@@ -45,6 +58,14 @@ public class Order {
 
     public boolean getDeliveryStatus() {
         return deliveryStatus;
+    }
+
+    public ArrayList<BasketItem> getItems() {
+        return items;
+    }
+
+    public Customer getCustomer() {
+        return customer;
     }
 
     public void addItem(BasketItem item) {

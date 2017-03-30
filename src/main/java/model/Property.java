@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Created by jakub on 29/03/2017.
+ * Property Entity
  */
 public class Property {
     private int pid;

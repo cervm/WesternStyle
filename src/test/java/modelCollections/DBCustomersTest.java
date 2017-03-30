@@ -6,7 +6,9 @@ import org.junit.Test;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -28,12 +30,13 @@ public class DBCustomersTest {
         array.setAccessible(true);
         ArrayList<Customer> list = (ArrayList<Customer>) array.get(customers);
 
-        assertTrue(list.size() != 0);
+        assertNotEquals("Empty table or fetching error", 0, list.size());
     }
 
     @Test
     public void getAll() throws Exception {
-
+        List<Customer> c = customers.getAll();
+        assertNotEquals("Empty table or fetching error", 0, c.size());
     }
 
     @Test
@@ -43,7 +46,13 @@ public class DBCustomersTest {
 
     @Test
     public void create() throws Exception {
+        List<Customer> c = customers.getAll();
+        int numOfRows = c.size();
+        Customer temp = new Customer("test", "tefgst", "test1", "test", "test", "test", "PL", 1);
+        customers.create(temp);
+        c = customers.getAll();
 
+        assertNotEquals("Didn't create a new row", c.size(), numOfRows);
     }
 
     @Test

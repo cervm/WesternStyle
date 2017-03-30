@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Created by jakub on 29/03/2017.
+ * Basket Item Entity
  */
 public class BasketItem {
     private Product product;
