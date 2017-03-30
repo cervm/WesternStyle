@@ -43,17 +43,27 @@ public class DBOrdersTest {
 
     @Test
     public void createDelete() throws Exception {
-        List<Order> o = dbOrders.getAll();
-        int numOfRows = o.size();
-        Order order = new Order(1, new Date(134275623), new Date(143275623), 2, false, 21);
-        order = dbOrders.create(order);
-        System.out.println("The order ID: " + order.getId());
-        o = dbOrders.getAll();
+        List<Order> list = dbOrders.getAll();
+        int initialSize = list.size();
 
-        int size = o.size();
-        dbOrders.delete(order);
-        System.out.println("Before: " + numOfRows + "\n After" + size);
-        assertNotEquals(numOfRows, size);
+        // Create new object
+        Order temp = new Order(1, new Date(134275623), new Date(143275623), 2, false, 21);
+        temp = dbOrders.create(temp);
+        int tempId = temp.getId();
+
+        // Check the list size after creation
+        list = dbOrders.getAll();
+        int creationSize = list.size();
+
+        // Delete the object
+        dbOrders.delete(temp);
+
+        // Check the list size after deletion
+        list = dbOrders.getAll();
+        int deletionSize = list.size();
+
+        assertNotEquals("The order not created", creationSize, initialSize);
+        assertEquals("The order not deleted. The id is " + tempId, deletionSize, initialSize);
     }
 
     @Test

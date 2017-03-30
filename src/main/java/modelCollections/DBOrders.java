@@ -101,7 +101,9 @@ public class DBOrders implements IDataAccessObject<Order> {
             preparedStatement.close();
         } catch (ConnectionException | SQLException e) {
             e.printStackTrace();
-        }
+        } finally {
+        orders.add(order);
+    }
 
         //iterates through all of the basketItems of the order and adds them to the order_items table
         /*for (BasketItem item : order.getItems()) {
