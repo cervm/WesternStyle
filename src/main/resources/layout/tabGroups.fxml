@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TabGroupsController">
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TabGroupsController">
    <center>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -28,11 +28,14 @@
             <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TableView fx:id="table_groups" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+            <TableView fx:id="table_groups" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="390.0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
              <columns>
-                 <TableColumn fx:id="groups_name" prefWidth="208.99998474121094" text="Group name" />
-                 <TableColumn fx:id="groups_discount" prefWidth="219.0" text="Discount" />
+                 <TableColumn fx:id="groups_name" prefWidth="194.0" text="Group name" />
+                 <TableColumn fx:id="groups_discount" prefWidth="194.0" text="Discount" />
              </columns>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
             </TableView>
             <TableView fx:id="table_members" prefHeight="485.0" prefWidth="401.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                 <columns>
