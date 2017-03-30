@@ -118,9 +118,6 @@ public class DBConnect {
         try {
             int affectedRows = stmt.executeUpdate();
             con.close();
-            if (affectedRows == 0) {
-                throw new ConnectionException("Update failed for an unknown reason!");
-            }
         } catch (SQLException ex) {
             throw new ConnectionException("WARNING! exception occured while uploading a query to the server.", ex);
         }
