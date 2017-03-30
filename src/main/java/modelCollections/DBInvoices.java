@@ -40,11 +40,10 @@ public class DBInvoices implements IDataAccessObject<Invoice> {
         try{
             dbConnect = new DBConnect();
             ResultSet rs = dbConnect.getFromDataBase("SELECT * FROM invoice WHERE id = " + id);
-            while(rs.next())
-                invoice = new Invoice(rs.getInt("id"),
-                        rs.getDate("payment_date"),
-                        rs.getInt("amount"),
-                        rs.getInt("order_id"));
+            invoice = new Invoice(rs.getInt("id"),
+                                rs.getDate("payment_date"),
+                                rs.getInt("amount"),
+                                rs.getInt("order_id"));
         } catch (ConnectionException | SQLException e) {
             throw new ModelSyncException("Could not load invoices.", e);
         }
