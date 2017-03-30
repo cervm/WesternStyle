@@ -16,15 +16,15 @@
    <center>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="452.0" minWidth="10.0" prefWidth="450.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="877.0" minWidth="10.0" prefWidth="60.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="877.0" minWidth="10.0" prefWidth="451.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="7000.0" minWidth="10.0" prefWidth="450.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="877.0" minWidth="10.0" prefWidth="450.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints maxHeight="294.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="500.0" minHeight="10.0" prefHeight="532.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="4000.0" minHeight="400.0" prefHeight="532.0" vgrow="SOMETIMES" />
 
-            <RowConstraints maxHeight="294.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <JFXTreeTableView fx:id="table_groups" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
@@ -45,7 +45,7 @@
             <Pane opacity="0.75" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #000000;" GridPane.rowIndex="2" />
             <Pane opacity="0.75" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #000000;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Pane opacity="0.75" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #000000;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <JFXButton fx:id="btn_groups_edit" prefWidth="90.0" mnemonicParsing="false" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF;" text="Edit" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <JFXButton fx:id="btn_groups_edit" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Edit" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
@@ -53,35 +53,35 @@
                   <Insets bottom="5.0" />
                </opaqueInsets>
             </JFXButton>
-            <JFXButton fx:id="btn_groups_create" prefWidth="90.0" mnemonicParsing="false" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF;" text="Create" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <JFXButton fx:id="btn_groups_create" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Create" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets left="-200.0" />
                </GridPane.margin>
                <opaqueInsets>
                   <Insets bottom="5.0" />
                </opaqueInsets></JFXButton>
-            <JFXButton fx:id="btn_groups_delete" prefWidth="90.0" mnemonicParsing="false" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF;" text="Delete" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <JFXButton fx:id="btn_groups_delete" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Delete" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets left="200.0" />
                </GridPane.margin>
                <opaqueInsets>
                   <Insets bottom="5.0" />
                </opaqueInsets></JFXButton>
-            <JFXButton fx:id="btn_members_create" prefWidth="90.0" mnemonicParsing="false" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF;" text="Create" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <JFXButton fx:id="btn_members_create" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Create" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="-200.0" />
                </GridPane.margin>
                <opaqueInsets>
                   <Insets bottom="5.0" />
                </opaqueInsets></JFXButton>
-            <JFXButton fx:id="btn_members_delete" prefWidth="90.0" mnemonicParsing="false" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF;" text="Delete" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <JFXButton fx:id="btn_members_delete" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Delete" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="200.0" />
                </GridPane.margin>
                <opaqueInsets>
                   <Insets bottom="5.0" />
                </opaqueInsets></JFXButton>
-            <JFXButton fx:id="btn_members_edit" prefWidth="90.0" mnemonicParsing="false" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF;" text="Edit" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <JFXButton fx:id="btn_members_edit" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Edit" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <opaqueInsets>
                   <Insets bottom="5.0" />
                </opaqueInsets></JFXButton>
