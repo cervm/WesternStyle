@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.sql.Date;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -39,22 +41,22 @@ public class DBOrdersTest {
         assertEquals("Empty table or fetching error", 23, order.getAmount(), 2);
     }
 
-    @Ignore("Not implemented")
     @Test
-    public void create() throws Exception {
+    public void createDelete() throws Exception {
+        List<Order> o = dbOrders.getAll();
+        int numOfRows = o.size();
+        Order order = new Order(1, new Date(134275623), new Date(143275623), 2, false);
+        order = dbOrders.create(order);
+        System.out.println("The order ID: " + order.getId());
+        o = dbOrders.getAll();
 
+        int size = o.size();
+        dbOrders.delete(order);
+        assertNotEquals(numOfRows, size);
     }
 
-    @Ignore("Not implemented")
     @Test
     public void update() throws Exception {
 
     }
-
-    @Ignore("Not implemented")
-    @Test
-    public void delete() throws Exception {
-
-    }
-
 }
