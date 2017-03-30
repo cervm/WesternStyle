@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Ondřej Soukup on 30.03.2017.
  */
-public class tabCustomersController implements Initializable{
+public class TabCustomersController implements Initializable{
 
     @FXML
     public TableView table_customers;
