@@ -31,9 +31,9 @@ public class DBInvoices implements IDataAccessObject<Invoice> {
             ResultSet rs = dbConnect.getFromDataBase("SELECT * FROM invoices");
             while (rs.next()) {
                 ArrayList<Integer> orders = new ArrayList<>();
-                ResultSet orderResults = dbConnect.getFromDataBase("SELECT * FROM orders AS o INNER JOIN invoices AS i ON i.id = o.invoice_id;");
+                ResultSet orderResults = dbConnect.getFromDataBase("SELECT o.id FROM orders AS o INNER JOIN invoices AS i ON i.id = o.invoice_id WHERE o.invoice_id=" + rs.getInt("id") + ";");
                 while (orderResults.next()) {
-                    orders.add(orderResults.getInt("id"));
+                    orders.add(orderResults.getInt(1));
                 }
                 invoices.add(new Invoice(rs.getInt("id"),
                         rs.getDate("payment_date"),
