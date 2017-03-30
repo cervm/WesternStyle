@@ -1,6 +1,7 @@
 package modelCollections;
 
 import model.Invoice;
+import model.exception.ModelSyncException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -82,4 +83,25 @@ public class DBInvoicesTest {
         assertEquals(amount, invoices.getById(15).getAmount(), 1);
     }
 
+    @Test(expected = ModelSyncException.class)
+    public void getByIdNoSuchElementExceptionTest() throws Exception {
+        Invoice i = invoices.getById(-1);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void updateNullExceptionTest() throws Exception {
+        invoices.update(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void updateInvalidObjectExceptionTest() throws Exception {
+        Invoice i = new Invoice(null, -1);
+        invoices.update(i);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void createInvalidObjectEceptionTest() throws Exception {
+        Invoice i = new Invoice(new Date(-1), -1);
+        invoices.create(i);
+    }
 }
