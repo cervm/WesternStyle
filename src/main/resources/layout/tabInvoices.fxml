@@ -2,18 +2,13 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
-<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TabInvoicesController">
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.111"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TabInvoicesController">
    <center>
       <GridPane BorderPane.alignment="CENTER">
          <columnConstraints>
@@ -61,8 +56,10 @@
             </TableView>
             <TableView fx:id="table_invoices" GridPane.columnSpan="3" GridPane.rowIndex="2">
                <columns>
-                  <TableColumn />
-                  <TableColumn />
+                  <TableColumn fx:id="idCol" prefWidth="75.0" text="ID"/>
+                  <TableColumn fx:id="paymentCol" prefWidth="75.0" text="Payment Date"/>
+                  <TableColumn fx:id="amountCol" prefWidth="75.0" text="Amount"/>
+                  <TableColumn fx:id="ordersCol" prefWidth="75.0" text="# of orders"/>
                </columns>
             </TableView>
             <JFXButton fx:id="btn_invoices_search" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #000000; -fx-border-width: 0.8;" text="Search" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
