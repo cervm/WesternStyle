@@ -1,7 +1,6 @@
 package modelCollections;
 
 import model.Product;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -13,37 +12,49 @@ import static org.junit.Assert.*;
  * Created by rajmu on 17.03.30.
  */
 public class DBProductsTest {
-    private static DBProducts dbProducts;
+    private static DBProducts products;
 
     @BeforeClass
     public static void setUp() throws Exception {
-        dbProducts = new DBProducts();
+        products = new DBProducts();
     }
 
     @Test
     public void getAll() throws Exception {
-        List<Product> p = dbProducts.getAll();
+        List<Product> p = products.getAll();
         assertNotEquals(0, p.size());
     }
 
     @Test
     public void getById() throws Exception {
-        Product p = dbProducts.getById(10);
+        Product p = products.getById(10);
         assertEquals("ad", p.getName());
     }
 
     @Test
     public void createDelete() throws Exception {
-        List<Product> c = dbProducts.getAll();
-        int numOfRows = c.size();
-        Product temp = new Product() //TODO: needs to be finished
-        temp = dbProducts.create(temp);
-        System.out.println("The id is: " + temp.getId());
-        c = dbProducts.getAll();
+        // Initial list size
+        List<Product> list = products.getAll();
+        int initialSize = list.size();
 
-        int size = c.size();
-        dbProducts.delete(temp);
-        assertNotEquals("Didn't create a new row", size, numOfRows);
+        // Create new object
+        Product temp = new Product(5, "Product name", "DK", "Description", 100, 150, 50);
+        temp = products.create(temp);
+        int tempId = temp.getId();
+
+        // Check the list size after creation
+        list = products.getAll();
+        int creationSize = list.size();
+
+        // Delete the object
+        products.delete(temp);
+
+        // Check the list size after deletion
+        list = products.getAll();
+        int deletionSize = list.size();
+
+        assertNotEquals("The product not created", creationSize, initialSize);
+        assertEquals("The product not deleted. The id is " + tempId, deletionSize, initialSize);
     }
 
     @Test

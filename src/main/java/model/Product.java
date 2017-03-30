@@ -12,6 +12,16 @@ public class Product {
     private Category primaryCategory;
     private ArrayList<Category> categories;
 
+    public Product(int minStock, String name, String countryOrigin, String description, double costPrice, double salesPrice, double rentPrice) {
+        this.minStock = minStock;
+        this.name = name;
+        this.countryOrigin = countryOrigin;
+        this.description = description;
+        this.costPrice = costPrice;
+        this.salesPrice = salesPrice;
+        this.rentPrice = rentPrice;
+    }
+
     public Product(int id, int minStock, String name, String countryOrigin, String description, double costPrice, double salesPrice, double rentPrice, Category primaryCategory, ArrayList<Category> categories) {
         this.id = id;
         this.minStock = minStock;

@@ -48,8 +48,8 @@ public class DBInvoicesTest {
     @Test
     public void createDelete() throws Exception {
         // Initial list size
-        List<Invoice> i = invoices.getAll();
-        int initialSize = i.size();
+        List<Invoice> list = invoices.getAll();
+        int initialSize = list.size();
 
         // Create new object
         Invoice temp = new Invoice(new Date(Calendar.getInstance().getTimeInMillis()), 100);
@@ -57,15 +57,15 @@ public class DBInvoicesTest {
         int tempId = temp.getId();
 
         // Check the list size after creation
-        i = invoices.getAll();
-        int creationSize = i.size();
+        list = invoices.getAll();
+        int creationSize = list.size();
 
         // Delete the object
         invoices.delete(temp);
 
         // Check the list size after deletion
-        i = invoices.getAll();
-        int deletionSize = i.size();
+        list = invoices.getAll();
+        int deletionSize = list.size();
 
         assertNotEquals("The invoice not created", creationSize, initialSize);
         assertEquals("The invoice not deleted. The id is " + tempId, deletionSize, initialSize);
