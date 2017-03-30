@@ -146,10 +146,11 @@ public class DBOrders implements IDataAccessObject<Order> {
     public void delete(Order order) {
         try {
             dbConnect = new DBConnect();
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement(
+            PreparedStatement stmt = dbConnect.getConnection().prepareStatement(
                     "DELETE FROM [orders]\n" +
                             "WHERE [id] = ?;");
-            ps.setInt(1, order.getId());
+            stmt.setInt(1, order.getId());
+            stmt.execute();
         } catch (ConnectionException | SQLException e) {
             e.printStackTrace();
         } finally {
