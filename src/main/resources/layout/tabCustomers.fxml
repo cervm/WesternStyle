@@ -2,23 +2,99 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.scene.control.TableColumn?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <JFXTextField fx:id="txtfield_customers_search" layoutX="14.0" layoutY="23.0" prefHeight="25.0" prefWidth="400.0" promptText="Search" />
-      <TableView fx:id="table_customers" layoutX="14.0" layoutY="61.0" prefHeight="480.0" prefWidth="872.0">
-        <columns>
-          <TableColumn fx:id="nameCol" prefWidth="75.0" text="Name" />
-          <TableColumn fx:id="emailCol" prefWidth="75.0" text="Email" />
-        </columns>
-      </TableView>
-      <JFXButton fx:id="btn_customers_create" layoutX="14.0" layoutY="549.0" mnemonicParsing="false" text="Create" />
-      <JFXButton fx:id="btn_customers_edit" layoutX="73.0" layoutY="549.0" mnemonicParsing="false" text="Edit" />
-      <JFXButton fx:id="btn_customers_delete" layoutX="118.0" layoutY="549.0" mnemonicParsing="false" text="Remove" />
-      <JFXButton fx:id="btn_customers_add_group" layoutX="241.0" layoutY="549.0" mnemonicParsing="false" text="Add to group" />
-      <JFXButton fx:id="btn_customers_change_group" layoutX="338.0" layoutY="549.0" mnemonicParsing="false" text="Change group" />
-   </children>
-</Pane>
+<?import javafx.scene.control.TableColumn?>
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TabCustomersController">
+    <center>
+        <GridPane BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="4000.0" minWidth="300.0" prefWidth="831.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="4000.0" minWidth="350.0" prefWidth="831.0" />
+                <ColumnConstraints />
+                <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="4000.0" minHeight="100.0" prefHeight="182.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+         <children>
+            <Pane opacity="0.75" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #000000;" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customers" GridPane.halignment="LEFT">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Text>
+            <JFXTextField fx:id="tf_customers_search" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+               <padding>
+                  <Insets left="10.0" right="110.0" />
+               </padding>
+               <GridPane.margin>
+                  <Insets left="10.0" right="110.0" />
+               </GridPane.margin></JFXTextField>
+            <JFXButton fx:id="btn_customers_search" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #000000; -fx-border-width: 0.8;" text="Search" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin></JFXButton>
+             <TableView fx:id="table_customers" GridPane.columnSpan="3" GridPane.rowIndex="2" >
+                 <columns>
+                     <TableColumn fx:id="nameCol" text="Name"></TableColumn>
+                     <TableColumn fx:id="emailCol" text="E-mail"></TableColumn>
+                 </columns>
+             </TableView>
+            <JFXButton fx:id="btn_customers_add" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Add" textFill="WHITE" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </JFXButton>
+            <JFXButton fx:id="btn_customers_edit" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Edit" textFill="WHITE" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="110.0" />
+               </GridPane.margin>
+            </JFXButton>
+            <JFXButton fx:id="btn_customers_delete" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Delete" textFill="WHITE" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="210.0" />
+               </GridPane.margin>
+            </JFXButton>
+            <JFXButton fx:id="btn_customers_changeCat" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Change" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </JFXButton>
+            <JFXButton fx:id="btn_customers_assignCat" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #ffffff; -fx-border-width: 0.8;" text="Assign" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets right="110.0" />
+               </GridPane.margin>
+            </JFXButton>
+            <Line endX="-60.0" endY="22.0" startX="-60.0" startY="-22.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="2.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets right="300.0" />
+               </GridPane.margin>
+            </Line>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Category " GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets right="210.0" />
+               </GridPane.margin>
+            </Text>
+         </children>
+        </GridPane>
+    </center>
+</BorderPane>

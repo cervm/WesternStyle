@@ -33,24 +33,33 @@
             <Pane opacity="0.75" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #000000;" GridPane.columnIndex="2" GridPane.rowIndex="5" />
             <Pane opacity="0.75" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #000000;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <CheckTreeView fx:id="categories_checkTreeView" prefHeight="194.0" prefWidth="209.0" GridPane.rowIndex="1" GridPane.rowSpan="5" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Category" GridPane.halignment="CENTER">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Category" GridPane.halignment="LEFT">
                <font>
                   <Font size="24.0" />
-               </font></Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Products" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+               </font>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Products" GridPane.columnIndex="2" GridPane.halignment="LEFT">
                <font>
                   <Font size="24.0" />
-               </font></Text>
+               </font>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Text>
              <TableView fx:id="products_table" GridPane.columnIndex="2" GridPane.rowIndex="1">
                  <columns>
                      <TableColumn />
                      <TableColumn />
                  </columns>
              </TableView>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Variants" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Variants" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                <font>
                   <Font size="24.0" />
-               </font></Text>
+               </font>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Text>
              <TableView fx:id="variants_table" GridPane.columnIndex="2" GridPane.rowIndex="4">
                  <columns>
                      <TableColumn />

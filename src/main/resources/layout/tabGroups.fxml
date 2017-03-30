@@ -89,15 +89,21 @@
                <opaqueInsets>
                   <Insets bottom="5.0" />
                </opaqueInsets></JFXButton>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Groups" GridPane.halignment="CENTER">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Groups" GridPane.halignment="LEFT">
                <font>
                   <Font size="24.0" />
                </font>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Members" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Members" GridPane.columnIndex="2" GridPane.halignment="LEFT">
                <font>
                   <Font size="24.0" />
                </font>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
             </Text>
          </children>
       </GridPane>
