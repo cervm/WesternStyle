@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
-<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TabSuppliersController">
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.111"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TabSuppliersController">
     <center>
         <GridPane BorderPane.alignment="CENTER">
             <columnConstraints>
@@ -43,7 +38,18 @@
                   <Insets right="10.0" />
                </GridPane.margin>
             </JFXButton>
-             <TableView fx:id="table_suppliers" GridPane.rowIndex="2" />
+             <TableView fx:id="table_suppliers" GridPane.rowIndex="2">
+                 <columns>
+                     <TableColumn fx:id="nameCol" prefWidth="75.0" text="Name"/>
+                     <TableColumn fx:id="emailCol" prefWidth="75.0" text="Email"/>
+                     <TableColumn fx:id="phoneCol" prefWidth="75.0" text="Phone #"/>
+                     <TableColumn fx:id="addressCol" prefWidth="75.0" text="Address"/>
+                     <TableColumn fx:id="postCol" prefWidth="75.0" text="Postal code"/>
+                     <TableColumn fx:id="cityCol" prefWidth="75.0" text="City"/>
+                     <TableColumn fx:id="countryCol" prefWidth="75.0" text="Country"/>
+                     <TableColumn fx:id="regCol" prefWidth="75.0" text="Company reg #"/>
+                 </columns>
+             </TableView>
             <JFXButton fx:id="btn_suppliers_edit" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #ffffff; -fx-border-width: 0.8;" text="Edit" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
             <JFXButton fx:id="btn_suppliers_delete" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #ffffff; -fx-border-width: 0.8;" text="Delete" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <GridPane.margin>

@@ -22,7 +22,7 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
     private DBConnect dbConnect;
     private boolean isLoaded;
 
-    DBSuppliers() throws ModelSyncException {
+    public DBSuppliers() throws ModelSyncException {
         suppliers = new ArrayList<>();
         isLoaded = false;
     }
