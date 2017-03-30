@@ -4,19 +4,41 @@
 <?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.effect.Reflection?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controller.MainWindowController"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="600.0" prefWidth="900.0">
     <center>
-        <ColorPicker editable="true" BorderPane.alignment="CENTER">
-            <effect>
-                <BoxBlur height="0.0" iterations="2" width="11.07">
-                    <input>
-                        <Reflection/>
-                    </input>
-                </BoxBlur>
-            </effect>
-        </ColorPicker>
+        <TabPane fx:id="menuTabPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+        <tabs>
+            <Tab fx:id="tabCustomers" text="Customers">
+                <fx:include fx:id="tabCustomersSrc" source="tabCustomers.fxml" />
+            </Tab>
+            <Tab fx:id="tabGroups" text="Groups">
+                <fx:include fx:id="tabGroupsSrc" source="tabGroups.fxml" />
+            </Tab>
+            <Tab fx:id="tabSuppliers" text="Suppliers">
+                <fx:include fx:id="tabSuppliersSrc" source="tabSuppliers.fxml" />
+            </Tab>
+            <Tab fx:id="tabOrders" text="Orders">
+                <fx:include fx:id="tabOrdersSrc" source="tabOrders.fxml" />
+            </Tab>
+            <Tab fx:id="tabInvoices" text="Invoices">
+                <fx:include fx:id="tabInvoicesSrc" source="tabInvoices.fxml" />
+            </Tab>
+            <Tab fx:id="tabProducts" text="Products">
+                <fx:include fx:id="tabGProductsSrc" source="tabProducts.fxml" />
+            </Tab>
+            <Tab fx:id="tabCategories" text="Categories">
+                <fx:include fx:id="tabCategoriesSrc" source="tabCategories.fxml" />
+            </Tab>
+            <Tab fx:id="tabVariants" text="Variants">
+                <fx:include fx:id="tabVariantsSrc" source="tabVariants.fxml" />
+            </Tab>
+
+        </tabs>
+        </TabPane>
     </center>
 </BorderPane>

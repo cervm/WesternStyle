@@ -6,9 +6,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by rajmu on 17.03.28.
+ * Created by Ondřej Soukup on 30.03.2017.
  */
-public class MainWindowController implements Initializable {
+public class tabVariantsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
