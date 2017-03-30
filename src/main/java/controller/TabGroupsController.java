@@ -11,6 +11,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.CustomerGroup;
 import model.entity.Customer;
 import model.exception.ModelSyncException;
@@ -68,6 +69,14 @@ public class TabGroupsController implements Initializable {
             a.setHeaderText("Error occured while initializing the customer connection component.");
             a.setContentText(e.getMessage());
         }
-        table_groups.setItems(groups);
+        loadTable(groups);
+    }
+
+    private void loadTable(ObservableList<CustomerGroup> source){
+        table_groups.getColumns().removeAll(groups_name, groups_discount);
+        table_groups.setItems(source);
+        groups_name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        groups_discount.setCellValueFactory(new PropertyValueFactory<>("discount"));
+        table_groups.getColumns().addAll(groups_name, groups_discount);
     }
 }

@@ -42,6 +42,16 @@ public class TabCustomersController implements Initializable{
     public JFXButton btn_customers_changeCat;
     @FXML
     public JFXButton btn_customers_assignCat;
+    @FXML
+    public TableColumn phoneCol;
+    @FXML
+    public TableColumn addressCol;
+    @FXML
+    public TableColumn postCol;
+    @FXML
+    public TableColumn cityCol;
+    @FXML
+    public TableColumn countryCol;
 
     private DBCustomers dbCustomers;
     ObservableList<Customer> customers;
@@ -57,9 +67,26 @@ public class TabCustomersController implements Initializable{
             a.setContentText(e.getMessage());
         }
 
-        table_customers.setItems(customers);
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
+        loadTable(customers);
     }
 
+    private void loadTable(ObservableList<Customer> source) {
+        table_customers.getColumns().removeAll(nameCol, emailCol, phoneCol, addressCol, postCol, cityCol, countryCol);
+        table_customers.setItems(source);
+        nameCol.setMinWidth(50);
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        emailCol.setMinWidth(60);
+        emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
+        phoneCol.setMaxWidth(50);
+        phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        addressCol.setMinWidth(80);
+        addressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        postCol.setMinWidth(30);
+        postCol.setCellValueFactory(new PropertyValueFactory<>("postcode"));
+        cityCol.setMinWidth(50);
+        cityCol.setCellValueFactory(new PropertyValueFactory<>("city"));
+        countryCol.setMinWidth(20);
+        countryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
+        table_customers.getColumns().addAll(nameCol, emailCol, phoneCol, addressCol, postCol, cityCol, countryCol);
+    }
 }
