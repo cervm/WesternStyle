@@ -12,19 +12,20 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TabCategoriesController">
+<?import org.controlsfx.control.CheckTreeView?>
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TabCategoriesController">
    <center>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="4000.0" minWidth="500.0" prefWidth="900.0" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="182.0" minHeight="100.0" prefHeight="175.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="4000.0" minHeight="100.0" prefHeight="175.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="182.0" minHeight="100.0" prefHeight="175.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="4000.0" minHeight="100.0" prefHeight="175.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Pane opacity="0.75" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #000000;" GridPane.rowIndex="5" />
@@ -34,7 +35,7 @@
                   <Font size="24.0" />
                </font>
                <GridPane.margin>
-                  <Insets left="20.0" />
+                  <Insets left="10.0" />
                </GridPane.margin>
             </Text>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Properties" GridPane.rowIndex="3">
@@ -42,42 +43,38 @@
                   <Font size="24.0" />
                </font>
                <GridPane.margin>
-                  <Insets left="20.0" />
+                  <Insets left="10.0" />
                </GridPane.margin>
             </Text>
-            <JFXButton mnemonicParsing="false" text="Create" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <JFXButton fx:id="btn_categories_create" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF;" text="Create" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="200.0" />
                </GridPane.margin>
             </JFXButton>
-            <JFXButton mnemonicParsing="false" text="Update" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <JFXButton fx:id="btn_categories_edit" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF;" text="Edit" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
             </JFXButton>
-            <JFXButton mnemonicParsing="false" text="Delete" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <JFXButton fx:id="btn_categories_delete" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF;" text="Delete" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="200.0" />
                </GridPane.margin>
             </JFXButton>
-            <JFXButton layoutX="335.0" layoutY="234.0" mnemonicParsing="false" text="Create" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+            <JFXButton fx:id="btn_properties_create" layoutX="335.0" layoutY="234.0" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF;" text="Create" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets right="200.0" />
                </GridPane.margin>
             </JFXButton>
-            <JFXButton layoutX="433.0" layoutY="234.0" mnemonicParsing="false" text="Update" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-            <JFXButton layoutX="535.0" layoutY="234.0" mnemonicParsing="false" text="Delete" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+            <JFXButton fx:id="btn_properties_edit" layoutX="433.0" layoutY="234.0" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF;" text="Edit" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+            <JFXButton fx:id="btn_properties_delete" layoutX="535.0" layoutY="234.0" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF;" text="Delete" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="200.0" />
                </GridPane.margin>
             </JFXButton>
-            <TableView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
-              <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
-              </columns>
-            </TableView>
-            <TableView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
+            <CheckTreeView fx:id="table_categories" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+            </CheckTreeView>
+            <TableView fx:id="table_properties" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
               <columns>
                 <TableColumn prefWidth="75.0" text="C1" />
                 <TableColumn prefWidth="75.0" text="C2" />

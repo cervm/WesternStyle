@@ -35,10 +35,6 @@
             <Tab fx:id="tabCategories" text="Categories">
                 <fx:include fx:id="tabCategoriesSrc" source="tabCategories.fxml" />
             </Tab>
-            <Tab fx:id="tabVariants" text="Variants">
-                <fx:include fx:id="tabVariantsSrc" source="tabVariants.fxml" />
-            </Tab>
-
         </tabs>
         </JFXTabPane>
     </center>
