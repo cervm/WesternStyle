@@ -9,7 +9,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Created by rajmu on 17.03.30.
+ * Tests for Products DAO
  */
 public class DBProductsTest {
     private static DBProducts products;
@@ -38,7 +38,7 @@ public class DBProductsTest {
         int initialSize = list.size();
 
         // Create new object
-        Product temp = new Product(5, "Product name", "DK", "Description", 100, 150, 50);
+        Product temp = new Product(5, "Product name", "DK", "Description", 100, 150, 50, 1);
         temp = products.create(temp);
         int tempId = temp.getId();
 

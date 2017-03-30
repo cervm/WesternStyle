@@ -124,16 +124,16 @@ public class DBInvoices implements IDataAccessObject<Invoice> {
     public void delete(Invoice invoice) {
         try {
             dbConnect = new DBConnect();
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement(
+            PreparedStatement stmt = dbConnect.getConnection().prepareStatement(
                     "DELETE FROM invoices\n" +
                             "WHERE id = ?;"
             );
-            ps.setInt(1, invoice.getId());
+            stmt.setInt(1, invoice.getId());
+            stmt.execute();
         } catch (ConnectionException | SQLException e) {
             e.printStackTrace();
         } finally {
             invoices.removeIf(p -> p.getId() == invoice.getId());
         }
-
     }
 }

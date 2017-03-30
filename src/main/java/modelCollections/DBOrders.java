@@ -95,16 +95,18 @@ public class DBOrders implements IDataAccessObject<Order> {
             preparedStatement.setDouble(2, order.getAmount());
             preparedStatement.setBoolean(3, order.getDeliveryStatus());
             preparedStatement.setInt(4, order.getInvoiceId());
-            preparedStatement.setInt(5, order.getCustomer().getId());
+            preparedStatement.setInt(5, order.getCustomerId());
             preparedStatement.setDate(6, (Date) order.getDeliveryDate());
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (ConnectionException | SQLException e) {
             e.printStackTrace();
-        }
+        } finally {
+        orders.add(order);
+    }
 
         //iterates through all of the basketItems of the order and adds them to the order_items table
-        for (BasketItem item : order.getItems()) {
+        /*for (BasketItem item : order.getItems()) {
             try {
                 dbConnect = new DBConnect();
                 PreparedStatement preparedStatement = dbConnect.getConnection().prepareStatement(
@@ -116,7 +118,7 @@ public class DBOrders implements IDataAccessObject<Order> {
             } catch (ConnectionException | SQLException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
         return order;
     }
 
@@ -132,7 +134,7 @@ public class DBOrders implements IDataAccessObject<Order> {
             preparedStatement.setDouble(2, order.getAmount());
             preparedStatement.setBoolean(3, order.getDeliveryStatus());
             preparedStatement.setInt(4, order.getInvoiceId());
-            preparedStatement.setInt(5, order.getCustomer().getId());
+            preparedStatement.setInt(5, order.getCustomerId());
             preparedStatement.setDate(6, (Date) order.getDeliveryDate());
             dbConnect.uploadSafe(preparedStatement);
         } catch (SQLException | ConnectionException e) {
@@ -144,16 +146,16 @@ public class DBOrders implements IDataAccessObject<Order> {
     public void delete(Order order) {
         try {
             dbConnect = new DBConnect();
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement(
+            PreparedStatement stmt = dbConnect.getConnection().prepareStatement(
                     "DELETE FROM [orders]\n" +
                             "WHERE [id] = ?;");
-            ps.setInt(1, order.getId());
+            stmt.setInt(1, order.getId());
+            stmt.execute();
         } catch (ConnectionException | SQLException e) {
             e.printStackTrace();
         } finally {
             orders.removeIf(p -> p.getId() == order.getId());
         }
 
-        //TODO: Discuss, whether the update and delete functions are actually relevant for orders
     }
 }

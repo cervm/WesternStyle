@@ -14,9 +14,9 @@ public class Order {
     private double amount;
     private boolean deliveryStatus;
     private ArrayList<BasketItem> items;
-    private Customer customer;
+    private int customerId;
 
-    public Order(int id, int invoiceId, Date orderDate, Date deliveryDate, double amount, boolean deliveryStatus, ArrayList<BasketItem> items, Customer customer) {
+    public Order(int id, int invoiceId, Date orderDate, Date deliveryDate, double amount, boolean deliveryStatus, ArrayList<BasketItem> items, int customerId) {
         this.id = id;
         this.invoiceId = invoiceId;
         this.orderDate = orderDate;
@@ -24,7 +24,7 @@ public class Order {
         this.amount = amount;
         this.deliveryStatus = deliveryStatus;
         this.items = items;
-        this.customer = customer;
+        this.customerId = customerId;
     }
 
     public Order(int id, int invoiceId, Date orderDate, Date deliveryDate, double amount, boolean deliveryStatus) {
@@ -36,12 +36,13 @@ public class Order {
         this.deliveryStatus = deliveryStatus;
     }
 
-    public Order(int invoiceId, Date orderDate, Date deliveryDate, double amount, boolean deliveryStatus) {
+    public Order(int invoiceId, Date orderDate, Date deliveryDate, double amount, boolean deliveryStatus, int customerId) {
         this.invoiceId = invoiceId;
         this.orderDate = orderDate;
         this.deliveryDate = deliveryDate;
         this.amount = amount;
         this.deliveryStatus = deliveryStatus;
+        this.customerId = customerId;
     }
 
     public int getId() {
@@ -72,8 +73,8 @@ public class Order {
         return items;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public int getCustomerId() {
+        return customerId;
     }
 
     public void addItem(BasketItem item) {

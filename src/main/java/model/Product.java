@@ -6,13 +6,13 @@ import java.util.ArrayList;
  * Product Entity
  */
 public class Product {
-    private int id, minStock;
+    private int id, minStock, supplierId;
     private String name, countryOrigin, description;
     private double costPrice, salesPrice, rentPrice;
     private Category primaryCategory;
     private ArrayList<Category> categories;
 
-    public Product(int minStock, String name, String countryOrigin, String description, double costPrice, double salesPrice, double rentPrice) {
+    public Product(int minStock, String name, String countryOrigin, String description, double costPrice, double salesPrice, double rentPrice, int supplierId) {
         this.minStock = minStock;
         this.name = name;
         this.countryOrigin = countryOrigin;
@@ -20,6 +20,7 @@ public class Product {
         this.costPrice = costPrice;
         this.salesPrice = salesPrice;
         this.rentPrice = rentPrice;
+        this.supplierId = supplierId;
     }
 
     public Product(int id, int minStock, String name, String countryOrigin, String description, double costPrice, double salesPrice, double rentPrice, Category primaryCategory, ArrayList<Category> categories) {
@@ -48,6 +49,10 @@ public class Product {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getMinStock() {
@@ -92,5 +97,13 @@ public class Product {
 
     public void removeCategory(Category c) {
         categories.removeIf(o -> o == c);
+    }
+
+    public int getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
     }
 }
