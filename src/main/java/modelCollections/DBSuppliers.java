@@ -17,12 +17,10 @@ import java.util.List;
  * Suppliers Data Access Object
  */
 public class DBSuppliers implements IDataAccessObject<Supplier> {
-
+    private static final String SELECT_CONTACT_ID = "(SELECT [contact_detail_id] FROM customers WHERE [id] = ?)";
     private List<Supplier> suppliers;
     private DBConnect dbConnect;
     private boolean isLoaded;
-
-    private static final String SELECT_CONTACT_ID = "(SELECT [contact_detail_id] FROM customers WHERE [id] = ?)";
 
     DBSuppliers() throws ModelSyncException {
         suppliers = new ArrayList<>();
