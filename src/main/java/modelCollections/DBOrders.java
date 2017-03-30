@@ -143,7 +143,7 @@ public class DBOrders implements IDataAccessObject<Order> {
     }
 
     @Override
-    public void delete(Order order) {
+    public void delete(Order order) throws ModelSyncException {
         try {
             dbConnect = new DBConnect();
             PreparedStatement stmt = dbConnect.getConnection().prepareStatement(
@@ -152,7 +152,7 @@ public class DBOrders implements IDataAccessObject<Order> {
             stmt.setInt(1, order.getId());
             stmt.execute();
         } catch (ConnectionException | SQLException e) {
-            e.printStackTrace();
+            throw new ModelSyncException("Couldn't delete order of id=" + order.getId(), e);
         } finally {
             orders.removeIf(p -> p.getId() == order.getId());
         }
