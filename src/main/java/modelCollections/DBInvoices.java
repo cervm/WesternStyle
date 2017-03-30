@@ -1,17 +1,16 @@
 package modelCollections;
 
+import model.Invoice;
 import model.connection.DBConnect;
 import model.connection.IDataAccessObject;
-import model.Invoice;
 import model.exception.ConnectionException;
 import model.exception.ModelSyncException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Invoices Data Access Object
@@ -21,7 +20,7 @@ public class DBInvoices implements IDataAccessObject<Invoice> {
     private DBConnect dbConnect;
     private boolean isLoaded;
 
-    public DBInvoices(){
+    public DBInvoices() {
         isLoaded = false;
     }
 
@@ -49,7 +48,7 @@ public class DBInvoices implements IDataAccessObject<Invoice> {
 
     @Override
     public ArrayList<Invoice> getAll() throws ModelSyncException {
-        if(!isLoaded){
+        if (!isLoaded) {
             load();
         }
         return invoices;
@@ -81,14 +80,23 @@ public class DBInvoices implements IDataAccessObject<Invoice> {
     public Invoice create(Invoice invoice) throws ModelSyncException {
         try {
             dbConnect = new DBConnect();
-            PreparedStatement stmt = dbConnect.getConnection().prepareStatement(
-                    "INSERT INTO [invoices] ([payment_date], [amount]) VALUES (?, ?);"
-            );
-            stmt.setDate(1,invoice.getPaymentDate());
-            stmt.setDouble(2,invoice.getAmount());
+            String invoiceQuery = "INSERT INTO [invoices] ([payment_date], [amount]) VALUES (?, ?);";
+            PreparedStatement stmt = dbConnect.getConnection().prepareStatement(invoiceQuery, Statement.RETURN_GENERATED_KEYS);
+            stmt.setDate(1, invoice.getPaymentDate());
+            stmt.setDouble(2, invoice.getAmount());
+            stmt.executeUpdate();
 
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    invoice.setId(generatedKeys.getInt(1));
+                } else {
+                    throw new ModelSyncException("Creating invoice failed. No ID retrieved!");
+                }
+            }
         } catch (ConnectionException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            invoices.add(invoice);
         }
         return invoice;
     }
