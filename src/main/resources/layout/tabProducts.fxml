@@ -32,7 +32,7 @@
          <children>
             <Pane opacity="0.75" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #000000;" GridPane.columnIndex="2" GridPane.rowIndex="5" />
             <Pane opacity="0.75" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #000000;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <CheckTreeView prefHeight="194.0" prefWidth="209.0" GridPane.rowIndex="1" GridPane.rowSpan="5" />
+            <CheckTreeView fx:id="categories_checkTreeView" prefHeight="194.0" prefWidth="209.0" GridPane.rowIndex="1" GridPane.rowSpan="5" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Category" GridPane.halignment="CENTER">
                <font>
                   <Font size="24.0" />
@@ -41,7 +41,7 @@
                <font>
                   <Font size="24.0" />
                </font></Text>
-             <TableView fx:id="" GridPane.columnIndex="2" GridPane.rowIndex="1">
+             <TableView fx:id="products_table" GridPane.columnIndex="2" GridPane.rowIndex="1">
                  <columns>
                      <TableColumn />
                      <TableColumn />
@@ -51,32 +51,32 @@
                <font>
                   <Font size="24.0" />
                </font></Text>
-             <TableView fx:id="" GridPane.columnIndex="2" GridPane.rowIndex="4">
+             <TableView fx:id="variants_table" GridPane.columnIndex="2" GridPane.rowIndex="4">
                  <columns>
                      <TableColumn />
                      <TableColumn />
                  </columns>
              </TableView>
-            <JFXButton maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Create" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <JFXButton fx:id="btn_products_create" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Create" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="-200.0" />
                </GridPane.margin>
             </JFXButton>
-            <JFXButton maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Delete" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <JFXButton fx:id="btn_products_delete" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Delete" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="200.0" />
                </GridPane.margin>
             </JFXButton>
-            <JFXButton maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Edit" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-            <JFXButton maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Add" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+            <JFXButton fx:id="btn_products_edit" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Edit" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <JFXButton fx:id="btn_variants_add" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Add" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="-200.0" />
                </GridPane.margin></JFXButton>
-            <JFXButton maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Delete" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+            <JFXButton fx:id="btn_variants_delete" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Delete" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="200.0" />
                </GridPane.margin></JFXButton>
-            <JFXButton maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Edit" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+            <JFXButton fx:id="btn_variants_edit" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Edit" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
          </children>
         </GridPane>
     </center>
