@@ -76,9 +76,9 @@ public class DBOrders implements IDataAccessObject<Order> {
             load();
         }
 
-        if (id >= orders.size() || id < 0) {
+        /*if (id >= orders.size() || id < 0) {
             throw new ModelSyncException("ID is out of range!");
-        }
+        }*/
         return orders.stream().filter(o -> o.getId() == id).findFirst().get();
 
     }
