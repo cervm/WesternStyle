@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Text?>
 <?import org.controlsfx.control.CheckTreeView?>
 
-<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TabProductsController">
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TabProductsController">
     <center>
         <GridPane BorderPane.alignment="CENTER">
             <columnConstraints>
@@ -49,8 +49,14 @@
                </GridPane.margin></Text>
              <TableView fx:id="products_table" GridPane.columnIndex="2" GridPane.rowIndex="1">
                  <columns>
-                     <TableColumn />
-                     <TableColumn />
+                     <TableColumn fx:id="nameCol" prefWidth="88.0" text="Name" />
+                     <TableColumn fx:id="desCol" prefWidth="115.0" text="Description" />
+                    <TableColumn fx:id="countryCol" prefWidth="69.0" text="Country" />
+                    <TableColumn fx:id="costCol" prefWidth="49.0" text="Cost" />
+                    <TableColumn fx:id="saleCol" prefWidth="69.0" text="Sale price" />
+                    <TableColumn fx:id="rentCol" prefWidth="45.0" text="Rent" />
+                    <TableColumn fx:id="minCol" prefWidth="84.0" text="Min Stock" />
+                     <TableColumn fx:id="suppCol" prefWidth="84.0" text="Supplier ID" />
                  </columns>
              </TableView>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Variants" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="3">
@@ -66,7 +72,7 @@
                      <TableColumn />
                  </columns>
              </TableView>
-            <JFXButton fx:id="btn_products_create" onAction="#showNewProductDialog" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Create" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <JFXButton fx:id="btn_products_create" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" onAction="#showNewProductDialog" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Create" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="-200.0" />
                </GridPane.margin>
