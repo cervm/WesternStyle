@@ -19,10 +19,14 @@ import java.util.List;
 public class DBInvoices implements IDataAccessObject<Invoice> {
     private LinkedList<Invoice> invoices;
     private DBConnect dbConnect;
+    private boolean isLoaded;
 
-    @Override
-    public List<Invoice> getAll() throws ModelSyncException {
-        List<Invoice> invoices = new LinkedList<>();
+    public DBInvoices(){
+        isLoaded = false;
+    }
+
+    public void load() throws ModelSyncException {
+        invoices = new LinkedList<>();
         try {
             dbConnect = new DBConnect();
             ResultSet rs = dbConnect.getFromDataBase("SELECT * FROM invoices");
@@ -31,8 +35,16 @@ public class DBInvoices implements IDataAccessObject<Invoice> {
                         rs.getDate("payment_date"),
                         rs.getInt("amount"),
                         rs.getInt("order_id")));
+            isLoaded = true;
         } catch (ConnectionException | SQLException e) {
             throw new ModelSyncException("Could not load invoices.", e);
+        }
+    }
+
+    @Override
+    public List<Invoice> getAll() throws ModelSyncException {
+        if(!isLoaded){
+            load();
         }
         return invoices;
     }
