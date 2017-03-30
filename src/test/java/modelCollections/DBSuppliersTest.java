@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -41,22 +42,29 @@ public class DBSuppliersTest {
         assertEquals("Wrong object fetched", "56234", supplier.getCompanyRegNo());
     }
 
-    @Ignore("Not implemented")
     @Test
-    public void create() throws Exception {
+    public void createDelete() throws Exception {
+        List<Supplier> s = dbSuppliers.getAll();
+        int numOfRows = s.size();
+        Supplier supplier = new Supplier("Sennheiser", "2334634234", "tes345w2354235", "sdjfhasf", "sdr232", "asas", "DK", "2343");
+        supplier = dbSuppliers.create(supplier);
+        System.out.println("The ID of supplier: " + supplier.getId());
+        s = dbSuppliers.getAll();
 
+        int size = s.size();
+        dbSuppliers.delete(supplier);
+        assertEquals(numOfRows, size);
     }
 
-    @Ignore("Not implemented")
     @Test
     public void update() throws Exception {
-
-    }
-
-    @Ignore("Not implemented")
-    @Test
-    public void delete() throws Exception {
-
+        String postCode = "2137";
+        dbSuppliers.load();
+        Supplier s = dbSuppliers.getById(3);
+        s.setPostcode(postCode);
+        dbSuppliers.update(s);
+        dbSuppliers.load();
+        assertEquals(postCode, dbSuppliers.getById(3).getPostcode());
     }
 
 }

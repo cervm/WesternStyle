@@ -17,7 +17,7 @@ import java.util.List;
  * Suppliers Data Access Object
  */
 public class DBSuppliers implements IDataAccessObject<Supplier> {
-    private static final String SELECT_CONTACT_ID = "(SELECT [contact_detail_id] FROM customers WHERE [id] = ?)";
+    private static final String SELECT_CONTACT_ID = "(SELECT [contact_detail_id] FROM suppliers WHERE [id] = ?)";
     private List<Supplier> suppliers;
     private DBConnect dbConnect;
     private boolean isLoaded;
@@ -27,7 +27,7 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
         isLoaded = false;
     }
 
-    private void load() throws ModelSyncException {
+    public void load() throws ModelSyncException {
         suppliers = new ArrayList<>();
         try {
             dbConnect = new DBConnect();
@@ -97,7 +97,8 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
             stmt.setString(3, supplier.getEmail());
             stmt.setString(4, supplier.getAddress());
             stmt.setString(5, supplier.getPostcode());
-            stmt.setString(6, supplier.getCountry());
+            stmt.setString(6, supplier.getCity());
+            stmt.setString(7, supplier.getCountry());
 
             stmt.executeUpdate();
 
@@ -145,12 +146,13 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
                             "SET [phone] = ?, [email] = ?, [address] = ?, [postcode] = ?, [city] = ?, [country_code] = ?\n" +
                             "WHERE [id] =  " + SELECT_CONTACT_ID + ";"
             );
-            updatePs.setString(1, supplier.getName());
-            updatePs.setString(2, supplier.getPhone());
-            updatePs.setString(3, supplier.getEmail());
-            updatePs.setString(4, supplier.getAddress());
-            updatePs.setString(5, supplier.getPostcode());
+            updatePs.setString(1, supplier.getPhone());
+            updatePs.setString(2, supplier.getEmail());
+            updatePs.setString(3, supplier.getAddress());
+            updatePs.setString(4, supplier.getPostcode());
+            updatePs.setString(5, supplier.getCity());
             updatePs.setString(6, supplier.getCountry());
+            updatePs.setInt(7, supplier.getId());
             dbConnect.uploadSafe(updatePs);
             String updateSupplierQuery = "UPDATE suppliers SET co_reg_no = ? WHERE id = ?;";
             PreparedStatement updateSuppPs = dbConnect.getConnection().prepareStatement(updateSupplierQuery);
