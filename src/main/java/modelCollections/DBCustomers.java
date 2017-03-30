@@ -175,7 +175,7 @@ public class DBCustomers implements IDataAccessObject<Customer> {
             stmt.setString(4, customer.getPostcode());
             stmt.setString(5, customer.getCity());
             stmt.setString(6, customer.getCountry());
-            stmt.setInt(7, customer.getGroupID());
+            stmt.setInt(7, customer.getId());
             dbConnect.uploadSafe(stmt);
 
             stmt = dbConnect.getConnection().prepareStatement(
