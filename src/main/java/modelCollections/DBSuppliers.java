@@ -36,7 +36,7 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
             ResultSet rs = conn.getFromDataBase(query);
             while (rs.next()) {
                 suppliers.add(new Supplier(
-                        rs.getInt("s.id"),
+                        rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("phone"),
                         rs.getString("email"),
