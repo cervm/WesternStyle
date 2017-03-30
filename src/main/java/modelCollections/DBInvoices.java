@@ -3,7 +3,6 @@ package modelCollections;
 import model.connection.DBConnect;
 import model.connection.IDataAccessObject;
 import model.Invoice;
-import model.entity.Customer;
 import model.exception.ConnectionException;
 import model.exception.ModelSyncException;
 
