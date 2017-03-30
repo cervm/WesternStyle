@@ -1,9 +1,9 @@
 package modelCollections;
 
-import model.Product;
 import model.connection.DBConnect;
 import model.connection.IDataAccessObject;
 import model.Invoice;
+import model.entity.Customer;
 import model.exception.ConnectionException;
 import model.exception.ModelSyncException;
 
@@ -54,56 +54,54 @@ public class DBInvoices implements IDataAccessObject<Invoice> {
     }
 
     @Override
-    public void create(Invoice... objects) throws ModelSyncException {
-        for (Invoice object : objects) {
-            try {
-                dbConnect = new DBConnect();
-                PreparedStatement preparedStatement = dbConnect.getConnection().prepareStatement(
-                        "INSERT INTO [invoices] ([payment_date], [amount])");
+    public Invoice create(Invoice invoice) throws ModelSyncException {
+        try {
+            dbConnect = new DBConnect();
+            PreparedStatement stmt = dbConnect.getConnection().prepareStatement(
+                    "INSERT INTO [invoices] ([payment_date], [amount]) VALUES (?, ?);"
+            );
+            stmt.setDate(1,invoice.getPaymentDate());
+            stmt.setDouble(2,invoice.getAmount());
 
-            } catch (ConnectionException | SQLException e) {
-                e.printStackTrace();
-            }
+        } catch (ConnectionException | SQLException e) {
+            e.printStackTrace();
+        }
+        return invoice;
+    }
+
+    @Override
+    public void update(Invoice invoice) throws ModelSyncException {
+        try {
+            dbConnect = new DBConnect();
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement(
+                    "UPDATE [invoices]\n" +
+                            "SET [id] = ?, [payment_date] = ?, [amount] = ?"
+            );
+            ps.setInt(1, invoice.getId());
+            ps.setDate(2, java.sql.Date.valueOf(invoice.getPaymentDate().toString()));
+            ps.setDouble(3, invoice.getAmount());
+        } catch (ConnectionException | SQLException e) {
+            throw new ModelSyncException("WARNING! Could not update the invoice of id [" + invoice.getId() + "]!", e);
+        } finally {
+            invoices.removeIf(p -> p.getId() == invoice.getId());
+            invoices.add(invoice);
         }
     }
 
     @Override
-    public void update(Invoice... objects) throws ModelSyncException {
-        for (Invoice object : objects) {
-            try {
-                dbConnect = new DBConnect();
-                PreparedStatement ps = dbConnect.getConnection().prepareStatement(
-                        "UPDATE [invoices]\n" +
-                                "SET [id] = ?, [payment_date] = ?, [amount] = ?"
-                );
-                ps.setInt(1, object.getId());
-                ps.setDate(2, java.sql.Date.valueOf(object.getPaymentDate().toString()));
-                ps.setDouble(3, object.getAmount());
-            } catch (ConnectionException | SQLException e) {
-                throw new ModelSyncException("WARNING! Could not update the invoice of id [" + object.getId() + "]!", e);
-            } finally {
-                invoices.removeIf(p -> p.getId() == object.getId());
-                invoices.add(object);
-            }
+    public void delete(Invoice invoice) {
+        try {
+            dbConnect = new DBConnect();
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement(
+                    "DELETE FROM invoices\n" +
+                            "WHERE id = ?;"
+            );
+            ps.setInt(1, invoice.getId());
+        } catch (ConnectionException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            invoices.removeIf(p -> p.getId() == invoice.getId());
         }
-    }
 
-    @Override
-    public void delete(Invoice... objects) {
-        for (Invoice object : objects) {
-            try {
-                dbConnect = new DBConnect();
-                PreparedStatement ps = dbConnect.getConnection().prepareStatement(
-                        "DELETE FROM invoices\n" +
-                                "WHERE id = ?;"
-                );
-                ps.setInt(1, object.getId());
-            } catch (ConnectionException | SQLException e) {
-                e.printStackTrace();
-            } finally {
-                invoices.removeIf(p -> p.getId() == object.getId());
-            }
-
-        }
     }
 }

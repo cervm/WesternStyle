@@ -9,6 +9,7 @@ import model.exception.ModelSyncException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class DBCustomers implements IDataAccessObject<Customer> {
         isLoaded = false;
     }
 
-    public void load() throws ModelSyncException {
+    void load() throws ModelSyncException {
         customers = new ArrayList<>();
         try {
             dbConnect = new DBConnect();
@@ -35,7 +36,7 @@ public class DBCustomers implements IDataAccessObject<Customer> {
             ResultSet rs = dbConnect.getFromDataBase(query);
             while (rs.next()) {
                 customers.add(new Customer(
-                        rs.getInt("c.id"),
+                        rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("phone"),
                         rs.getString("email"),
@@ -43,7 +44,7 @@ public class DBCustomers implements IDataAccessObject<Customer> {
                         rs.getString("postcode"),
                         rs.getString("city"),
                         rs.getString("country_code"),
-                        rs.getInt("customers.group_id")
+                        rs.getInt("customer_group_id")
                 ));
             }
             isLoaded = true;
@@ -60,6 +61,13 @@ public class DBCustomers implements IDataAccessObject<Customer> {
         return customers;
     }
 
+    /**
+     * Method to get a customer by id
+     *
+     * @param id id of the customer
+     * @return customer with the id
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
     public Customer getById(int id) throws ModelSyncException {
         if (!isLoaded) {
@@ -71,95 +79,126 @@ public class DBCustomers implements IDataAccessObject<Customer> {
         return customers.stream().filter(o -> o.getId() == id).findFirst().get();
     }
 
+    /**
+     * Method to persist a customer in the database
+     *
+     * @param customer customer to be persisted
+     * @return customer with assigned id from the database
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
-    public void create(Customer... objects) throws ModelSyncException {
-        for (Customer object : objects) {
-            try {
-                dbConnect = new DBConnect();
+    public Customer create(Customer customer) throws ModelSyncException {
+        try {
+            dbConnect = new DBConnect();
 
-                //creating contact details record
-                PreparedStatement stmt = dbConnect.getConnection().prepareStatement(
-                        "INSERT INTO [contact_details] ([name], [phone], [email], [address], [postcode], [city], [country_code]) VALUES (?,?,?,?,?,?,?);");
-                stmt.setString(1, object.getName());
-                stmt.setString(2, object.getPhone());
-                stmt.setString(3, object.getEmail());
-                stmt.setString(4, object.getAddress());
-                stmt.setString(5, object.getPostcode());
-                stmt.setString(6, object.getCity());
-                stmt.setString(7, object.getCountry());
-                stmt.execute();
+            //creating contact details record
+            PreparedStatement stmt = dbConnect.getConnection().prepareStatement(
+                    "INSERT INTO [contact_details] ([name], [phone], [email], [address], [postcode], [city], [country_code])\n" +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?);",
+                    Statement.RETURN_GENERATED_KEYS
+            );
+            stmt.setString(1, customer.getName());
+            stmt.setString(2, customer.getPhone());
+            stmt.setString(3, customer.getEmail());
+            stmt.setString(4, customer.getAddress());
+            stmt.setString(5, customer.getPostcode());
+            stmt.setString(6, customer.getCity());
+            stmt.setString(7, customer.getCountry());
+            stmt.executeUpdate();
 
-                //fetching contact details data
-                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        object.setContactId(generatedKeys.getInt("id"));
-                    } else {
-                        throw new ModelSyncException("Creating contact details failed. No ID retrieved!");
-                    }
+            //fetching contact details data
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    customer.setContactId(generatedKeys.getInt(1));
+                } else {
+                    throw new ModelSyncException("Creating contact details failed. No ID retrieved!");
                 }
+            }
 
+            try {
                 //create customer
                 stmt = dbConnect.getConnection().prepareStatement(
-                        "INSERT INTO [customers] ([contact_detail_id], [customer_group_id]) VALUES (?,?);");
-                stmt.setInt(1, object.getContactId());
-                stmt.setInt(2, object.getGroupID());
-                stmt.execute();
-
+                        "INSERT INTO [customers] ([contact_detail_id], [customer_group_id])\n" +
+                                "VALUES (?,?);"
+                );
+                stmt.setInt(1, customer.getContactId());
+                stmt.setInt(2, customer.getGroupID());
+                stmt.executeUpdate();
             } catch (ConnectionException | SQLException e) {
-                throw new ModelSyncException("WARNING! Error occured while creating a new contact details record.", e);
-            } finally {
-                customers.add(object);
+                throw new ModelSyncException("WARNING! Error occurred while creating the customer record.", e);
             }
+
+        } catch (ConnectionException | SQLException e) {
+            throw new ModelSyncException("WARNING! Error occurred while creating a new contact details record.", e);
+        } finally {
+            customers.add(customer);
         }
+        return customer;
 
     }
 
+    /**
+     * Method to update a customer in the database
+     *
+     * @param customer customer to be updated
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
-    public void update(Customer... objects) throws ModelSyncException {
-        for (Customer object : objects) {
-            try {
-                dbConnect = new DBConnect();
-                PreparedStatement stmt = dbConnect.getConnection().prepareStatement(
-                        "UPDATE [contact_details] SET [phone]=?, [email]=?, [address]=?, [postcode]=?, [city]=?, [country_code]=? WHERE id=?;");
-                stmt.setString(1, object.getPhone());
-                stmt.setString(2, object.getEmail());
-                stmt.setString(3, object.getAddress());
-                stmt.setString(4, object.getPostcode());
-                stmt.setString(5, object.getCity());
-                stmt.setString(6, object.getCountry());
-                stmt.setInt(7, object.getGroupID());
-                dbConnect.uploadSafe(stmt);
+    public void update(Customer customer) throws ModelSyncException {
+        try {
+            dbConnect = new DBConnect();
+            PreparedStatement stmt = dbConnect.getConnection().prepareStatement(
+                    "UPDATE [contact_details]\n" +
+                            "SET [phone] = ?, [email] = ?, [address] = ?, [postcode] = ?, [city] = ?, [country_code] = ?\n" +
+                            "WHERE id = ?;"
+            );
+            stmt.setString(1, customer.getPhone());
+            stmt.setString(2, customer.getEmail());
+            stmt.setString(3, customer.getAddress());
+            stmt.setString(4, customer.getPostcode());
+            stmt.setString(5, customer.getCity());
+            stmt.setString(6, customer.getCountry());
+            stmt.setInt(7, customer.getGroupID());
+            dbConnect.uploadSafe(stmt);
 
-                stmt = dbConnect.getConnection().prepareStatement(
-                        "UPDATE [customers] SET [customer_group_id]=? WHERE [id]=?;");
-                stmt.setInt(1, object.getGroupID());
-                stmt.setInt(2, object.getId());
-                dbConnect.uploadSafe(stmt);
-            } catch (ConnectionException | SQLException e) {
-                throw new ModelSyncException("WARNING! Could not update the customer of id [" + object.getId() + "]!", e);
-            } finally {
-                customers.removeIf(c -> c.getId() == object.getId());
-                customers.add(object);
-            }
+            stmt = dbConnect.getConnection().prepareStatement(
+                    "UPDATE [customers]\n" +
+                            "SET [customer_group_id] = ?\n" +
+                            "WHERE [id] = ?;"
+            );
+            stmt.setInt(1, customer.getGroupID());
+            stmt.setInt(2, customer.getId());
+            dbConnect.uploadSafe(stmt);
+        } catch (ConnectionException | SQLException e) {
+            throw new ModelSyncException("WARNING! Could not update the customer of id [" + customer.getId() + "]!", e);
+        } finally {
+            customers.removeIf(c -> c.getId() == customer.getId());
+            customers.add(customer);
         }
     }
 
+    /**
+     * Method to delete a customer from the database
+     *
+     * @param customer customer to be deleted
+     */
     @Override
-    public void delete(Customer... objects) throws ModelSyncException {
-        for (Customer object : objects) {
-            try {
-                dbConnect = new DBConnect();
-                PreparedStatement stmt = dbConnect.getConnection().prepareStatement(
-                        "DELETE FROM [customers] WHERE id=?;" +
-                                "DELETE FROM [contact_details] WHERE [id]=?;");
-                stmt.setInt(1, object.getId());
-                stmt.setInt(2, object.getGroupID());
-                dbConnect.uploadSafe(stmt);
-            } catch (ConnectionException | SQLException e) {
-                throw new ModelSyncException("Could not delete the user!", e);
-            } finally {
-                customers.removeIf(c -> c.getId() == object.getId());
-            }
+    public void delete(Customer customer) throws ModelSyncException {
+        try {
+            dbConnect = new DBConnect();
+            PreparedStatement stmt = dbConnect.getConnection().prepareStatement(
+                    "DELETE FROM [customers]\n" +
+                            "WHERE id = ?;" +
+                            "DELETE FROM [contact_details]\n" +
+                            "WHERE [id] = ?;"
+            );
+            stmt.setInt(1, customer.getId());
+            stmt.setInt(2, customer.getGroupID());
+            dbConnect.uploadSafe(stmt);
+        } catch (ConnectionException | SQLException e) {
+            throw new ModelSyncException("Could not delete the user!", e);
+        } finally {
+            customers.removeIf(c -> c.getId() == customer.getId());
         }
     }
 }

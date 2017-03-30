@@ -49,10 +49,12 @@ public class DBCustomersTest {
         List<Customer> c = customers.getAll();
         int numOfRows = c.size();
         Customer temp = new Customer("test", "tefgst", "test1", "test", "test", "test", "PL", 1);
-        customers.create(temp);
+        temp = customers.create(temp);
         c = customers.getAll();
 
+        customers.delete(temp);
         assertNotEquals("Didn't create a new row", c.size(), numOfRows);
+
     }
 
     @Test
