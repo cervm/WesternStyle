@@ -1,7 +1,5 @@
 package model;
 
-import model.entity.Customer;
-
 import java.util.ArrayList;
 import java.sql.Date;
 
@@ -47,6 +45,10 @@ public class Order {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getInvoiceId() {
