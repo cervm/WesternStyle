@@ -66,7 +66,7 @@
                      <TableColumn />
                  </columns>
              </TableView>
-            <JFXButton fx:id="btn_products_create" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Create" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <JFXButton fx:id="btn_products_create" onAction="#showNewProductDialog" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Create" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="-200.0" />
                </GridPane.margin>
