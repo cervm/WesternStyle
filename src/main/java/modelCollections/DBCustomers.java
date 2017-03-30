@@ -1,5 +1,6 @@
 package modelCollections;
 
+import model.CustomerGroup;
 import model.connection.DBConnect;
 import model.connection.IDataAccessObject;
 import model.entity.Customer;
@@ -21,9 +22,11 @@ public class DBCustomers implements IDataAccessObject<Customer> {
     private ArrayList<Customer> customers;
     private DBConnect dbConnect;
     private boolean isLoaded;
+    private ArrayList<CustomerGroup> customerGroups;
 
     public DBCustomers() throws ModelSyncException {
         customers = new ArrayList<>();
+        customerGroups = new ArrayList<>();
         isLoaded = false;
     }
 
@@ -52,6 +55,22 @@ public class DBCustomers implements IDataAccessObject<Customer> {
         } catch (ConnectionException | SQLException e) {
             throw new ModelSyncException("Could not load customers.", e);
         }
+
+        customerGroups = new ArrayList<>();
+        try {
+            dbConnect = new DBConnect();
+            String query = "SELECT * FROM customer_groups";
+            ResultSet rs = dbConnect.getFromDataBase(query);
+            while (rs.next()) {
+                customerGroups.add(new CustomerGroup(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getInt("discount")
+                ));
+            }
+        } catch (ConnectionException | SQLException e) {
+            throw new ModelSyncException("Could not load customer groups.", e);
+        }
     }
 
     @Override
@@ -73,9 +92,6 @@ public class DBCustomers implements IDataAccessObject<Customer> {
     public Customer getById(int id) throws ModelSyncException {
         if (!isLoaded) {
             load();
-        }
-        if (id >= customers.size() || id < 0) {
-            throw new ModelSyncException("ID is out of range!");
         }
         return customers.stream().filter(o -> o.getId() == id).findFirst().get();
     }
@@ -198,5 +214,17 @@ public class DBCustomers implements IDataAccessObject<Customer> {
         } finally {
             customers.removeIf(c -> c.getId() == customer.getId());
         }
+    }
+
+    public ArrayList<CustomerGroup> getCustomerGroups() throws ModelSyncException {
+        if (!isLoaded) {
+            load();
+        }
+        return customerGroups;
+    }
+
+    public void assignToGroup(Customer customer, CustomerGroup customerGroup) throws ModelSyncException {
+        customer.setGroupID(customerGroup.getGid());
+        update(customer);
     }
 }

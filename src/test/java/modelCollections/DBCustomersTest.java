@@ -1,13 +1,16 @@
 package modelCollections;
 
+import model.CustomerGroup;
 import model.entity.Customer;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -41,7 +44,8 @@ public class DBCustomersTest {
 
     @Test
     public void getById() throws Exception {
-
+        Customer c = customers.getById(22);
+        assertEquals(1, c.getGroupID());
     }
 
     @Test
@@ -58,14 +62,31 @@ public class DBCustomersTest {
         assertNotEquals("Didn't create a new row", size, numOfRows);
     }
 
+    @Ignore("Not implemented")
     @Test
     public void update() throws Exception {
 
     }
 
+    @Ignore("Not implemented")
     @Test
     public void delete() throws Exception {
 
     }
 
+    @Test
+    public void getCustomerGroupsTest() throws Exception {
+        ArrayList<CustomerGroup> groups = customers.getCustomerGroups();
+        assertNotEquals(0, groups.size());
+    }
+
+    @Test
+    public void assignToGroupTest() throws Exception {
+        int newGroupID = 2;
+        customers.load();
+        Customer c = customers.getById(24);
+        customers.assignToGroup(c, customers.getCustomerGroups().get(1));
+
+        assertEquals(newGroupID, c.getGroupID());
+    }
 }
