@@ -1,18 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ColorPicker?>
-<?import javafx.scene.effect.BoxBlur?>
-<?import javafx.scene.effect.Reflection?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTreeTableColumn?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.tabGroupsController"
-            prefHeight="200.0" prefWidth="400.0">
-    <center>
-    <Text>Groups tab :]]]</Text>
 
-    </center>
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.tabGroupsController">
+   <center>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="452.0" minWidth="10.0" prefWidth="450.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="877.0" minWidth="10.0" prefWidth="60.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="877.0" minWidth="10.0" prefWidth="451.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="294.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="500.0" minHeight="10.0" prefHeight="532.0" vgrow="SOMETIMES" />
+
+            <RowConstraints maxHeight="294.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <JFXTreeTableView fx:id="table_groups" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+             <columns>
+                 <JFXTreeTableColumn fx:id="groups_name" prefWidth="208.99998474121094" text="Group name" />
+                 <JFXTreeTableColumn fx:id="groups_discount" prefWidth="219.0" text="Discount" />
+             </columns>
+            </JFXTreeTableView>
+            <JFXTreeTableView fx:id="table_members" prefHeight="485.0" prefWidth="401.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                <columns>
+                    <JFXTreeTableColumn fx:id="members_name" prefWidth="123.0" text="Member name" />
+                    <JFXTreeTableColumn fx:id="members_city" prefWidth="78.0" text="City" />
+                    <JFXTreeTableColumn fx:id="members_email" prefWidth="106.0" text="E-mail" />
+                    <JFXTreeTableColumn fx:id="members_phone" prefWidth="123.0" text="Phone" />
+                </columns>
+
+            </JFXTreeTableView>
+            <Pane opacity="0.75" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #000000;" GridPane.rowIndex="2" />
+            <Pane opacity="0.75" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #000000;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Pane opacity="0.75" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #000000;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <JFXButton fx:id="btn_groups_edit" mnemonicParsing="false" text="Edit" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </JFXButton>
+            <JFXButton fx:id="btn_groups_create" mnemonicParsing="false" text="Create" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets left="-200.0" />
+               </GridPane.margin></JFXButton>
+            <JFXButton fx:id="btn_groups_delete" mnemonicParsing="false" text="Delete" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets left="200.0" />
+               </GridPane.margin></JFXButton>
+            <JFXButton fx:id="btn_members_create" mnemonicParsing="false" text="Create" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="-200.0" />
+               </GridPane.margin></JFXButton>
+            <JFXButton fx:id="btn_members_delete" mnemonicParsing="false" text="Delete" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="200.0" />
+               </GridPane.margin></JFXButton>
+            <JFXButton fx:id="btn_members_edit" mnemonicParsing="false" text="Edit" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Groups" GridPane.halignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Members" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+         </children>
+      </GridPane>
+   </center>
 </BorderPane>
