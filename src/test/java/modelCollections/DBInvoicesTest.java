@@ -2,7 +2,6 @@ package modelCollections;
 
 import model.Invoice;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
@@ -11,7 +10,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Tests for Invoices DAO
@@ -71,10 +71,15 @@ public class DBInvoicesTest {
         assertEquals("The invoice not deleted. The id is " + tempId, deletionSize, initialSize);
     }
 
-    @Ignore("Not implemented")
     @Test
     public void update() throws Exception {
-
+        int amount = 1234;
+        invoices.load();
+        Invoice invoice = invoices.getById(15);
+        invoice.setAmount(amount);
+        invoices.update(invoice);
+        invoices.load();
+        assertEquals(amount, invoices.getById(15).getAmount(), 1);
     }
 
 }

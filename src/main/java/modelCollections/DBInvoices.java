@@ -107,11 +107,12 @@ public class DBInvoices implements IDataAccessObject<Invoice> {
             dbConnect = new DBConnect();
             PreparedStatement ps = dbConnect.getConnection().prepareStatement(
                     "UPDATE [invoices]\n" +
-                            "SET [id] = ?, [payment_date] = ?, [amount] = ?"
+                            "SET [payment_date] = ?, [amount] = ? WHERE [id] = ?;"
             );
-            ps.setInt(1, invoice.getId());
-            ps.setDate(2, java.sql.Date.valueOf(invoice.getPaymentDate().toString()));
-            ps.setDouble(3, invoice.getAmount());
+            ps.setInt(3, invoice.getId());
+            ps.setDate(1, java.sql.Date.valueOf(invoice.getPaymentDate().toString()));
+            ps.setDouble(2, invoice.getAmount());
+            ps.executeUpdate();
         } catch (ConnectionException | SQLException e) {
             throw new ModelSyncException("WARNING! Could not update the invoice of id [" + invoice.getId() + "]!", e);
         } finally {

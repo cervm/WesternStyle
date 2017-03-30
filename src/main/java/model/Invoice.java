@@ -49,6 +49,10 @@ public class Invoice {
         orders.removeIf(o -> o == orderId);
     }
 
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
     public ArrayList<Integer> getOrders() {
         return orders;
     }
