@@ -128,6 +128,7 @@ public class DBConnect {
      * @param tf a TextField object
      * @return true when the TextField object doesn't contain any illegal characters. False otherwise
      */
+    @Deprecated
     public static boolean validateField(TextField tf) {
         //TODO: should be implemented better but didn't have creativity to do it better
         return !(tf.getText().contains(";") || tf.getText().contains("[") || tf.getText().contains("]") || tf.getText().contains("{") || tf.getText().contains("}")) && !tf.getText().isEmpty();
