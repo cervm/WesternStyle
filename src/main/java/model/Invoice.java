@@ -1,13 +1,13 @@
 package model;
 
-import java.util.ArrayList;
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  * Invoice Entity
  */
 public class Invoice {
-    private int id;
+    private int id, numOfOrders;
     private Date paymentDate;
     private double amount;
     private ArrayList<Integer> orders;
@@ -22,6 +22,7 @@ public class Invoice {
         this.paymentDate = paymentDate;
         this.amount = amount;
         this.orders = orders;
+        numOfOrders = orders.size();
     }
 
     public int getId() {
@@ -46,6 +47,15 @@ public class Invoice {
 
     public void deleteOrder(int orderId) {
         orders.removeIf(o -> o == orderId);
+    }
+
+    public ArrayList<Integer> getOrders() {
+        return orders;
+    }
+
+    public int getNumOfOrders() {
+        numOfOrders = orders.size();
+        return numOfOrders;
     }
 
     @Override
