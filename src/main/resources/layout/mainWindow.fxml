@@ -6,12 +6,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.Tab?>
+<?import com.jfoenix.controls.JFXTabPane?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="controller.MainWindowController"
             prefHeight="600.0" prefWidth="900.0">
     <center>
-        <TabPane fx:id="menuTabPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+        <JFXTabPane fx:id="menuTabPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
         <tabs>
             <Tab fx:id="tabCustomers" text="Customers">
                 <fx:include fx:id="tabCustomersSrc" source="tabCustomers.fxml" />
@@ -39,6 +40,6 @@
             </Tab>
 
         </tabs>
-        </TabPane>
+        </JFXTabPane>
     </center>
 </BorderPane>
