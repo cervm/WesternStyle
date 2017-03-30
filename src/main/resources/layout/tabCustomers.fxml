@@ -8,17 +8,17 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <JFXTextField layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="400.0" promptText="Search" />
+      <JFXTextField fx:id="txtfield_customers_search" layoutX="14.0" layoutY="23.0" prefHeight="25.0" prefWidth="400.0" promptText="Search" />
       <TableView fx:id="table_customers" layoutX="14.0" layoutY="61.0" prefHeight="480.0" prefWidth="872.0">
         <columns>
           <TableColumn fx:id="nameCol" prefWidth="75.0" text="Name" />
           <TableColumn fx:id="emailCol" prefWidth="75.0" text="Email" />
         </columns>
       </TableView>
-      <JFXButton layoutX="14.0" layoutY="549.0" mnemonicParsing="false" text="Create" />
-      <JFXButton layoutX="73.0" layoutY="549.0" mnemonicParsing="false" text="Edit" />
-      <JFXButton layoutX="118.0" layoutY="549.0" mnemonicParsing="false" text="Remove" />
-      <JFXButton layoutX="241.0" layoutY="549.0" mnemonicParsing="false" text="Add to group" />
-      <JFXButton layoutX="338.0" layoutY="549.0" mnemonicParsing="false" text="Change group" />
+      <JFXButton fx:id="btn_customers_create" layoutX="14.0" layoutY="549.0" mnemonicParsing="false" text="Create" />
+      <JFXButton fx:id="btn_customers_edit" layoutX="73.0" layoutY="549.0" mnemonicParsing="false" text="Edit" />
+      <JFXButton fx:id="btn_customers_delete" layoutX="118.0" layoutY="549.0" mnemonicParsing="false" text="Remove" />
+      <JFXButton fx:id="btn_customers_add_group" layoutX="241.0" layoutY="549.0" mnemonicParsing="false" text="Add to group" />
+      <JFXButton fx:id="btn_customers_change_group" layoutX="338.0" layoutY="549.0" mnemonicParsing="false" text="Change group" />
    </children>
 </Pane>
