@@ -14,6 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Product;
+import model.Variant;
 import model.exception.ModelSyncException;
 import modelCollections.DBProducts;
 import org.controlsfx.control.CheckTreeView;
@@ -46,9 +47,12 @@ public class TabProductsController implements Initializable {
     public TableColumn minCol;
     @FXML
     public TableColumn suppCol;
-
     @FXML
     public TableView variants_table;
+    @FXML
+    public TableColumn quantityCol;
+    @FXML
+    public TableColumn noOfProprCol;
     @FXML
     public JFXButton btn_products_create;
     @FXML
@@ -64,6 +68,7 @@ public class TabProductsController implements Initializable {
 
     DBProducts dbProducts;
     ObservableList<Product> products;
+    Product selectedProduct;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -76,7 +81,7 @@ public class TabProductsController implements Initializable {
             a.setContentText(e.getMessage());
         }
         loadTable(products);
-
+        selectedProduct = (Product) products_table.getSelectionModel().getSelectedItem();
     }
 
     private void loadTable(ObservableList<Product> source){
@@ -104,5 +109,13 @@ public class TabProductsController implements Initializable {
         } catch (IOException ex) {
         } catch (Exception ex2) {
         }
+    }
+
+    public void tableViewOnMouseClicked(){
+
+    }
+
+    public void loadVariantsTable(){
+        ObservableList<Variant> variants = FXCollections.observableArrayList();
     }
 }
