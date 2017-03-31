@@ -5,15 +5,20 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import model.Order;
 import model.exception.ModelSyncException;
 import modelCollections.DBOrders;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -75,5 +80,18 @@ public class TabOrdersController implements Initializable {
         statCol.setCellValueFactory(new PropertyValueFactory<>("deliveryStatus"));
         custIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         table_orders.getColumns().addAll(iodCol, dateCol, delDateCol, amntCol, statCol, custIdCol);
+    }
+
+    @FXML
+    public void showNewOrderDialog() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/layout/addOrder.fxml"));
+            Stage newOrderDialog = new Stage();
+            newOrderDialog.setTitle("New product");
+            newOrderDialog.setScene(new Scene(root));
+            newOrderDialog.show();
+        } catch (IOException ex) {
+        } catch (Exception ex2) {
+        }
     }
 }
