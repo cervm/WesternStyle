@@ -64,12 +64,12 @@ public class Invoice {
 
     @Override
     public String toString() {
-        String s = "[INVOICE]: id=" + id + " ," +
+        StringBuilder s = new StringBuilder("[INVOICE]: id=" + id + " ," +
                 " paymentDate=" + paymentDate.toString() + " ," +
-                " amount=" + amount + " , ordersIDs=";
+                " amount=" + amount + " , ordersIDs=");
         for (int i : orders) {
-            s += i + ",";
+            s.append(i).append(",");
         }
-        return s;
+        return s.toString();
     }
 }

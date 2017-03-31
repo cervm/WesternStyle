@@ -58,7 +58,6 @@ public class TabInvoicesController implements Initializable {
     @FXML
     public TableColumn customerCol;
 
-    private DBInvoices dbInvoices;
     private DBOrders dbOrders;
     private ObservableList<Invoice> invoices;
     private Invoice selectedInvoice;
@@ -66,7 +65,7 @@ public class TabInvoicesController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            dbInvoices = new DBInvoices();
+            DBInvoices dbInvoices = new DBInvoices();
             dbOrders = new DBOrders();
             invoices = FXCollections.observableArrayList(dbInvoices.getAll());
         } catch (ModelSyncException e) {

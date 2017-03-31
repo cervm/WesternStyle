@@ -26,7 +26,7 @@ public class DBConnectTest {
 
     @Test
     public void testConnection() throws Exception {
-        assertFalse(connect.testConnection(" ", "", ""));
+        assertFalse(DBConnect.testConnection(" ", "", ""));
     }
 
     @Test

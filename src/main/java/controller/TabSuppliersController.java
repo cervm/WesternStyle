@@ -50,13 +50,12 @@ public class TabSuppliersController implements Initializable {
     @FXML
     public TableColumn regCol;
 
-    private DBSuppliers dbSuppliers;
     private ObservableList<Supplier> suppliers;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            dbSuppliers = new DBSuppliers();
+            DBSuppliers dbSuppliers = new DBSuppliers();
             suppliers = FXCollections.observableArrayList(dbSuppliers.getAll());
         } catch (ModelSyncException e) {
             Alert a = new Alert(Alert.AlertType.ERROR);

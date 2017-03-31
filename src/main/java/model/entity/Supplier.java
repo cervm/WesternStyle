@@ -30,7 +30,7 @@ public class Supplier extends ContactDetails {
         return companyRegNo;
     }
 
-    public void setCompanyRegNo(String companyRegNo) {
+    private void setCompanyRegNo(String companyRegNo) {
         this.companyRegNo = companyRegNo;
     }
 

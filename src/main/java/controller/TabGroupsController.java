@@ -54,14 +54,13 @@ public class TabGroupsController implements Initializable {
     @FXML
     public JFXButton btn_members_delete;
 
-    private DBCustomers dbCustomers;
     ObservableList<Customer> customers;
     ObservableList<CustomerGroup> groups;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            dbCustomers = new DBCustomers();
+            DBCustomers dbCustomers = new DBCustomers();
             customers = FXCollections.observableArrayList(dbCustomers.getAll());
             groups = FXCollections.observableArrayList(dbCustomers.getCustomerGroups());
         } catch (ModelSyncException e) {

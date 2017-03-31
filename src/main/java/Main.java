@@ -47,10 +47,10 @@ public class Main extends Application {
         Button exitButton = (Button) a.getDialogPane().lookupButton(ButtonType.OK);
         exitButton.setText("Exit");
         Optional<ButtonType> closeResponse = a.showAndWait();
-        if (closeResponse.isPresent()) {
-            if (ButtonType.OK.equals(closeResponse.get())) {
+        closeResponse.ifPresent(buttonType -> {
+            if (ButtonType.OK.equals(buttonType)) {
                 window.close();
             }
-        }
+        });
     }
 }
