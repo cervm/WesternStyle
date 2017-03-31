@@ -130,6 +130,7 @@ public class DBOrders implements IDataAccessObject<Order> {
 
     @Override
     public void update(Order order) throws ModelSyncException {
+        //TODO Caused by: com.microsoft.sqlserver.jdbc.SQLServerException: The UPDATE statement conflicted with the FOREIGN KEY constraint "Orders_Customers_id_fk". The conflict occurred in database "dmaj0916_197286", table "dbo.customers", column 'id'.
         try {
             dbConnect = new DBConnect();
 
