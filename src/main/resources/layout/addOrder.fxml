@@ -30,7 +30,7 @@
             </rowConstraints>
          <children>
             <Pane opacity="0.75" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #000000;" GridPane.columnSpan="3" GridPane.rowIndex="4" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Products" GridPane.halignment="LEFT">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select products" GridPane.halignment="LEFT">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
@@ -38,7 +38,7 @@
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Variants" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select variant" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
@@ -65,7 +65,7 @@
              <TableView fx:id="table_order_product" GridPane.columnIndex="0" GridPane.rowIndex="1" />
              <TableView fx:id="table_order_variant" GridPane.columnIndex="0" GridPane.rowIndex="3" />
              <ListView fx:id="listview_basket" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="2" />
-            <JFXButton fx:id="btn_order_addCustomer" maxWidth="130.0" minWidth="130.0" mnemonicParsing="false" prefWidth="130.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Add customer" textFill="WHITE" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+            <JFXButton fx:id="btn_order_addCustomer" onAction="#showAssignProductDialog" maxWidth="130.0" minWidth="130.0" mnemonicParsing="false" prefWidth="130.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Add customer" textFill="WHITE" GridPane.halignment="LEFT" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
