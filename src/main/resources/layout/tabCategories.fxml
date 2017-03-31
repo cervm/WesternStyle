@@ -12,8 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import org.controlsfx.control.CheckTreeView?>
-<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TabCategoriesController">
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TabCategoriesController">
    <center>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -72,12 +71,15 @@
                   <Insets left="200.0" />
                </GridPane.margin>
             </JFXButton>
-            <CheckTreeView fx:id="table_categories" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
-            </CheckTreeView>
+            <TableView fx:id="table_categories" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <columns>
+                  <TableColumn text="Name" />
+                  <TableColumn minWidth="0.0" prefWidth="100.0" text="Parent Category" />
+               </columns></TableView>
             <TableView fx:id="table_properties" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn fx:id="nameCol" prefWidth="75.0" text="Name" />
+                <TableColumn fx:id="desCol" prefWidth="75.0" text="Description" />
               </columns>
             </TableView>
          </children>
