@@ -48,11 +48,12 @@ public class DBOrders implements IDataAccessObject<Order> {
             while (ordersRS.next()) {
                 orders.add(new Order(
                         ordersRS.getInt("id"),
-                        ordersRS.getInt("invoice_id"),
                         ordersRS.getDate("order_date"),
-                        ordersRS.getDate("delivery_date"),
                         ordersRS.getDouble("amount"),
-                        ordersRS.getBoolean("delivery_status")
+                        ordersRS.getBoolean("delivery_status"),
+                        ordersRS.getInt("invoice_id"),
+                        ordersRS.getInt("customer_id"),
+                        ordersRS.getDate("delivery_date")
                 ));
             }
             isLoaded = true;
@@ -129,21 +130,19 @@ public class DBOrders implements IDataAccessObject<Order> {
 
     @Override
     public void update(Order order) throws ModelSyncException {
-        //TODO Caused by: com.microsoft.sqlserver.jdbc.SQLServerException: The UPDATE statement conflicted with the FOREIGN KEY constraint "Orders_Customers_id_fk". The conflict occurred in database "dmaj0916_197286", table "dbo.customers", column 'id'.
         try {
             dbConnect = new DBConnect();
 
             String updateOrderQry = "UPDATE [orders] SET [order_date] = ?, [amount] = ?, [delivery_status] = ?, [invoice_id] = ?, [customer_id] = ?, [delivery_date] = ? WHERE [id]=?;";
 
             PreparedStatement preparedStatement = dbConnect.getConnection().prepareStatement(updateOrderQry);
-            preparedStatement.setDate(1, (Date) order.getOrderDate());
+            preparedStatement.setDate(1, order.getOrderDate());
             preparedStatement.setDouble(2, order.getAmount());
             preparedStatement.setBoolean(3, order.getDeliveryStatus());
             preparedStatement.setInt(4, order.getInvoiceId());
             preparedStatement.setInt(5, order.getCustomerId());
-            preparedStatement.setDate(6, (Date) order.getDeliveryDate());
+            preparedStatement.setDate(6, order.getDeliveryDate());
             preparedStatement.setInt(7, order.getId());
-            System.out.println(preparedStatement.toString());
             dbConnect.uploadSafe(preparedStatement);
         } catch (SQLException | ConnectionException e) {
             throw new ModelSyncException("WARNING! Could not update the order of id [" + order.getId() + "]!", e);

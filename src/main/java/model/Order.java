@@ -25,13 +25,14 @@ public class Order {
         this.customerId = customerId;
     }
 
-    public Order(int id, int invoiceId, Date orderDate, Date deliveryDate, double amount, boolean deliveryStatus) {
+    public Order(int id, Date orderDate, double amount, boolean deliveryStatus, int invoiceId, int customerId, Date deliveryDate) {
         this.id = id;
-        this.invoiceId = invoiceId;
         this.orderDate = orderDate;
-        this.deliveryDate = deliveryDate;
         this.amount = amount;
         this.deliveryStatus = deliveryStatus;
+        this.invoiceId = invoiceId;
+        this.customerId = customerId;
+        this.deliveryDate = deliveryDate;
     }
 
     public Order(int invoiceId, Date orderDate, Date deliveryDate, double amount, boolean deliveryStatus, int customerId) {
