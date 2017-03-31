@@ -24,12 +24,20 @@ public class DBCustomers implements IDataAccessObject<Customer> {
     private boolean isLoaded;
     private ArrayList<CustomerGroup> customerGroups;
 
-    public DBCustomers() throws ModelSyncException {
+    /**
+     * Initialize empty lists for collections
+     */
+    public DBCustomers() {
         customers = new ArrayList<>();
         customerGroups = new ArrayList<>();
         isLoaded = false;
     }
 
+    /**
+     * Loads all customers from the database
+     *
+     * @throws ModelSyncException connection or SQL exception
+     */
     void load() throws ModelSyncException {
         customers = new ArrayList<>();
         try {
@@ -73,6 +81,12 @@ public class DBCustomers implements IDataAccessObject<Customer> {
         }
     }
 
+    /**
+     * Method to retrieve all customers from the database
+     *
+     * @return list of customers
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
     public List<Customer> getAll() throws ModelSyncException {
         if (!isLoaded) {
@@ -82,7 +96,7 @@ public class DBCustomers implements IDataAccessObject<Customer> {
     }
 
     /**
-     * Method to get a customer by id
+     * Method to get a customer from the database by id
      *
      * @param id id of the customer
      * @return customer with the id
@@ -93,7 +107,7 @@ public class DBCustomers implements IDataAccessObject<Customer> {
         if (!isLoaded) {
             load();
         }
-        return customers.stream().filter(o -> o.getId() == id).findFirst().get();
+        return customers.stream().filter(o -> o.getId() == id).findFirst().orElse(null);
     }
 
     /**
@@ -216,13 +230,23 @@ public class DBCustomers implements IDataAccessObject<Customer> {
         }
     }
 
-    public ArrayList<CustomerGroup> getCustomerGroups() throws ModelSyncException {
+    /**
+     * Method to retrieve all customer groups
+     */
+    public List<CustomerGroup> getCustomerGroups() throws ModelSyncException {
         if (!isLoaded) {
             load();
         }
         return customerGroups;
     }
 
+    /**
+     * Method to assign a group to a customer
+     *
+     * @param customer      customer to assign to
+     * @param customerGroup group to assign
+     * @throws ModelSyncException connection or SQL exception
+     */
     public void assignToGroup(Customer customer, CustomerGroup customerGroup) throws ModelSyncException {
         customer.setGroupID(customerGroup.getGid());
         update(customer);

@@ -22,11 +22,19 @@ public class DBProducts implements IDataAccessObject<Product> {
     private DBConnect dbConnect;
     private boolean isLoaded;
 
+    /**
+     * Initialize empty lists for collections
+     */
     public DBProducts() {
         products = new ArrayList<>();
         isLoaded = false;
     }
 
+    /**
+     * Loads all products from the database
+     *
+     * @throws ModelSyncException connection or SQL exception
+     */
     void load() throws ModelSyncException {
         products = new ArrayList<>();
         try {
@@ -53,7 +61,7 @@ public class DBProducts implements IDataAccessObject<Product> {
     /**
      * Method to retrieve all products from the database
      *
-     * @return all products in the database
+     * @return list of products
      * @throws ModelSyncException connection or SQL exception
      */
     @Override
@@ -65,46 +73,10 @@ public class DBProducts implements IDataAccessObject<Product> {
     }
 
     /**
-     * Method to retrieve all products from the specified category
-     *
-     * @param category category to search in
-     * @return all products in the category
-     * @throws ModelSyncException connection or SQL exception
-     */
-    public List<Product> getByCategory(Category category) throws ModelSyncException {
-        List<Product> products = new ArrayList<>();
-        try {
-            dbConnect = new DBConnect();
-            Statement statement = dbConnect.getConnection().createStatement();
-            ResultSet rs = statement.executeQuery(
-                    "SELECT *\n" +
-                            "FROM products AS p\n" +
-                            "JOIN product_categories AS c ON c.product_id = p.id\n" +
-                            "WHERE c.id = " + category.getCid() + ";");
-            while (rs.next()) {
-                products.add(new Product(
-                        rs.getInt("id"),
-                        rs.getInt("min_stock"),
-                        rs.getString("name"),
-                        rs.getString("country_code"),
-                        rs.getString("description"),
-                        rs.getDouble("cost_price"),
-                        rs.getDouble("sales_price"),
-                        rs.getDouble("rent_price"),
-                        rs.getInt("supplier_id")
-                ));
-            }
-        } catch (ConnectionException | SQLException e) {
-            throw new ModelSyncException("Could not load products.", e);
-        }
-        return products;
-    }
-
-    /**
-     * Method to get a product by id
+     * Method to get a product from the database by id
      *
      * @param id id of the product
-     * @return product with the id
+     * @return product matching the id
      * @throws ModelSyncException connection or SQL exception
      */
     @Override
@@ -168,6 +140,42 @@ public class DBProducts implements IDataAccessObject<Product> {
             products.add(product);
         }
         return product;
+    }
+
+    /**
+     * Method to retrieve all products from the specified category
+     *
+     * @param category category to search in
+     * @return all products in the category
+     * @throws ModelSyncException connection or SQL exception
+     */
+    public List<Product> getByCategory(Category category) throws ModelSyncException {
+        List<Product> products = new ArrayList<>();
+        try {
+            dbConnect = new DBConnect();
+            Statement statement = dbConnect.getConnection().createStatement();
+            ResultSet rs = statement.executeQuery(
+                    "SELECT *\n" +
+                            "FROM products AS p\n" +
+                            "JOIN product_categories AS c ON c.product_id = p.id\n" +
+                            "WHERE c.id = " + category.getCid() + ";");
+            while (rs.next()) {
+                products.add(new Product(
+                        rs.getInt("id"),
+                        rs.getInt("min_stock"),
+                        rs.getString("name"),
+                        rs.getString("country_code"),
+                        rs.getString("description"),
+                        rs.getDouble("cost_price"),
+                        rs.getDouble("sales_price"),
+                        rs.getDouble("rent_price"),
+                        rs.getInt("supplier_id")
+                ));
+            }
+        } catch (ConnectionException | SQLException e) {
+            throw new ModelSyncException("Could not load products.", e);
+        }
+        return products;
     }
 
     /**

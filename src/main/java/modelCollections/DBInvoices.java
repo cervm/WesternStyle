@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Invoices Data Access Object
@@ -20,10 +21,19 @@ public class DBInvoices implements IDataAccessObject<Invoice> {
     private DBConnect dbConnect;
     private boolean isLoaded;
 
+    /**
+     * Initialize empty lists for collections
+     */
     public DBInvoices() {
+        invoices = new ArrayList<>();
         isLoaded = false;
     }
 
+    /**
+     * Loads all invoices from the database
+     *
+     * @throws ModelSyncException connection or SQL exception
+     */
     public void load() throws ModelSyncException {
         invoices = new ArrayList<>();
         try {
@@ -46,14 +56,27 @@ public class DBInvoices implements IDataAccessObject<Invoice> {
         }
     }
 
+    /**
+     * Method to retrieve all invoices from the database
+     *
+     * @return list of invoices
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
-    public ArrayList<Invoice> getAll() throws ModelSyncException {
+    public List<Invoice> getAll() throws ModelSyncException {
         if (!isLoaded) {
             load();
         }
         return invoices;
     }
 
+    /**
+     * Method to get an invoice from the database by id
+     *
+     * @param id id of the invoice
+     * @return invoice matching the id
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
     public Invoice getById(int id) throws ModelSyncException {
         Invoice invoice;
@@ -76,6 +99,12 @@ public class DBInvoices implements IDataAccessObject<Invoice> {
         return invoice;
     }
 
+    /**
+     * Method to persist an invoice in the database
+     *
+     * @param invoice invoice to be persisted
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
     public Invoice create(Invoice invoice) throws ModelSyncException {
         try {
@@ -101,6 +130,12 @@ public class DBInvoices implements IDataAccessObject<Invoice> {
         return invoice;
     }
 
+    /**
+     * Method to update an invoice in the database
+     *
+     * @param invoice invoice to be updated
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
     public void update(Invoice invoice) throws ModelSyncException {
         try {
@@ -121,6 +156,11 @@ public class DBInvoices implements IDataAccessObject<Invoice> {
         }
     }
 
+    /**
+     * Method to delete an invoice from the database
+     *
+     * @param invoice invoice to be deleted
+     */
     @Override
     public void delete(Invoice invoice) {
         try {

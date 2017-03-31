@@ -12,23 +12,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * Orders Data Access Object
  */
-
 public class DBOrders implements IDataAccessObject<Order> {
     private List<Order> orders;
     private DBConnect dbConnect;
     private boolean isLoaded;
 
+    /**
+     * Initialize empty lists for collections
+     */
     public DBOrders() throws ModelSyncException {
         orders = new ArrayList<>();
         isLoaded = false;
     }
 
+    /**
+     * Loads all orders from the database without products and variants
+     *
+     * @throws ModelSyncException connection or SQL exception
+     */
     public void load() throws ModelSyncException {
-        //doesn't instantiate products, variants or the customer at this point
         orders = new ArrayList<>();
         try {
             dbConnect = new DBConnect();
@@ -61,6 +66,12 @@ public class DBOrders implements IDataAccessObject<Order> {
         }
     }
 
+    /**
+     * Method to retrieve all orders from the database
+     *
+     * @return list of orders
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
     public List<Order> getAll() throws ModelSyncException {
         if (!isLoaded) {
@@ -69,22 +80,30 @@ public class DBOrders implements IDataAccessObject<Order> {
         return orders;
     }
 
+    /**
+     * Method to get an order from the database by id
+     *
+     * @param id id of the order
+     * @return order matching the id
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
     public Order getById(int id) throws ModelSyncException {
         if (!isLoaded) {
             load();
         }
 
-        /*if (id >= orders.size() || id < 0) {
-            throw new ModelSyncException("ID is out of range!");
-        }*/
-        return orders.stream().filter(o -> o.getId() == id).findFirst().get();
-
+        return orders.stream().filter(o -> o.getId() == id).findFirst().orElse(null);
     }
 
+    /**
+     * Method to persist an order in the database
+     *
+     * @param order order to be persisted
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
     public Order create(Order order) throws ModelSyncException {
-        //creates the row in the orders table
         try {
             dbConnect = new DBConnect();
             String orderQuery = "INSERT INTO [orders] ([order_date], [amount], [delivery_status], [invoice_id], [customer_id],[delivery_date]) VALUES (?, ?, ?, ?, ?, ?);";
@@ -110,23 +129,15 @@ public class DBOrders implements IDataAccessObject<Order> {
             orders.add(order);
         }
 
-        //iterates through all of the basketItems of the order and adds them to the order_items table
-        /*for (BasketItem item : order.getItems()) {
-            try {
-                dbConnect = new DBConnect();
-                PreparedStatement preparedStatement = dbConnect.getConnection().prepareStatement(
-                        "INSERT INTO [order_items] ([order_id], [variant_id], [quantity]) VALUES (?, ?, ?);"
-                );
-                preparedStatement.setInt(1, order.getId());
-                preparedStatement.setInt(2, item.getVariant().getVid());
-                preparedStatement.setInt(3, item.getQuantity());
-            } catch (ConnectionException | SQLException e) {
-                e.printStackTrace();
-            }
-        }*/
         return order;
     }
 
+    /**
+     * Method to update an order in the database
+     *
+     * @param order order to be updated
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
     public void update(Order order) throws ModelSyncException {
         try {
@@ -148,6 +159,11 @@ public class DBOrders implements IDataAccessObject<Order> {
         }
     }
 
+    /**
+     * Method to delete an order from the database
+     *
+     * @param order order to be deleted
+     */
     @Override
     public void delete(Order order) throws ModelSyncException {
         try {

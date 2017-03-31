@@ -22,11 +22,19 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
     private DBConnect dbConnect;
     private boolean isLoaded;
 
+    /**
+     * Initialize empty lists for collections
+     */
     public DBSuppliers() throws ModelSyncException {
         suppliers = new ArrayList<>();
         isLoaded = false;
     }
 
+    /**
+     * Loads all suppliers from the database
+     *
+     * @throws ModelSyncException connection or SQL exception
+     */
     public void load() throws ModelSyncException {
         suppliers = new ArrayList<>();
         try {
@@ -54,6 +62,12 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
         }
     }
 
+    /**
+     * Method to retrieve all suppliers from the database
+     *
+     * @return list of suppliers
+     * @throws ModelSyncException connection or SQL exception
+     */
     @Override
     public List<Supplier> getAll() throws ModelSyncException {
         if (!isLoaded) {
@@ -63,10 +77,10 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
     }
 
     /**
-     * Method to get a supplier by id
+     * Method to get a supplier from the database by id
      *
      * @param id id of the supplier
-     * @return supplier with the id
+     * @return supplier matching the id
      * @throws ModelSyncException connection or SQL exception
      */
     @Override
@@ -74,7 +88,7 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
         if (!isLoaded) {
             load();
         }
-        return suppliers.stream().filter(o -> o.getId() == id).findFirst().get();
+        return suppliers.stream().filter(o -> o.getId() == id).findFirst().orElse(null);
     }
 
     /**
