@@ -36,7 +36,7 @@ public class Product {
         this.categories = categories;
     }
 
-    public Product(int id, int minStock, String name, String countryOrigin, String description, double costPrice, double salesPrice, double rentPrice) {
+    public Product(int id, int minStock, String name, String countryOrigin, String description, double costPrice, double salesPrice, double rentPrice, int supplierId) {
         this.id = id;
         this.minStock = minStock;
         this.name = name;
@@ -45,6 +45,7 @@ public class Product {
         this.costPrice = costPrice;
         this.salesPrice = salesPrice;
         this.rentPrice = rentPrice;
+        this.supplierId = supplierId;
     }
 
     public int getId() {

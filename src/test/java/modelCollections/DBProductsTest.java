@@ -1,6 +1,8 @@
 package modelCollections;
 
+import model.Category;
 import model.Product;
+import model.exception.ModelSyncException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -67,5 +69,34 @@ public class DBProductsTest {
         products.update(p);
         products.load();
         assertEquals(price, products.getById(5).getCostPrice(), 1);
+    }
+
+    @Test
+    public void getByCategoryTest() throws Exception {
+        Category category = new Category(4, "Tools", null, null);
+        List<Product> p = products.getByCategory(category);
+
+        assertNotEquals(0, p.size());
+    }
+
+    @Test(expected = ModelSyncException.class)
+    public void getByIdInvalidIndexExceptionTest() throws Exception {
+        Product p = products.getById(-1);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void getByCategoryInvalidIndeExceptionTest() throws Exception {
+        List<Product> lp = products.getByCategory(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void updateNullObjectTest() throws Exception {
+        products.update(null);
+    }
+
+    @Test(expected = ModelSyncException.class)
+    public void createInvalidObjectTest() throws Exception {
+        Product p = new Product(5, null, null, "asdfasdf", 0, -1, -1, -1);
+        products.create(p);
     }
 }

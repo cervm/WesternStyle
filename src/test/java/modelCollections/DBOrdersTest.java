@@ -1,6 +1,7 @@
 package modelCollections;
 
 import model.Order;
+import model.exception.ModelSyncException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -8,57 +9,58 @@ import java.lang.reflect.Field;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 /**
- * Created by Rajmund Staniek on 30-Mar-17.
+ * Tests for Orders DAO
  */
 public class DBOrdersTest {
-    private static DBOrders dbOrders;
+    private static DBOrders orders;
 
     @BeforeClass
     public static void setUp() throws Exception {
-        dbOrders = new DBOrders();
+        orders = new DBOrders();
     }
 
     @Test
     public void getAll() throws Exception {
-        dbOrders.getAll();
+        orders.getAll();
 
-        Field f = dbOrders.getClass().getDeclaredField("orders");
+        Field f = orders.getClass().getDeclaredField("orders");
         f.setAccessible(true);
-        ArrayList<Order> list = (ArrayList<Order>) f.get(dbOrders);
+        ArrayList<Order> list = (ArrayList<Order>) f.get(orders);
 
         assertNotEquals("Empty table or fetching error", 0, list.size());
     }
 
     @Test
     public void getById() throws Exception {
-        Order order = dbOrders.getById(1);
+        Order order = orders.getById(1);
         assertEquals("Empty table or fetching error", 23, order.getAmount(), 2);
     }
 
     @Test
     public void createDelete() throws Exception {
-        List<Order> list = dbOrders.getAll();
+        List<Order> list = orders.getAll();
         int initialSize = list.size();
 
         // Create new object
         Order temp = new Order(1, new Date(134275623), new Date(143275623), 2, false, 21);
-        temp = dbOrders.create(temp);
+        temp = orders.create(temp);
         int tempId = temp.getId();
 
         // Check the list size after creation
-        list = dbOrders.getAll();
+        list = orders.getAll();
         int creationSize = list.size();
 
         // Delete the object
-        dbOrders.delete(temp);
+        orders.delete(temp);
 
         // Check the list size after deletion
-        list = dbOrders.getAll();
+        list = orders.getAll();
         int deletionSize = list.size();
 
         assertNotEquals("The order not created", creationSize, initialSize);
@@ -68,11 +70,27 @@ public class DBOrdersTest {
     @Test
     public void update() throws Exception {
         boolean status = true;
-        dbOrders.load();
-        Order order = dbOrders.getById(29);
+        orders.load();
+        Order order = orders.getById(29);
         order.setDeliveryStatus(status);
-        dbOrders.update(order);
-        dbOrders.load();
-        assertEquals(status, dbOrders.getById(29).getDeliveryStatus());
+        orders.update(order);
+        orders.load();
+        assertEquals(status, orders.getById(29).getDeliveryStatus());
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void getByIdInvalidIndexTest() throws Exception {
+        Order o = orders.getById(-1);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void updateNullObjectTest() throws Exception {
+        orders.update(null);
+    }
+
+    @Test(expected = ModelSyncException.class)
+    public void createInvalidObjectTest() throws Exception {
+        Order o = new Order(2, null, null, 0, false, 4);
+        orders.create(o);
     }
 }
