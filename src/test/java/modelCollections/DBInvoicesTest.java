@@ -98,10 +98,4 @@ public class DBInvoicesTest {
         Invoice i = new Invoice(null, -1);
         invoices.update(i);
     }
-
-    @Test(expected = NullPointerException.class)
-    public void createInvalidObjectEceptionTest() throws Exception {
-        Invoice i = new Invoice(new Date(-1), -1);
-        invoices.create(i);
-    }
 }
