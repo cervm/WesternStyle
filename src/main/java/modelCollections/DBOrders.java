@@ -87,13 +87,14 @@ public class DBOrders implements IDataAccessObject<Order> {
      * @return order matching the id
      * @throws ModelSyncException connection or SQL exception
      */
+    @SuppressWarnings("ConstantConditions")
     @Override
     public Order getById(int id) throws ModelSyncException {
         if (!isLoaded) {
             load();
         }
 
-        return orders.stream().filter(o -> o.getId() == id).findFirst().orElse(null);
+        return orders.stream().filter(o -> o.getId() == id).findFirst().get();
     }
 
     /**

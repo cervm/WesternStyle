@@ -83,12 +83,13 @@ public class DBSuppliers implements IDataAccessObject<Supplier> {
      * @return supplier matching the id
      * @throws ModelSyncException connection or SQL exception
      */
+    @SuppressWarnings("ConstantConditions")
     @Override
     public Supplier getById(int id) throws ModelSyncException {
         if (!isLoaded) {
             load();
         }
-        return suppliers.stream().filter(o -> o.getId() == id).findFirst().orElse(null);
+        return suppliers.stream().filter(o -> o.getId() == id).findFirst().get();
     }
 
     /**

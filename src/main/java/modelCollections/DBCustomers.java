@@ -102,12 +102,13 @@ public class DBCustomers implements IDataAccessObject<Customer> {
      * @return customer with the id
      * @throws ModelSyncException connection or SQL exception
      */
+    @SuppressWarnings("ConstantConditions")
     @Override
     public Customer getById(int id) throws ModelSyncException {
         if (!isLoaded) {
             load();
         }
-        return customers.stream().filter(o -> o.getId() == id).findFirst().orElse(null);
+        return customers.stream().filter(o -> o.getId() == id).findFirst().get();
     }
 
     /**
