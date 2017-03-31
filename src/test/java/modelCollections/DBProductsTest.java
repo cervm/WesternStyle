@@ -81,12 +81,12 @@ public class DBProductsTest {
 
     @Test(expected = ModelSyncException.class)
     public void getByIdInvalidIndexExceptionTest() throws Exception {
-        Product p = products.getById(-1);
+        products.getById(-1);
     }
 
     @Test(expected = NullPointerException.class)
     public void getByCategoryInvalidIndeExceptionTest() throws Exception {
-        List<Product> lp = products.getByCategory(null);
+        products.getByCategory(null);
     }
 
     @Test(expected = NullPointerException.class)

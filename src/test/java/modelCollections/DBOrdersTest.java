@@ -69,7 +69,7 @@ public class DBOrdersTest {
 
     @Test
     public void update() throws Exception {
-        boolean status = true;
+        final boolean status = true;
         orders.load();
         Order order = orders.getById(29);
         order.setDeliveryStatus(status);
@@ -80,7 +80,7 @@ public class DBOrdersTest {
 
     @Test(expected = NoSuchElementException.class)
     public void getByIdInvalidIndexTest() throws Exception {
-        Order o = orders.getById(-1);
+        orders.getById(-1);
     }
 
     @Test(expected = NullPointerException.class)

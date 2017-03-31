@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 /**
- * Created by rajmu on 17.03.29.
+ * Tests for Customers DAO
  */
 public class DBCustomersTest {
     private static DBCustomers customers;

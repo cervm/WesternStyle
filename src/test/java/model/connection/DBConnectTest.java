@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 /**
- * Created by Rajmund Staniek on 29-Mar-17.
+ * Testing database connection
  */
 public class DBConnectTest {
     private static DBConnect connect;
@@ -21,7 +21,7 @@ public class DBConnectTest {
 
     @Test
     public void testConstructorJSON() throws Exception {
-        DBConnect dbConnect = new DBConnect();
+        new DBConnect();
     }
 
     @Test

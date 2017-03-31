@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 /**
- * Created by Rajmund Staniek on 30-Mar-17.
+ * Tests for Suppliers DAO
  */
 public class DBSuppliersTest {
     private static DBSuppliers dbSuppliers;
@@ -69,7 +69,7 @@ public class DBSuppliersTest {
 
     @Test(expected = NoSuchElementException.class)
     public void getByIDNoSuchElementExceptionTest() throws Exception {
-        Supplier s = dbSuppliers.getById(-1);
+        dbSuppliers.getById(-1);
     }
 
     @Test(expected = NullPointerException.class)
