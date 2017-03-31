@@ -105,7 +105,7 @@ public class DBCustomersTest {
 
     @Test
     public void getCustomerGroupsTest() throws Exception {
-        ArrayList<CustomerGroup> groups = customers.getCustomerGroups();
+        List<CustomerGroup> groups = customers.getCustomerGroups();
         assertNotEquals(0, groups.size());
     }
 
