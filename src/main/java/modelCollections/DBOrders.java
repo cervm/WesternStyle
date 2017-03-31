@@ -6,7 +6,6 @@ import model.connection.IDataAccessObject;
 import model.exception.ConnectionException;
 import model.exception.ModelSyncException;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -106,7 +105,7 @@ public class DBOrders implements IDataAccessObject<Order> {
                 }
             }
         } catch (ConnectionException | SQLException e) {
-            e.printStackTrace();
+            throw new ModelSyncException("Could not create new order!", e);
         } finally {
             orders.add(order);
         }

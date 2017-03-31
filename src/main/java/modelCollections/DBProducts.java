@@ -41,7 +41,8 @@ public class DBProducts implements IDataAccessObject<Product> {
                         rs.getString("description"),
                         rs.getDouble("cost_price"),
                         rs.getDouble("sales_price"),
-                        rs.getDouble("rent_price")
+                        rs.getDouble("rent_price"),
+                        rs.getInt("supplier_id")
                 ));
             }
         } catch (ConnectionException | SQLException e) {
@@ -89,7 +90,8 @@ public class DBProducts implements IDataAccessObject<Product> {
                         rs.getString("description"),
                         rs.getDouble("cost_price"),
                         rs.getDouble("sales_price"),
-                        rs.getDouble("rent_price")
+                        rs.getDouble("rent_price"),
+                        rs.getInt("supplier_id")
                 ));
             }
         } catch (ConnectionException | SQLException e) {
@@ -120,7 +122,8 @@ public class DBProducts implements IDataAccessObject<Product> {
                     rs.getString("description"),
                     rs.getDouble("cost_price"),
                     rs.getDouble("sales_price"),
-                    rs.getDouble("rent_price")
+                    rs.getDouble("rent_price"),
+                    rs.getInt("supplier_id")
             );
         } catch (ConnectionException | SQLException e) {
             throw new ModelSyncException("Could not load products.", e);
@@ -180,7 +183,7 @@ public class DBProducts implements IDataAccessObject<Product> {
             PreparedStatement stmt = dbConnect.getConnection().prepareStatement(
                     "UPDATE [products]\n" +
                             "SET [name]      = ?, [cost_price] = ?, [sales_price] = ?, [rent_price] = ?, [country_code] = ?, [min_stock] = ?,\n" +
-                            "  [description] = ?, [supplier_id] = ?;"
+                            "  [description] = ?, [supplier_id] = ? WHERE [id] = ?;"
             );
             stmt.setString(1, product.getName());
             stmt.setDouble(2, product.getCostPrice());
@@ -189,7 +192,9 @@ public class DBProducts implements IDataAccessObject<Product> {
             stmt.setString(5, product.getCountryOrigin());
             stmt.setInt(6, product.getMinStock());
             stmt.setString(7, product.getDescription());
-            stmt.setInt(8, 1);
+            stmt.setInt(8, product.getSupplierId());
+            stmt.setInt(9, product.getId());
+            stmt.executeUpdate();
         } catch (ConnectionException | SQLException e) {
             throw new ModelSyncException("WARNING! Could not update the product of id [" + product.getId() + "]!", e);
         } finally {

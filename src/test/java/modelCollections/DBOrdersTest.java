@@ -1,6 +1,7 @@
 package modelCollections;
 
 import model.Order;
+import model.exception.ModelSyncException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -8,6 +9,7 @@ import java.lang.reflect.Field;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -74,5 +76,21 @@ public class DBOrdersTest {
         orders.update(order);
         orders.load();
         assertEquals(status, orders.getById(29).getDeliveryStatus());
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void getByIdInvalidIndexTest() throws Exception {
+        Order o = orders.getById(-1);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void updateNullObjectTest() throws Exception {
+        orders.update(null);
+    }
+
+    @Test(expected = ModelSyncException.class)
+    public void createInvalidObjectTest() throws Exception {
+        Order o = new Order(2, null, null, 0, false, 4);
+        orders.create(o);
     }
 }
