@@ -106,4 +106,40 @@ public class Product {
     public void setSupplierId(int supplierId) {
         this.supplierId = supplierId;
     }
+
+    public void setMinStock(int minStock) {
+        this.minStock = minStock;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCountryOrigin(String countryOrigin) {
+        this.countryOrigin = countryOrigin;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCostPrice(double costPrice) {
+        this.costPrice = costPrice;
+    }
+
+    public void setSalesPrice(double salesPrice) {
+        this.salesPrice = salesPrice;
+    }
+
+    public void setRentPrice(double rentPrice) {
+        this.rentPrice = rentPrice;
+    }
+
+    public void setPrimaryCategory(Category primaryCategory) {
+        this.primaryCategory = primaryCategory;
+    }
+
+    public void setCategories(ArrayList<Category> categories) {
+        this.categories = categories;
+    }
 }

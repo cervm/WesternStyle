@@ -6,7 +6,8 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Tests for Products DAO
@@ -59,6 +60,12 @@ public class DBProductsTest {
 
     @Test
     public void update() throws Exception {
-
+        double price = 69;
+        products.load();
+        Product p = products.getById(5);
+        p.setCostPrice(price);
+        products.update(p);
+        products.load();
+        assertEquals(price, products.getById(5).getCostPrice(), 1);
     }
 }
