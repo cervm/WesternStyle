@@ -1,16 +1,16 @@
 package modelCollections;
 
 import model.entity.Supplier;
-import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Created by Rajmund Staniek on 30-Mar-17.
@@ -67,4 +67,18 @@ public class DBSuppliersTest {
         assertEquals(postCode, dbSuppliers.getById(3).getPostcode());
     }
 
+    @Test(expected = NoSuchElementException.class)
+    public void getByIDNoSuchElementExceptionTest() throws Exception {
+        Supplier s = dbSuppliers.getById(-1);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void updateExceptionTest() throws Exception {
+        dbSuppliers.update(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void createInvalidObjectExceptionTest() throws Exception {
+        dbSuppliers.create(null);
+    }
 }
