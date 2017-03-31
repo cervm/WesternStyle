@@ -47,7 +47,7 @@
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin></Text>
-             <TableView fx:id="products_table" GridPane.columnIndex="2" GridPane.rowIndex="1">
+             <TableView fx:id="products_table" onMouseClicked="#tableViewOnMouseClicked" GridPane.columnIndex="2" GridPane.rowIndex="1">
                  <columns>
                      <TableColumn fx:id="nameCol" prefWidth="88.0" text="Name" />
                      <TableColumn fx:id="desCol" prefWidth="115.0" text="Description" />
@@ -68,8 +68,8 @@
                </GridPane.margin></Text>
              <TableView fx:id="variants_table" GridPane.columnIndex="2" GridPane.rowIndex="4">
                  <columns>
-                     <TableColumn />
-                     <TableColumn />
+                     <TableColumn fx:id="quantityCol" text="Quantity" />
+                     <TableColumn fx:id="noOfProprCol" prefWidth="143.0" text="Number of properties" />
                  </columns>
              </TableView>
             <JFXButton fx:id="btn_products_create" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" onAction="#showNewProductDialog" prefWidth="90.0" style="-fx-border-radius: 0; -fx-border-color: #FFFFFF; -fx-border-width: 0.8;" text="Create" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
