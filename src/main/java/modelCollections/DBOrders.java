@@ -1,9 +1,8 @@
 package modelCollections;
 
-import model.BasketItem;
+import model.Order;
 import model.connection.DBConnect;
 import model.connection.IDataAccessObject;
-import model.Order;
 import model.exception.ConnectionException;
 import model.exception.ModelSyncException;
 
@@ -134,15 +133,17 @@ public class DBOrders implements IDataAccessObject<Order> {
         try {
             dbConnect = new DBConnect();
 
-            String updateSupplierQuery = "UPDATE [orders] SET [order_date] = ?, [amount] = ?, [delivery_status] = ?, [invoice_id] = ?, [customer_id] = ?, [delivery_date] = ? WHERE [id]= '" + order.getId() + "'";
+            String updateOrderQry = "UPDATE [orders] SET [order_date] = ?, [amount] = ?, [delivery_status] = ?, [invoice_id] = ?, [customer_id] = ?, [delivery_date] = ? WHERE [id]=?;";
 
-            PreparedStatement preparedStatement = dbConnect.getConnection().prepareStatement(updateSupplierQuery);
+            PreparedStatement preparedStatement = dbConnect.getConnection().prepareStatement(updateOrderQry);
             preparedStatement.setDate(1, (Date) order.getOrderDate());
             preparedStatement.setDouble(2, order.getAmount());
             preparedStatement.setBoolean(3, order.getDeliveryStatus());
             preparedStatement.setInt(4, order.getInvoiceId());
             preparedStatement.setInt(5, order.getCustomerId());
             preparedStatement.setDate(6, (Date) order.getDeliveryDate());
+            preparedStatement.setInt(7, order.getId());
+            System.out.println(preparedStatement.toString());
             dbConnect.uploadSafe(preparedStatement);
         } catch (SQLException | ConnectionException e) {
             throw new ModelSyncException("WARNING! Could not update the order of id [" + order.getId() + "]!", e);
