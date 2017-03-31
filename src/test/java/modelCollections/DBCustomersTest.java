@@ -121,7 +121,7 @@ public class DBCustomersTest {
 
     @Test(expected = NoSuchElementException.class)
     public void getByIDNoSuchElementExceptionTest() throws Exception {
-        Customer c = customers.getById(-1);
+        customers.getById(-1);
     }
 
     @Test(expected = NullPointerException.class)
